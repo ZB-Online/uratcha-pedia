@@ -1,3 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log(process.env.THE_MOVIE_DB_API_KEY);
-});
+import { renderMovies } from './modules/movies.js';
+
+function App() {
+  renderMovies();
+}
+App();

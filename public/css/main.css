@@ -1,0 +1,116 @@
+.movie-container {
+  margin-top: 0px;
+  margin-bottom: 42px;
+  width: 100%;
+}
+
+.movie-container:first-of-type {
+  margin-top: 86px;
+}
+
+.movie-container:last-of-type {
+  margin-bottom: 86px;
+}
+
+.movie-container .movie-ranking {
+  height: 56px;
+  max-height: 60px;
+}
+
+.movie-container .movie-ranking span {
+  padding-top: 12px;
+  display: block;
+  color: rgb(41, 42, 50);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  line-height: 30px;
+}
+
+.movie-container ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.movie-container ul li.movie-item {
+  width: 20%;
+  margin: 0 8px;
+  box-sizing: content-box;
+}
+
+.movie-container ul li.movie-item:first-child {
+  margin-left: 0;
+}
+
+.movie-container ul li.movie-item:last-child {
+  margin-right: 0;
+}
+
+.movie-container ul li .movie-poster {
+  position: relative;
+}
+
+.movie-container ul li .movie-poster .movie-poster-num {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 5;
+  color: rgb(225, 225, 225);
+  background-color: rgba(0, 0, 0, 0.77);
+  border-radius: 4px;
+  opacity: 1;
+  text-align: center;
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  display: block;
+  box-sizing: border-box;
+  padding-top: 4px;
+}
+
+.movie-container ul li .movie-poster img {
+  border-radius: 5px;
+}
+
+.movie-container ul li .movie-poster img {
+  width: 100%;
+  height: auto;
+}
+
+.movie-container ul li.movie-item .movie-detail span {
+  margin-top: 5px;
+}
+
+.movie-container ul li.movie-item .movie-detail span {
+  display: block;
+}
+
+.movie-container ul li.movie-item .movie-detail span.movie-title {
+  font-size: 16px;
+  color: #292a32;
+  font-weight: 500;
+  line-height: 22px;
+  text-overflow: ellipsis;
+}
+
+.movie-container ul li.movie-item .movie-detail .movie-info span {
+  display: inline-block;
+  font-size: 14px;
+  color: #292a32;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.movie-container ul li.movie-item .movie-detail span.movie-score {
+  font-size: 13px;
+  color: #74747b;
+  font-weight: 400;
+  letter-spacing: -0.3px;
+  line-height: 18px;
+}
