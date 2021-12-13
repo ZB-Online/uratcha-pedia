@@ -1,6 +1,6 @@
 const path = require('path');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: ['@babel/polyfill', './public/js/app.js'],
@@ -36,11 +36,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new Dotenv(),
   ],
   devtool: 'source-map',
   mode: 'development',
   devServer: {
-    port: 5000,
+    port: 5500,
     open: true,
     // proxy: {
     //   "/api": "http://localhost:8080"
