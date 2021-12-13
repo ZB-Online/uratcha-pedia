@@ -1,5 +1,5 @@
 const path = require('path');
-// const NodemonPlugin = require('nodemon-webpack-plugin');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
