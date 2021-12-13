@@ -22,11 +22,11 @@ const getReviewByMovieIdUserEmail = (req, res) => {
 const addReview = (req, res) => {
   const newReview = req.body;
   if (reviewService.findReviewById(newReview.id))
-    res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
+    return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
   if (!userService.findUserByEmail(newReview.userEmail))
-    res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
+    return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   if (reviewService.getReviewByMovieIdUserEmail(newReview.movieId, newReview.userEmail))
-    res.status(400).json(resData.successFalse(resMessage.REVIEW_ALREADY_EXIST));
+    return res.status(400).json(resData.successFalse(resMessage.REVIEW_ALREADY_EXIST));
   // TODO : movieId validation
   reviewService.addReview(newReview);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_CREATE_SUCCESS));
@@ -34,14 +34,14 @@ const addReview = (req, res) => {
 
 const updateReview = (req, res) => {
   const { id, comment } = req.body;
-  if (!reviewService.findReviewById(id)) res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
+  if (!reviewService.findReviewById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   reviewService.updateReview(id, comment);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_UPDATE_SUCCESS));
 };
 
 const removeReview = (req, res) => {
   const { id } = req.body;
-  if (!reviewService.findReviewById(id)) res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
+  if (!reviewService.findReviewById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   reviewService.removeReview(id);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_DELETE_SUCCESS));
 };

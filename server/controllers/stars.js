@@ -21,26 +21,26 @@ const getAverageStarByMovieId = (req, res) => {
 
 const addStar = (req, res) => {
   const newStar = req.body;
-  if (starService.findStarById(newStar.id)) res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
+  if (starService.findStarById(newStar.id)) return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
   if (!userService.findUserByEmail(newStar.userEmail))
-    res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
+    return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   // TODO : movieId validation
   if (starService.getStarByMovieIdUserEmail(newStar.movieId, newStar.userEmail))
-    res.status(400).json(resData.successFalse(resMessage.STAR_ALREADY_EXIST));
+    return res.status(400).json(resData.successFalse(resMessage.STAR_ALREADY_EXIST));
   starService.addStar(newStar);
   res.status(200).json(resData.successTrue(resMessage.STAR_CREATE_SUCCESS));
 };
 
 const updateStar = (req, res) => {
   const { id, score } = req.body;
-  if (!starService.findStarById(id)) res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
+  if (!starService.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   starService.updateStar(id, score);
   res.status(200).json(resData.successTrue(resMessage.STAR_UPDATE_SUCCESS));
 };
 
 const removeStar = (req, res) => {
   const { id } = req.body;
-  if (!starService.findStarById(id)) res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
+  if (!starService.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   starService.removeStar(id);
   res.status(200).json(resData.successTrue(resMessage.STAR_DELETE_SUCCESS));
 };
