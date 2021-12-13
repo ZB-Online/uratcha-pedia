@@ -13,9 +13,9 @@ const getReviewsByMovieId = (req, res) => {
   res.status(200).json(resData.successTrue(resMessage.REVIEW_GET_SUCCESS, reviews));
 };
 
-const getReviewsByMovieIdUserEmail = (req, res) => {
+const getReviewByMovieIdUserEmail = (req, res) => {
   const { movieId, userEmail } = req.params;
-  const review = reviewService.getReviewsByMovieIdUserEmail(movieId, userEmail);
+  const review = reviewService.getReviewByMovieIdUserEmail(movieId, userEmail);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_GET_SUCCESS, review));
 };
 
@@ -46,7 +46,7 @@ const removeReview = (req, res) => {
 module.exports = {
   getReviews,
   getReviewsByMovieId,
-  getReviewsByMovieIdUserEmail,
+  getReviewByMovieIdUserEmail,
   addReview,
   updateReview,
   removeReview,

@@ -8,7 +8,7 @@ const getReviewsByMovieId = movieId => {
   return reviewModel.filter(review => review.movieId === +movieId);
 };
 
-const getReviewsByMovieIdUserEmail = (movieId, userEmail) => {
+const getReviewByMovieIdUserEmail = (movieId, userEmail) => {
   const [isReview] = reviewModel.filter(review => review.movieId === +movieId && review.userEmail === userEmail);
   return isReview ? isReview : false;
 };
@@ -32,7 +32,7 @@ const removeReview = id => {
 module.exports = {
   getReviews,
   getReviewsByMovieId,
-  getReviewsByMovieIdUserEmail,
+  getReviewByMovieIdUserEmail,
   addReview,
   findReviewById,
   updateReview,

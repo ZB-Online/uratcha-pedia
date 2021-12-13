@@ -16,10 +16,10 @@ const responseMessage = {
   REVIEW_DELETE_SUCCESS: '리뷰 삭제 성공',
   ID_NOT_EXIST: '존재하지 않는 id 입니다.',
 
-  STARS_GET_SUCCESS: '평점 조회 성공',
-  STARS_CREATE_SUCCESS: '평점 등록 성공',
-  STARS_UPDATE_SUCCESS: '평점 수정 성공',
-  STARS_DELETE_SUCCESS: '평점 삭제 성공',
+  STAR_GET_SUCCESS: '평점 조회 성공',
+  STAR_CREATE_SUCCESS: '평점 등록 성공',
+  STAR_UPDATE_SUCCESS: '평점 수정 성공',
+  STAR_DELETE_SUCCESS: '평점 삭제 성공',
 
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
 };
