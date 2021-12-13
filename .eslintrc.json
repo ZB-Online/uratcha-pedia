@@ -9,7 +9,7 @@
     "es2021": true
   },
   "globals": { "_": true },
-  "plugins": ["import", "html"],
+  "plugins": ["import", "html", "@babel"],
   "extends": ["airbnb-base", "prettier"],
   // 추가
   "parser": "@babel/eslint-parser",

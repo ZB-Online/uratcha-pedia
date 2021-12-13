@@ -57,7 +57,7 @@ module.exports = {
   //   path: path.resolve(__dirname, "dist")
   // },
   devServer: {
-    port: 5000,
+    port: 5500,
     open: true,
     // proxy: {
     //   "/api": "http://localhost:8080"

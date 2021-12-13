@@ -59,9 +59,44 @@ const eventListeners = () => {
   };
 };
 
+import Home from './pages/Home';
+
+const routes = {
+  '/': Home,
+  '/home': Home,
+  '/detail': Detail,
+  '/mypage': MyPage,
+  '/search': SearchResult,
+};
+
+export default function App({ $target }) {
+  this.route = () => {
+    const { pathname } = window.location;
+    $target.innerHTML = ``;
+    console.log(pathname);
+
+    if (pathname === '/') {
+      console.log(pathname);
+      router(route, '/');
+    } else if (pathname.indexOf('/search') !== -1) {
+      console.log(pathname);
+      router(route, '/search');
+    } else if (pathname.indexOf('/detail') !== -1) {
+      console.log(pathname);
+      router(route, '/detail');
+    } else if (pathname === '/mypage') {
+      console.log(pathname);
+      router(route, '/mypage');
+    }
+  };
+
+  this.route();
+}
+
 window.onload = () => {
   // init(() => {
   //   router(location.pathname, location.pathname);
   // });
-  eventListeners();
+  new App({ $target: document.querySelector('.app') });
+  // eventListeners();
 };

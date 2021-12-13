@@ -1,7 +1,7 @@
 const express = require('express');
 
 const app = express();
-const PORT = 5000;
+const PORT = 5500;
 
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');

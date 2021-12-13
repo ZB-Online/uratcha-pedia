@@ -32,8 +32,8 @@ export function initialRoute() {
 //   });
 // };
 
-export function router(pathName) {
+export function router(url, pathName) {
   window.history.pushState({}, pathName, window.location.origin + pathName);
   render();
-  // window.dispatchEvent(new CustomEvent(ROUTE_CHANGE_EVENT));
+  window.dispatchEvent(new CustomEvent(ROUTE_CHANGE_EVENT));
 }
