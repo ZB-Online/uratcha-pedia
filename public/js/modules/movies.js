@@ -17,7 +17,6 @@ export async function renderMovies() {
   const movies = await getPopularMovies();
   const boxOfficeMovies = await getBoxOfficeMovies(movies);
 
-  console.log(boxOfficeMovies);
   $boxOffice.innerHTML = boxOfficeMovies
     ?.map(movie => renderSingleMovie(movie))
     .slice(0, 6)
