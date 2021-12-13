@@ -60,8 +60,8 @@ const eventListeners = () => {
 };
 
 window.onload = () => {
-  init(() => {
-    router(location.pathname, location.pathname);
-  });
+  // init(() => {
+  //   router(location.pathname, location.pathname);
+  // });
   eventListeners();
 };

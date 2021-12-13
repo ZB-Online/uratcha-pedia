@@ -26,14 +26,14 @@ export function initialRoute() {
   };
 }
 
-export const init = onRouteChange => {
-  window.addEventListener(ROUTE_CHANGE_EVENT, () => {
-    onRouteChange();
-  });
-};
+// export const init = onRouteChange => {
+//   window.addEventListener(ROUTE_CHANGE_EVENT, () => {
+//     onRouteChange();
+//   });
+// };
 
 export function router(pathName) {
   window.history.pushState({}, pathName, window.location.origin + pathName);
   render();
-  window.dispatchEvent(new CustomEvent(ROUTE_CHANGE_EVENT));
+  // window.dispatchEvent(new CustomEvent(ROUTE_CHANGE_EVENT));
 }
