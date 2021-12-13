@@ -10,13 +10,9 @@ const findUserByName = username => {
   return isUser ? isUser : false;
 };
 
-const addUser = newUser => {
-  userModel = [...userModel, newUser];
-};
+const addUser = newUser => (userModel = [...userModel, newUser]);
 
-const getUsers = () => {
-  return userModel;
-};
+const getUsers = () => userModel;
 
 module.exports = {
   findUserByEmail,

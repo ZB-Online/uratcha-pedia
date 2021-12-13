@@ -21,10 +21,13 @@ const getReviewByMovieIdUserEmail = (req, res) => {
 
 const addReview = (req, res) => {
   const newReview = req.body;
+  if (reviewService.findReviewById(newReview.id))
+    res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
   if (!userService.findUserByEmail(newReview.userEmail))
     res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
+  if (reviewService.getReviewByMovieIdUserEmail(newReview.movieId, newReview.userEmail))
+    res.status(400).json(resData.successFalse(resMessage.REVIEW_ALREADY_EXIST));
   // TODO : movieId validation
-  // TODO : movieId-email당 1개
   reviewService.addReview(newReview);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_CREATE_SUCCESS));
 };

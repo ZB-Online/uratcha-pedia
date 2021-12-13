@@ -14,12 +14,15 @@ const responseMessage = {
   REVIEW_CREATE_SUCCESS: '리뷰 등록 성공',
   REVIEW_UPDATE_SUCCESS: '리뷰 수정 성공',
   REVIEW_DELETE_SUCCESS: '리뷰 삭제 성공',
+  REVIEW_ALREADY_EXIST: '존재하는 리뷰입니다.',
   ID_NOT_EXIST: '존재하지 않는 id 입니다.',
+  ID_ALREADY_EXIST: '존재하는 id 입니다.',
 
   STAR_GET_SUCCESS: '평점 조회 성공',
   STAR_CREATE_SUCCESS: '평점 등록 성공',
   STAR_UPDATE_SUCCESS: '평점 수정 성공',
   STAR_DELETE_SUCCESS: '평점 삭제 성공',
+  STAR_ALREADY_EXIST: '존재하는 평점입니다.',
 
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
 };

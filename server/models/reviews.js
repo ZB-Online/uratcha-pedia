@@ -16,14 +16,14 @@ let reviews = [
     id: 3,
     userEmail: 'test3@test.com',
     movieId: 3,
-    comment: "추천합니다",
+    comment: '추천합니다',
   },
   {
     id: 4,
     userEmail: 'test3@test.com',
     movieId: 1,
-    comment: "으아아아아추천합니다",
-  }
+    comment: '으아아아아추천합니다',
+  },
 ];
 
-module.exports = reviews
+module.exports = reviews;

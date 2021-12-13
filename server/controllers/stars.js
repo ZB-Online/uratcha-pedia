@@ -21,11 +21,12 @@ const getAverageStarByMovieId = (req, res) => {
 
 const addStar = (req, res) => {
   const newStar = req.body;
-  // TODO : starId validation
+  if (starService.findStarById(newStar.id)) res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
   if (!userService.findUserByEmail(newStar.userEmail))
     res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   // TODO : movieId validation
-  // TODO : movieId-email당 1개
+  if (starService.getStarByMovieIdUserEmail(newStar.movieId, newStar.userEmail))
+    res.status(400).json(resData.successFalse(resMessage.STAR_ALREADY_EXIST));
   starService.addStar(newStar);
   res.status(200).json(resData.successTrue(resMessage.STAR_CREATE_SUCCESS));
 };
