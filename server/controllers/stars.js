@@ -9,7 +9,7 @@ const getStars = (req, res) => {
 
 const getStarsCount = (req, res) => {
   const starCount = starService.getStarsCount();
-  res.status(200).json(resData.successTrue(resMessage.STARS_GET_SUCCESS, { starCount }));
+  res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, { starCount }));
 };
 
 const getAverageStarByMovieId = (req, res) => {
