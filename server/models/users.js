@@ -15,3 +15,5 @@ let users = [
     username: '테스트계정3',
   },
 ];
+
+module.exports = users;
