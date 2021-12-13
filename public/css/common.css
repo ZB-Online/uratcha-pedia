@@ -11,7 +11,7 @@ body {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
-  font-family: "Roboto", "Noto Sans KR", sans-serif;
+  font-family: 'Roboto', 'Noto Sans KR', sans-serif;
 }
 
 img {
@@ -28,6 +28,9 @@ a {
   cursor: pointer;
 }
 
+a > img {
+  cursor: pointer;
+}
 .outer {
   max-width: 1444px;
   margin: 0 auto;
@@ -61,7 +64,6 @@ a {
   border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
-  cursor: pointer;
 }
 
 .hidden {
@@ -98,12 +100,6 @@ header ul {
 header ul li {
   margin: auto 0;
   height: 100%;
-  position: relative;
-}
-
-header ul li a.logo {
-  position: absolute;
-  top: -26px;
 }
 
 header .search {
@@ -225,7 +221,7 @@ footer .info li {
 }
 
 footer .info li::after {
-  content: "";
+  content: '';
   width: 1px;
   height: 12px;
   background-color: rgb(132, 132, 133);

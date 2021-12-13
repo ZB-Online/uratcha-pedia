@@ -9,7 +9,7 @@ import '../css/search-result.css';
 // import watchaLogo from '../img/watcha_logo.png';
 // import poster from '../img/poster.jpeg';
 
-import { initialRoute, router } from './router';
+import { init, initialRoute, router } from './router';
 
 initialRoute();
 
@@ -60,5 +60,8 @@ const eventListeners = () => {
 };
 
 window.onload = () => {
+  init(() => {
+    router(location.pathname, location.pathname);
+  });
   eventListeners();
 };

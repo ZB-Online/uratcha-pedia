@@ -1,12 +1,12 @@
-function Header() {
+export function Header() {
   return `
   <header>
       <div class="outer">
         <div class="inner">
           <ul>
             <li>
-              <a href="" class="logo" route="/">
-                <img src="./img/watcha_logo.png"></img>
+              <a href="javascript:void(0)" class="logo" route="/">
+                <img src="./img/watcha_logo.png" alt="LOGO" />
               </a>
             </li>
             <li class="search">
@@ -67,7 +67,7 @@ function Footer() {
             </ul>
             <ul class="logo">
               <li>
-                <img src="./img/watch_logo_s.PNG" alt="WATCHA_LOGO">
+                <a href="javascript:void(0)"><img src="./img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
               </li>
               <li>
                 <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
