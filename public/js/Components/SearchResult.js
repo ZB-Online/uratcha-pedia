@@ -1,4 +1,4 @@
-function SearchResult() {
+export function SearchResultContent() {
   return `
   <section class="search-result">
   <article class="container">

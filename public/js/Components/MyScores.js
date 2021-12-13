@@ -1,4 +1,4 @@
-function MyPage() {
+export function MyPageContents() {
   return `
   <section class="mypage">
       <article class="container">

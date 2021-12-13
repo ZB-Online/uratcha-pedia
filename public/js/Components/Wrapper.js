@@ -1,17 +1,16 @@
-export function Common() {
+function Header() {
   return `
-  <!-- HEADER -->
-    <header>
+  <header>
       <div class="outer">
         <div class="inner">
           <ul>
             <li>
-              <a href="" class="logo">
+              <a href="" class="logo" route="/">
                 <img src="./img/watcha_logo.png"></img>
               </a>
             </li>
             <li class="search">
-              <form class="search-form" action="#">
+              <form class="search-form" action="#" route="/search">
                 <span class="material-icons">search</span>
                 <label for="search-input">
                   <input type="text" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
@@ -24,22 +23,66 @@ export function Common() {
                 </label>
               </form>
             </li>
-            <li class='sign-in'>
+            <li class='sign-in hidden'>
               <button class="btn">로그인</button>
             </li>
-            <li class='sign-up'>
+            <li class='sign-up hidden'>
               <button class="btn btn--white">회원가입</button>
             </li>
-            <li class='my-page hidden'>
+            <li class='my-page '>
               <button class="btn">마이페이지</button>
             </li>
           </ul>
         </div>
       </div>
     </header>
+  `;
+}
 
+function Footer() {
+  return `
+  <!-- FOOTER -->
+    <footer>
+      <section class="score-info">
+        <div class="outer">
+          <div class="inner">
+            <div >
+              <span class="total-scores">지금까지 <em>★ 1,000,000,000 개의 평가가</em> 쌓였어요.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="info">
+        <div class="outer">
+          <div class="inner">
+            <ul class="menu">
+              <li><a href="javascript:void(0)">데이터 출처</a></li>
+              <li><a href="javascript:void(0)">서비스 이용약관</a></li>
+              <li><a href="javascript:void(0)">개인정보 처리방침</a></li>
+              <li><a href="javascript:void(0)">회사 안내</a></li>
+            </ul>
+            <ul class="customer-service">
+              <li><a href="javascript:void(0)">고객센터</a></li>
+              <li><a href="javascript:void(0)">support@watcha.com</a></li>
+            </ul>
+            <ul class="logo">
+              <li>
+                <img src="./img/watch_logo_s.PNG" alt="WATCHA_LOGO">
+              </li>
+              <li>
+                <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
+              </li>              
+            </ul>
+          </div>
+        </div>
+      </section>
+    </footer>
+  `;
+}
 
-    <!-- SIGNIN / SIGNUP POPUP -->
+function Sign() {
+  return `
+  <!-- SIGNIN / SIGNUP POPUP -->
     <div class="sign-modal hidden">
       <div class="backdrop"></div>
       <div id="sign-modal">
@@ -151,45 +194,13 @@ export function Common() {
         </div>
       </div>
     </div>
+  `;
+}
 
-    
-
-    <!-- FOOTER -->
-    <footer>
-      <section class="score-info">
-        <div class="outer">
-          <div class="inner">
-            <div >
-              <span class="total-scores">지금까지 <em>★ 1,000,000,000 개의 평가가</em> 쌓였어요.</span>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="info">
-        <div class="outer">
-          <div class="inner">
-            <ul class="menu">
-              <li><a href="javascript:void(0)">데이터 출처</a></li>
-              <li><a href="javascript:void(0)">서비스 이용약관</a></li>
-              <li><a href="javascript:void(0)">개인정보 처리방침</a></li>
-              <li><a href="javascript:void(0)">회사 안내</a></li>
-            </ul>
-            <ul class="customer-service">
-              <li><a href="javascript:void(0)">고객센터</a></li>
-              <li><a href="javascript:void(0)">support@watcha.com</a></li>
-            </ul>
-            <ul class="logo">
-              <li>
-                <img src="./img/watch_logo_s.PNG" alt="WATCHA_LOGO">
-              </li>
-              <li>
-                <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
-              </li>              
-            </ul>
-          </div>
-        </div>
-      </section>
-      
-    </footer>
+export default function Wrapper(...Components) {
+  return `
+  ${Header()}${Sign()}
+  ${Components.reduce((html, Component) => html + Component(), '')}
+  ${Footer()}
   `;
 }
