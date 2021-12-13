@@ -23,8 +23,8 @@ const addReview = (req, res) => {
   const newReview = req.body;
   if (!userService.findUserByEmail(newReview.userEmail))
     res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
-  // TODO : moviewId validation
-  // TODO : moviewId-email당 1개
+  // TODO : movieId validation
+  // TODO : movieId-email당 1개
   reviewService.addReview(newReview);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_CREATE_SUCCESS));
 };

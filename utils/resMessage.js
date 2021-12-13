@@ -1,0 +1,27 @@
+const responseMessage = {
+  JOIN_SUCCESS: '회원가입 성공',
+  JOIN_FAIL: '회원 가입 실패',
+
+  LOGIN_SUCCESS: '로그인 성공',
+  LOGIN_FAIL: '로그인 실패',
+  LOGOUT_SUCCESS: '로그아웃 성공',
+
+  EMAIL_ALREADY_EXIST: '존재하는 email 입니다.',
+  EMAIL_NOT_EXIST: '존재하지 않는 유저 email 입니다.',
+  PW_MISMATCH: '비밀번호가 일치하지 않습니다',
+
+  REVIEW_GET_SUCCESS: '리뷰 조회 성공',
+  REVIEW_CREATE_SUCCESS: '리뷰 등록 성공',
+  REVIEW_UPDATE_SUCCESS: '리뷰 수정 성공',
+  REVIEW_DELETE_SUCCESS: '리뷰 삭제 성공',
+  ID_NOT_EXIST: '존재하지 않는 id 입니다.',
+
+  STARS_GET_SUCCESS: '평점 조회 성공',
+  STARS_CREATE_SUCCESS: '평점 등록 성공',
+  STARS_UPDATE_SUCCESS: '평점 수정 성공',
+  STARS_DELETE_SUCCESS: '평점 삭제 성공',
+
+  INTERNAL_SERVER_ERROR: '서버 내부 오류',
+};
+
+module.exports = responseMessage;
