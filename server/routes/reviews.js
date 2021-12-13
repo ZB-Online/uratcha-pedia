@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const reviewCtrl = require('../controllers/reviews');
 
-router.get('/', (req, res)=> {
-    res.send("hello reviews")
-})
+router.get('/', reviewCtrl.getReviews);
+router.get('/:movieId', reviewCtrl.getReviewsByMovieId)
 
 module.exports = router;

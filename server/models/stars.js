@@ -18,3 +18,5 @@ let stars = [
     score: 5,
   },
 ];
+
+module.exports = stars;
