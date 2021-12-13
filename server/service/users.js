@@ -1,11 +1,26 @@
-const userModel = require('../models/users')
+let userModel = require('../models/users');
 
 const findUserByEmail = email => {
-    const [isUser] = userModel.filter(user => user.email===email)
-    return isUser.length === 0 ? false : isUser
-}
+  const [isUser] = userModel.filter(user => user.email === email);
+  return isUser ? isUser : false;
+};
 
+const findUserByName = username => {
+  const [isUser] = userModel.filter(user => user.username === username);
+  return isUser ? isUser : false;
+};
+
+const addUser = newUser => {
+  userModel = [...userModel, newUser];
+};
+
+const getUsers = () => {
+  return userModel;
+};
 
 module.exports = {
-    findUserByEmail
-}
+  findUserByEmail,
+  findUserByName,
+  addUser,
+  getUsers,
+};
