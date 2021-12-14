@@ -11,7 +11,7 @@ const getPopularMovies = async (page = 1) => {
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
-      poster_path: movie.poster_path,
+      poster_path: movieConfig.imageBaseUrl + movie.poster_path,
       release_date: movie.release_date,
     }));
   } catch (error) {}
