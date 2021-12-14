@@ -5,8 +5,8 @@ const getReviews = () => reviewModel;
 const getReviewsByMovieId = movieId => reviewModel.filter(review => review.movieId === +movieId);
 
 const getReviewByMovieIdUserEmail = (movieId, userEmail) => {
-  const [isReview] = reviewModel.filter(review => review.movieId === +movieId && review.userEmail === userEmail);
-  return isReview ? isReview : false;
+  const isReview = reviewModel.find(review => review.movieId === +movieId && review.userEmail === userEmail);
+  return isReview??false;
 };
 
 const addReview = newReview => (reviewModel = [...reviewModel, newReview]);

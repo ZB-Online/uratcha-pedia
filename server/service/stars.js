@@ -18,8 +18,8 @@ const updateStar = (id, score) => (starModel = starModel.map(star => (star.id ==
 const removeStar = id => (starModel = starModel.filter(star => star.id !== +id));
 
 const getStarByMovieIdUserEmail = (movieId, userEmail) => {
-  const [isStar] = starModel.filter(star => star.movieId === +movieId && star.userEmail === userEmail);
-  return isStar ? isStar.score : false;
+  const isStar = starModel.find(star => star.movieId === +movieId && star.userEmail === userEmail);
+  return isStar??false;
 };
 
 const getStarsByUserEmail = userEmail => starModel.filter(star => star.userEmail === userEmail);
