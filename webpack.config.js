@@ -4,11 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: ['@babel/polyfill', './public/js/app.js'],
+  entry: ['./public/js/index.js'],
   output: {
-    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    assetModuleFilename: 'assets/[name].[hash][ext]',
+    filename: 'bundle.js',
+    // assetModuleFilename: 'assets/[name].[hash][ext]',
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
@@ -17,12 +17,21 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: [path.resolve(__dirname, './public/js/app.js')],
+        include: [path.resolve(__dirname, './public/js/index.js')],
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
+            plugins: [
+              [
+                '@babel/plugin-transform-runtime',
+                {
+                  corejs: 3,
+                  proposals: true,
+                },
+              ],
+            ],
           },
         },
       },
