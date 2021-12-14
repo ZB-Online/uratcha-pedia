@@ -11,13 +11,11 @@ export const carousel = ($container, movies) => {
   // 1페이지당 보여줄 영화 수
   const PAGE_PER_MOVIES = 5;
 
-  let $carouselSlides, $carouselPrevBtn, $carouselNextBtn;
-
   $container.innerHTML = renderMovieCarousel(movies);
 
-  $carouselPrevBtn = document.querySelector('.carousel-control.prev');
-  $carouselNextBtn = document.querySelector('.carousel-control.next');
-  $carouselSlides = document.querySelector('.carousel-slides');
+  let $carouselPrevBtn = document.querySelector('.carousel-control.prev');
+  let $carouselNextBtn = document.querySelector('.carousel-control.next');
+  let $carouselSlides = document.querySelector('.carousel-slides');
 
   $carouselPrevBtn.style.visibility = 'hidden';
 
