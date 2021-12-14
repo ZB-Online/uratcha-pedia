@@ -6,7 +6,7 @@ import { eventListeners } from '../eventListeners';
 //   return Wrapper(SearchResultContent);
 // }
 
-export default function SearchResult({ $target }) {
+export default function SearchResultPage({ $target }) {
   this.render = () => {
     $target.innerHTML = Wrapper(SearchResultContent);
   };

@@ -1,4 +1,4 @@
-export function MovieDetail() {
+export function MovieDetails() {
   return `
   <section class="movie-details">
       <div class="outer">

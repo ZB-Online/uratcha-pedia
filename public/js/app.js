@@ -9,12 +9,11 @@ import '../css/search-result.css';
 // import watchaLogo from '../img/watcha_logo.png';
 // import poster from '../img/poster.jpeg';
 
-import HomePage from './pages/Home';
-import SearchPage from './pages/Search';
-import MovieDetailPage from './pages/MovieDetail';
+import HomePage from './pages/HomePage';
+import SearchResultPage from './pages/SearchResultPage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
 import MyPage from './pages/MyPage';
 import { init } from './router';
-import { eventListeners } from './eventListeners';
 
 export default function App({ $target }) {
   this.route = () => {
@@ -26,12 +25,12 @@ export default function App({ $target }) {
       Home.render();
       Home.event();
     } else if (pathname === '/search') {
-      const Search = new SearchPage({ $target });
+      const Search = new SearchResultPage({ $target });
       Search.render();
       Search.event();
     } else if (pathname.indexOf('/detail/') === 0) {
       const [, , movieId] = pathname.split('/');
-      const MovieDetail = new MovieDetailPage({ $target, movieId });
+      const MovieDetail = new MovieDetailsPage({ $target, movieId });
       MovieDetail.render();
       MovieDetail.event();
     } else if (pathname === '/mypage') {

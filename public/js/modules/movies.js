@@ -2,7 +2,7 @@ import { getPopularMovies, getMoviesMainDetails } from './api.js';
 import { carousel } from './carousel.js';
 import '../../css/main.css';
 
-async function getBoxOfficeMovies(movies) {
+async function getMoviesWithCountry(movies) {
   let data = [];
   for (let movie of movies) {
     const additionalInfo = await getMoviesMainDetails(movie.id);
@@ -13,9 +13,7 @@ async function getBoxOfficeMovies(movies) {
 
 export async function renderMovies() {
   const movies = await getPopularMovies();
-  const boxOfficeMovies = await getBoxOfficeMovies(movies);
+  const moviesWithCountry = await getMoviesWithCountry(movies);
 
-  console.log(boxOfficeMovies);
-
-  carousel(document.querySelector('.carousel'), boxOfficeMovies);
+  carousel(document.querySelector('.carousel'), moviesWithCountry);
 }

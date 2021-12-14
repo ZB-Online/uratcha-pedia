@@ -3,7 +3,7 @@ import { BoxOffice, HighestRates } from '../Components/Main';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 
-export default function Home({ $target }) {
+export default function HomePage({ $target }) {
   const $main = document.createElement('div');
   $target.appendChild($main);
 
