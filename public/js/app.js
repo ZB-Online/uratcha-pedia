@@ -15,6 +15,7 @@ import MovieDetailPage from './pages/MovieDetail';
 import MyPage from './pages/MyPage';
 import { init } from './router';
 import { eventListeners } from './eventListeners';
+import { renderMovies } from './modules/movies';
 
 export default function App({ $target }) {
   this.route = () => {
@@ -25,6 +26,7 @@ export default function App({ $target }) {
       const Home = new HomePage({ $target });
       Home.render();
       Home.event();
+      renderMovies();
     } else if (pathname === '/search') {
       const Search = new SearchPage({ $target });
       Search.render();
@@ -47,8 +49,3 @@ export default function App({ $target }) {
 
   window.addEventListener('popstate', this.route);
 }
-
-// fetch 로 옮기기
-import { renderMovies } from './modules/movies.js';
-
-renderMovies();
