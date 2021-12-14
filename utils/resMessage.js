@@ -1,4 +1,5 @@
 const responseMessage = {
+  // TODO : message 방식 status로 변경 여부
   JOIN_SUCCESS: '회원가입 성공',
   JOIN_FAIL: '회원 가입 실패',
 
