@@ -1,8 +1,10 @@
 import { config } from './config.js';
+const movieConfig = require("../")
 
 const BASE_URL = config.api_base_url;
 const API_KEY = config.api_key;
 
+// 1.
 export async function getPopularMovies(page = 1) {
   let data = [];
   try {
@@ -25,7 +27,7 @@ function findCertification(certificationData, country) {
   return result ? result.certification : 'None';
 }
 
-export async function getMoviesMainDetails(movieId) {
+export async function getMoviesDetailsById(movieId) {
   let data = {};
   try {
     const response = await fetch(`${BASE_URL}movie/${movieId}?api_key=${API_KEY}`);
@@ -39,6 +41,11 @@ export async function getMoviesMainDetails(movieId) {
     const certification = findCertification(responseCertificationData?.results, country);
 
     data = {
+      id: responseData?.id,
+      title: responseData?.title,
+      overview: responseData?.overview,
+      poster_path: responseData?.poster_path,
+      release_date: responseData?.release_date,
       genres: responseData?.genres.map(genre => genre.name),
       country,
       runtime: responseData?.runtime,
@@ -49,5 +56,27 @@ export async function getMoviesMainDetails(movieId) {
       })),
     };
   } catch (error) {}
+  return data;
+}
+
+// 국가 가져오기
+export async function getMoviesMainDetails(movieId) {
+  let data = {};
+  try {
+    const response = await fetch(`${BASE_URL}movie/${movieId}?api_key=${API_KEY}`);
+    const responseData = await response.json();
+    data = {
+      country: responseData?.production_countries.map(country => country.iso_3166_1)[0],
+    };
+  } catch (error) {}
+  return data;
+}
+
+export async function getMoviesWithCountry(movies) {
+  let data = [];
+  for (let movie of movies) {
+    const additionalInfo = await getMoviesMainDetails(movie.id);
+    data = [...data, { ...movie, ...additionalInfo }];
+  }
   return data;
 }
