@@ -40,7 +40,7 @@ const updateReview = (req, res) => {
 };
 
 const removeReview = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   if (!reviewService.findReviewById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   reviewService.removeReview(id);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_DELETE_SUCCESS));

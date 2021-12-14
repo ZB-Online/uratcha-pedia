@@ -39,7 +39,7 @@ const updateStar = (req, res) => {
 };
 
 const removeStar = (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   if (!starService.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   starService.removeStar(id);
   res.status(200).json(resData.successTrue(resMessage.STAR_DELETE_SUCCESS));
