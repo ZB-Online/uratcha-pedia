@@ -7,6 +7,11 @@ export default function Detail({ $target, movieId }) {
     movieId,
   };
 
+  this.setState = {
+    // 1. this.state 업데이트
+    // 2. render
+  };
+
   this.render = () => {
     $target.innerHTML = Wrapper(MovieDetail);
   };

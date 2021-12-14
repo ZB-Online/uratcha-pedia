@@ -1,7 +1,7 @@
 const path = require('path');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: ['./public/js/index.js'],
@@ -18,7 +18,7 @@ module.exports = {
       {
         test: /\.js$/,
         include: [path.resolve(__dirname, './public/js/index.js')],
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /server/],
         use: {
           loader: 'babel-loader',
           options: {
@@ -57,6 +57,7 @@ module.exports = {
       template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
+    new Dotenv(),
   ],
   devtool: 'source-map',
   mode: 'development',

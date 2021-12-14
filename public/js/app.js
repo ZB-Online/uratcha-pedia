@@ -47,3 +47,8 @@ export default function App({ $target }) {
 
   window.addEventListener('popstate', this.route);
 }
+
+// fetch 로 옮기기
+import { renderMovies } from './modules/movies.js';
+
+renderMovies();
