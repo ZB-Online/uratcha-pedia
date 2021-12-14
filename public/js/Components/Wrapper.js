@@ -5,12 +5,12 @@ export function Header() {
         <div class="inner">
           <ul>
             <li>
-              <a href="javascript:void(0)" class="logo" route="/">
-                <img src="./img/watcha_logo.png" alt="LOGO" />
+              <a href="javascript:void(0)" class="logo">
+                <img src="/img/watcha_logo.png" alt="LOGO" />
               </a>
             </li>
             <li class="search">
-              <form class="search-form" action="#" route="/search">
+              <form class="search-form" action="#">
                 <span class="material-icons">search</span>
                 <label for="search-input">
                   <input type="text" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />

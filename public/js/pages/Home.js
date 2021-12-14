@@ -1,19 +1,28 @@
 import Wrapper from '../Components/Wrapper';
 import { BoxOffice, HighestRates } from '../Components/Main';
-import { routeChange } from '../App';
+import { eventListeners } from '../eventListeners';
+import { routeChange } from '../router';
 
 export default function Home({ $target }) {
+  const $main = document.createElement('div');
+  $target.appendChild($main);
+
   this.render = () => {
-    $target.innerHTML = Wrapper(BoxOffice, HighestRates);
+    $main.innerHTML = Wrapper(BoxOffice, HighestRates);
   };
 
-  this.render();
+  this.event = () => {
+    eventListeners();
 
-  const $boxOffice = document.querySelector('.box-office');
-  console.log($boxOffice);
-
-  document.addEventListener('click', e => {
-    console.log(e);
-    routeChange('/detail/1');
-  });
+    $main.addEventListener('click', ({ target }) => {
+      if (!target.matches('.movie-item *')) return;
+      if (target.matches('.box-office *')) {
+        const route = '/detail/1';
+        routeChange(route);
+      } else {
+        const route = '/detail/2';
+        routeChange(route);
+      }
+    });
+  };
 }

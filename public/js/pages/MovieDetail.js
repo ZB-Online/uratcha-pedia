@@ -1,16 +1,17 @@
 import { MovieDetail } from '../Components/MovieDetails';
 import Wrapper from '../Components/Wrapper';
-
-// export default function Detail() {
-//   return Wrapper(MovieDetail);
-// }
+import { eventListeners } from '../eventListeners';
 
 export default function Detail({ $target, movieId }) {
   this.state = {
     movieId,
   };
+
   this.render = () => {
     $target.innerHTML = Wrapper(MovieDetail);
   };
-  this.render();
+
+  this.event = () => {
+    eventListeners();
+  };
 }
