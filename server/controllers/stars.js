@@ -1,59 +1,59 @@
-const starService = require('../service/stars');
-const userService = require('../service/users');
+const starDao = require('../dao/stars');
+const userDao = require('../dao/users');
 const resData = require('../../utils/resData');
 const resMessage = require('../../utils/resMessage');
 
 const getStars = (req, res) => {
-  res.send(starService.getStars());
+  res.send(starDao.getStars());
 };
 
 const getStarsCount = (req, res) => {
-  const starCount = starService.getStarsCount();
+  const starCount = starDao.getStarsCount();
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, { starCount }));
 };
 
 const getAverageStarByMovieId = (req, res) => {
   const { movieId } = req.params;
   // TODO : movieId validation
-  const averageStar = starService.getAverageStarByMovieId(movieId);
+  const averageStar = starDao.getAverageStarByMovieId(movieId);
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, { averageStar }));
 };
 
 const addStar = (req, res) => {
   const newStar = req.body;
-  if (starService.findStarById(newStar.id)) return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
-  if (!userService.findUserByEmail(newStar.userEmail))
+  if (starDao.findStarById(newStar.id)) return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
+  if (!userDao.findUserByEmail(newStar.userEmail))
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   // TODO : movieId validation
-  if (starService.getStarByMovieIdUserEmail(newStar.movieId, newStar.userEmail))
+  if (starDao.getStarByMovieIdUserEmail(newStar.movieId, newStar.userEmail))
     return res.status(400).json(resData.successFalse(resMessage.STAR_ALREADY_EXIST));
-  starService.addStar(newStar);
+  starDao.addStar(newStar);
   res.status(200).json(resData.successTrue(resMessage.STAR_CREATE_SUCCESS));
 };
 
 const updateStar = (req, res) => {
   const { id, score } = req.body;
-  if (!starService.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
-  starService.updateStar(id, score);
+  if (!starDao.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
+  starDao.updateStar(id, score);
   res.status(200).json(resData.successTrue(resMessage.STAR_UPDATE_SUCCESS));
 };
 
 const removeStar = (req, res) => {
   const { id } = req.params;
-  if (!starService.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
-  starService.removeStar(id);
+  if (!starDao.findStarById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
+  starDao.removeStar(id);
   res.status(200).json(resData.successTrue(resMessage.STAR_DELETE_SUCCESS));
 };
 
 const getStarByMovieIdUserEmail = (req, res) => {
   const { movieId, userEmail } = req.params;
-  const star = starService.getStarByMovieIdUserEmail(movieId, userEmail);
+  const star = starDao.getStarByMovieIdUserEmail(movieId, userEmail);
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, { star }));
 };
 
 const getStarsByUserEmail = (req, res) => {
   const { userEmail } = req.params;
-  const stars = starService.getStarsByUserEmail(userEmail);
+  const stars = starDao.getStarsByUserEmail(userEmail);
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, stars));
 };
 

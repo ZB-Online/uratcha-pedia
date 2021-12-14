@@ -1,14 +1,14 @@
-const userService = require('../service/users');
+const userDao = require('../dao/users');
 const resData = require('../../utils/resData');
 const resMessage = require('../../utils/resMessage');
 
 const getUsers = (req, res) => {
-  res.send(userService.getUsers());
+  res.send(userDao.getUsers());
 };
 
 const signin = (req, res) => {
   const signinUser = req.body;
-  const userInfo = userService.findUserByEmail(signinUser.email);
+  const userInfo = userDao.findUserByEmail(signinUser.email);
   if (!userInfo) {
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   }
@@ -23,13 +23,13 @@ const signup = (req, res) => {
   if (Object.values(signupUser).some(info => !info) || Object.values(signupUser).length !== 3)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_NULL));
 
-  if (userService.findUserByEmail(signupUser.email))
+  if (userDao.findUserByEmail(signupUser.email))
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_ALREADY_EXIST));
 
-  if (userService.findUserByName(signupUser.username))
+  if (userDao.findUserByName(signupUser.username))
     return res.status(400).json(resData.successFalse(resMessage.NAME_ALREADY_EXIST));
 
-  userService.addUser(signupUser);
+  userDao.addUser(signupUser);
   res.status(200).json(resData.successTrue(resMessage.JOIN_SUCCESS, signupUser));
 };
 
