@@ -19,7 +19,7 @@ const removeStar = id => (starModel = starModel.filter(star => star.id !== +id))
 
 const getStarByMovieIdUserEmail = (movieId, userEmail) => {
   const isStar = starModel.find(star => star.movieId === +movieId && star.userEmail === userEmail);
-  return isStar??false;
+  return isStar ?? false;
 };
 
 const getStarsByUserEmail = userEmail => starModel.filter(star => star.userEmail === userEmail);

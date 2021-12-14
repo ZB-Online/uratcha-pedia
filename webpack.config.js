@@ -10,17 +10,17 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.js$/,
-      //   include: [path.resolve(__dirname, './public/js/app.js')],
-      //   exclude: /node_modules/,
-      //   use: {
-      //     loader: 'babel-loader',
-      //     options: {
-      //       presets: ['@babel/preset-env'],
-      //     },
-      //   },
-      // },
+      {
+        test: /\.js$/,
+        include: [path.resolve(__dirname, './public/js/app.js')],
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
       {
         test: /\.css$/i,
         use: [
