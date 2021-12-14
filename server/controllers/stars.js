@@ -1,7 +1,7 @@
 const starDao = require('../dao/stars');
 const userDao = require('../dao/users');
-const resData = require('../../utils/resData');
-const resMessage = require('../../utils/resMessage');
+const resData = require('../utils/resData');
+const resMessage = require('../utils/resMessage');
 
 const getStars = (req, res) => {
   res.send(starDao.getStars());

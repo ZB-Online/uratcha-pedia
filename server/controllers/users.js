@@ -1,6 +1,6 @@
 const userDao = require('../dao/users');
-const resData = require('../../utils/resData');
-const resMessage = require('../../utils/resMessage');
+const resData = require('../utils/resData');
+const resMessage = require('../utils/resMessage');
 
 const getUsers = (req, res) => {
   res.send(userDao.getUsers());

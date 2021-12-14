@@ -1,7 +1,7 @@
 const reviewDao = require('../dao/reviews');
 const userDao = require('../dao/users');
-const resData = require('../../utils/resData');
-const resMessage = require('../../utils/resMessage');
+const resData = require('../utils/resData');
+const resMessage = require('../utils/resMessage');
 
 const getReviews = (req, res) => {
   res.send(reviewDao.getReviews());

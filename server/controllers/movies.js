@@ -1,99 +1,42 @@
-const { movieConfig } = require('../config/themovie');
-const { apiKey, apiBaseUrl } = movieConfig;
-const fetch = require('node-fetch');
+const theMovie = require('../utils/themovie');
+const resData = require('../utils/resData');
+const resMessage = require('../utils/resMessage');
 
-const getPopularMovies = async (page = 1) => {
-  let data = [];
+const getBoxoffices = async (req, res) => {
+  let boxoffices;
   try {
-    const response = await fetch(`${apiBaseUrl}movie/popular?api_key=${apiKey}&page=${page}`);
-    const responseData = await response.json();
-    data = responseData?.results.map(movie => ({
-      id: movie.id,
-      title: movie.title,
-      overview: movie.overview,
-      poster_path: movieConfig.imageBaseUrl + movie.poster_path,
-      release_date: movie.release_date,
-    }));
-  } catch (error) {}
-  return data;
-};
-
-const findCertification = async (certificationData, country) => {
-  const matchedReleaseDates = certificationData.find(item => item.iso_3166_1 === country);
-  const result = matchedReleaseDates?.release_dates.find(date => date.certification !== '');
-  return result ? result.certification : 'None';
-};
-
-const getMoviesDetailsById = async movieId => {
-  let data = {};
-  try {
-    const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
-    const responseData = await response.json();
-    const responseCredits = await fetch(`${apiBaseUrl}movie/${movieId}/credits?api_key=${apiKey}`);
-    const responseCreditsData = await responseCredits.json();
-    const responseCertification = await fetch(`${apiBaseUrl}movie/${movieId}/release_dates?api_key=${apiKey}`);
-    const responseCertificationData = await responseCertification.json();
-    const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
-    const certification = findCertification(responseCertificationData?.results, country);
-
-    data = {
-      id: responseData?.id,
-      title: responseData?.title,
-      overview: responseData?.overview,
-      poster_path: responseData?.poster_path,
-      release_date: responseData?.release_date,
-      genres: responseData?.genres.map(genre => genre.name),
-      country,
-      runtime: responseData?.runtime,
-      certification,
-      cast: responseCreditsData?.cast.slice(0, 6).map(cast => ({
-        name: cast.name,
-        character: cast.character,
-      })),
-    };
-  } catch (error) {
-    console.log(error);
+    const movies = await theMovie.getPopularMovies();
+    boxoffices = await theMovie.getMoviesWithCountry(movies);
+  } catch {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  return data;
+  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, boxoffices));
 };
 
-const getMoviesMainDetails = async movieId => {
-  let data = {};
+const getMovieDetailById = async (req, res) => {
+  const { movieId } = req.params;
+  let movieDetail;
   try {
-    const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
-    const responseData = await response.json();
-    data = {
-      country: responseData?.production_countries.map(country => country.iso_3166_1)[0],
-    };
-  } catch (error) {}
-  return data;
-};
-
-const getMoviesWithCountry = async movies => {
-  let data = [];
-  for (let movie of movies) {
-    const additionalInfo = await getMoviesMainDetails(movie.id);
-    data = [...data, { ...movie, ...additionalInfo }];
+    movieDetail = await theMovie.getMoviesDetailsById(movieId);
+  } catch {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  return data;
+  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieDetail));
 };
 
-const searchMoviesById = async keyword => {
-  let data = {};
+const getSearchMovies = async (req, res) => {
+  const { keyword } = req.params;
+  let searchMovies;
   try {
-    const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
-    const responseData = await response.json();
-    data = responseData
-  } catch (error) {
-    console.log(error);
+    searchMovies = await theMovie.searchMoviesById(keyword);
+  } catch {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  return data;
+  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, searchMovies));
 };
 
 module.exports = {
-  getPopularMovies,
-  getMoviesDetailsById,
-  getMoviesMainDetails,
-  getMoviesWithCountry,
-  searchMoviesById
+  getBoxoffices,
+  getMovieDetailById,
+  getSearchMovies,
 };
