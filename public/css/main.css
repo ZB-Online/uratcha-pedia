@@ -28,18 +28,24 @@
 }
 
 .movie-container ul {
-  margin: 0;
   padding: 0;
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row; */
   list-style: none;
+  white-space: nowrap;
+  position: relative;
 }
 
 .movie-container ul li.movie-item {
-  width: 20%;
-  margin: 0 8px;
-  box-sizing: content-box;
+  display: inline-block;
+  padding: 0 5px;
+  width: 17.9em;
+}
+
+.movie-container ul li.movie-item.movie-item-container {
+  padding: 20px;
 }
 
 .movie-container ul li.movie-item:first-child {
@@ -76,9 +82,6 @@
 
 .movie-container ul li .movie-poster img {
   border-radius: 5px;
-}
-
-.movie-container ul li .movie-poster img {
   width: 100%;
   height: auto;
 }
@@ -113,4 +116,56 @@
   font-weight: 400;
   letter-spacing: -0.3px;
   line-height: 18px;
+}
+
+.carousel {
+  margin: auto;
+  display: flex;
+  /* justify-content: space-around; */
+  align-items: center;
+  max-width: 1500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-slides {
+  --currentSlide: 0;
+  --duration: 0;
+  /* 수평 정렬 */
+  transition: transform calc(var(--duration) * 1ms) ease-out;
+  transform: translate3D(calc(var(--currentSlide) * -100%), 0, 0);
+}
+
+.carousel-control {
+  position: absolute;
+  top: 35%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  border: 1px solid rgb(249, 249, 249);
+  border-radius: 50%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 4px 0px;
+  background-size: 12px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  transition: opacity 300ms ease 0s;
+}
+
+.carousel-control:focus {
+  outline: none;
+}
+
+/* carousel의 prev 버튼 */
+.carousel-control.prev {
+  left: 0;
+}
+
+/* carousel의 next 버튼 */
+.carousel-control.next {
+  right: 0;
 }
