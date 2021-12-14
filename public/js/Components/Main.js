@@ -17,7 +17,7 @@ export function BoxOffice() {
 
 export function HighestRates() {
   return `
-  <section class=" movie-container">
+  <section class="movie-container">
   <div class="outer">
     <div class="inner">
       <div class="movie-ranking">

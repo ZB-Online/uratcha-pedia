@@ -149,11 +149,16 @@
   width: 34px;
   height: 34px;
   cursor: pointer;
+  opacity: 0;
   transition: opacity 300ms ease 0s;
 }
 
 .carousel-control:focus {
   outline: none;
+}
+
+.carousel-control:hover {
+  opacity: 1;
 }
 
 /* carousel의 prev 버튼 */

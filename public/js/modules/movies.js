@@ -1,20 +1,26 @@
-import { getPopularMovies, getMoviesMainDetails } from './api.js';
-import { carousel } from './carousel.js';
-import '../../css/main.css';
+import { mainCarousel, myScoredCarousel } from './carousel.js';
 
-async function getBoxOfficeMovies(movies) {
-  let data = [];
-  for (let movie of movies) {
-    const additionalInfo = await getMoviesMainDetails(movie.id);
-    data = [...data, { ...movie, ...additionalInfo }];
-  }
+async function getBoxOfficeMovies() {
+  const res = await fetch('http://localhost:7979/api/movies/');
+  const data = await res.json();
+  return data;
+}
+
+async function getMyScoredMovies() {
+  const res = await fetch('http://localhost:7979/api/movies/');
+  const data = await res.json();
   return data;
 }
 
 export async function renderMovies() {
-  const movies = await getPopularMovies();
-  const boxOfficeMovies = await getBoxOfficeMovies(movies);
+  const boxOfficeMovies = await getBoxOfficeMovies();
 
-  carousel(document.querySelector('.carousel.box-office'), boxOfficeMovies);
-  carousel(document.querySelector('.carousel.highest-rates'), boxOfficeMovies);
+  mainCarousel(document.querySelector('.carousel.box-office'), boxOfficeMovies);
+  mainCarousel(document.querySelector('.carousel.highest-rates'), boxOfficeMovies);
+}
+
+export async function renderMyScoredMovies() {
+  const boxOfficeMovies = await getBoxOfficeMovies();
+
+  myScoredCarousel(document.querySelector('.my-scored-movies-container__inner'), boxOfficeMovies);
 }

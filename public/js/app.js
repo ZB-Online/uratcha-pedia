@@ -15,7 +15,7 @@ import MovieDetailPage from './pages/MovieDetail';
 import MyPage from './pages/MyPage';
 import { init } from './router';
 import { eventListeners } from './eventListeners';
-import { renderMovies } from './modules/movies';
+import { renderMovies, renderMyScoredMovies } from './modules/movies';
 
 export default function App({ $target }) {
   this.route = () => {
@@ -40,6 +40,7 @@ export default function App({ $target }) {
       const MyPageP = new MyPage({ $target });
       MyPageP.render();
       MyPageP.event();
+      renderMyScoredMovies();
     }
   };
 
