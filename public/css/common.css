@@ -94,11 +94,6 @@ header ul li {
   position: relative;
 }
 
-header ul li a.logo {
-  position: absolute;
-  top: -26px;
-}
-
 header .search {
   flex: 1;
   width: 300px;
@@ -146,9 +141,6 @@ header .search .search-form .search-input {
 header .search .search-form .search-input:focus {
   border: none;
   outline: none;
-}
-
-header .search .search-form label .cancel-btn {
 }
 
 header .search .search-form .cancel-btn .material-icons {
