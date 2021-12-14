@@ -1,5 +1,3 @@
-const $carousel = document.querySelector('.carousel');
-
 import { getPopularMovies, getMoviesMainDetails } from './api.js';
 import { carousel } from './carousel.js';
 import '../../css/main.css';
@@ -19,9 +17,5 @@ export async function renderMovies() {
 
   console.log(boxOfficeMovies);
 
-  //  boxOfficeMovies
-  //     ?.map(movie => renderSingleMovie(movie))
-  //     .slice(0, 6)
-  //     .join('');
   carousel(document.querySelector('.carousel'), boxOfficeMovies);
 }

@@ -30,9 +30,6 @@
 .movie-container ul {
   padding: 0;
   width: 100%;
-  /* display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row; */
   list-style: none;
   white-space: nowrap;
   position: relative;
@@ -121,7 +118,6 @@
 .carousel {
   margin: auto;
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
   max-width: 1500px;
   position: relative;

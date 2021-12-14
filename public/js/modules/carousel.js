@@ -5,8 +5,10 @@ export const carousel = ($container, movies) => {
 
   let isMoving = false;
 
+  // 캐러셀 DURATION
   const DURATION = 500;
 
+  // 1페이지당 보여줄 영화 수
   const PAGE_PER_MOVIES = 5;
 
   let $carouselSlides, $carouselPrevBtn, $carouselNextBtn;
