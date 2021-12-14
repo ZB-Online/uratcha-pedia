@@ -10,7 +10,7 @@ export function BoxOffice() {
         </div>
       </div>
     </div> 
-  <div class="carousel">
+  <div class="carousel box-office">
   </div>
   </section>`;
 }
@@ -23,83 +23,8 @@ export function HighestRates() {
       <div class="movie-ranking">
         <span>평균 별점이 높은 작품</span>
       </div>
-      <ul class="movie-score">
-        <li class="movie-item">
-          <div class="movie-poster">
-            <div class="movie-poster-num" data-num='1'>1</div>
-            <img src="./img/movie-poster.jpg" alt="movie-poster">
-          </div>
-          <div class="movie-detail">
-            <span class="movie-title">엔칸토: 마법의 세계</span>
-            <div class="movie-info">
-              <span class="movie-year">2021</span>
-              <span>ㆍ</span>
-              <span class="movie-country">미국</span>
-            </div>
-            <span class="movie-score">평균★3.9</span>
-          </div>
-        </li>
-        <li class="movie-item">
-          <div class="movie-poster">
-            <div class="movie-poster-num" data-num='1'>1</div>
-            <img src="./img/movie-poster.jpg" alt="movie-poster">
-          </div>
-          <div class="movie-detail">
-            <span class="movie-title">엔칸토: 마법의 세계</span>
-            <div class="movie-info">
-              <span class="movie-year">2021</span>
-              <span>ㆍ</span>
-              <span class="movie-country">미국</span>
-            </div>
-            <span class="movie-score">평균★3.9</span>
-          </div>
-        </li>
-        <li class="movie-item">
-          <div class="movie-poster">
-            <div class="movie-poster-num" data-num='1'>1</div>
-            <img src="./img/movie-poster.jpg" alt="movie-poster">
-          </div>
-          <div class="movie-detail">
-            <span class="movie-title">엔칸토: 마법의 세계</span>
-            <div class="movie-info">
-              <span class="movie-year">2021</span>
-              <span>ㆍ</span>
-              <span class="movie-country">미국</span>
-            </div>
-            <span class="movie-score">평균★3.9</span>
-          </div>
-        </li>
-        <li class="movie-item">
-          <div class="movie-poster">
-            <div class="movie-poster-num" data-num='1'>1</div>
-            <img src="./img/movie-poster.jpg" alt="movie-poster">
-          </div>
-          <div class="movie-detail">
-            <span class="movie-title">엔칸토: 마법의 세계</span>
-            <div class="movie-info">
-              <span class="movie-year">2021</span>
-              <span>ㆍ</span>
-              <span class="movie-country">미국</span>
-            </div>
-            <span class="movie-score">평균★3.9</span>
-          </div>
-        </li>
-        <li class="movie-item">
-          <div class="movie-poster">
-            <div class="movie-poster-num" data-num='1'>1</div>
-            <img src="./img/movie-poster.jpg" alt="movie-poster">
-          </div>
-          <div class="movie-detail">
-            <span class="movie-title">엔칸토: 마법의 세계</span>
-            <div class="movie-info">
-              <span class="movie-year">2021</span>
-              <span>ㆍ</span>
-              <span class="movie-country">미국</span>
-            </div>
-            <span class="movie-score">평균★3.9</span>
-          </div>
-        </li>
-      </ul>
+    </div>
+    <div class="carousel highest-rates">
     </div>
   </div>
   </section>

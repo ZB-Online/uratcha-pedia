@@ -1,21 +1,23 @@
 import { config } from './config.js';
 
+const titleFormat = title => {
+  if (title.length === 0) return '';
+  return title.length >= 33 ? title.slice(0, 33) + '...' : title;
+};
+
 export const carousel = ($container, movies) => {
   let currentSlide = 0;
 
   let isMoving = false;
 
-  // 캐러셀 DURATION
   const DURATION = 500;
-
-  // 1페이지당 보여줄 영화 수
   const PAGE_PER_MOVIES = 5;
 
   $container.innerHTML = renderMovieCarousel(movies);
 
-  let $carouselPrevBtn = document.querySelector('.carousel-control.prev');
-  let $carouselNextBtn = document.querySelector('.carousel-control.next');
-  let $carouselSlides = document.querySelector('.carousel-slides');
+  let $carouselPrevBtn = $container.querySelector('.carousel-control.prev');
+  let $carouselNextBtn = $container.querySelector('.carousel-control.next');
+  let $carouselSlides = $container.querySelector('.carousel-slides');
 
   $carouselPrevBtn.style.visibility = 'hidden';
 
@@ -62,7 +64,7 @@ export const carousel = ($container, movies) => {
 const renderMovieCarousel = movies => {
   const template = [];
 
-  template.push(`<ul class="box-office carousel-slides">`);
+  template.push(`<ul class="carousel-slides">`);
 
   template.push(
     [...movies]
@@ -75,7 +77,7 @@ const renderMovieCarousel = movies => {
               <img src="${config.image_base_url + movie?.poster_path}" alt="movie-poster" />
             </div>
             <div class="movie-detail">
-             <span class="movie-title">${movie?.title}</span>
+             <span class="movie-title">${movie?.title ? titleFormat(movie.title) : ''}</span>
              <div class="movie-info">
               <span class="movie-year">${movie?.release_date}</span>
               <span>ㆍ</span>

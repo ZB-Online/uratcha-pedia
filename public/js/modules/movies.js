@@ -15,7 +15,6 @@ export async function renderMovies() {
   const movies = await getPopularMovies();
   const boxOfficeMovies = await getBoxOfficeMovies(movies);
 
-  console.log(boxOfficeMovies);
-
-  carousel(document.querySelector('.carousel'), boxOfficeMovies);
+  carousel(document.querySelector('.carousel.box-office'), boxOfficeMovies);
+  carousel(document.querySelector('.carousel.highest-rates'), boxOfficeMovies);
 }
