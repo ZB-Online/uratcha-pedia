@@ -24,6 +24,7 @@ const responseMessage = {
   STAR_DELETE_SUCCESS: '평점 삭제 성공',
   STAR_ALREADY_EXIST: '존재하는 평점입니다.',
 
+  VALUE_INVALID: "파라미터 값이 잘못 되었습니다.",
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
 };
 
