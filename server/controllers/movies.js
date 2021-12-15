@@ -1,6 +1,11 @@
 const theMovie = require('../utils/themovie');
 const resData = require('../utils/resData');
 const resMessage = require('../utils/resMessage');
+const movieDao = require('../dao/movies');
+
+const getMovies = (req, res) => {
+  res.send(movieDao.getMovies());
+};
 
 const getBoxoffices = async (req, res) => {
   try {
@@ -32,8 +37,15 @@ const getSearchMovies = async (req, res) => {
   }
 };
 
+const getStarLankMovies = async (req, res) => {
+  const movieLank = movieDao.getStarLankMovies().map(movie => movie.movieId);
+  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieLank));
+};
+
 module.exports = {
+  getMovies,
   getBoxoffices,
   getMovieDetailById,
   getSearchMovies,
+  getStarLankMovies,
 };
