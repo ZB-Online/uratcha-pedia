@@ -23,20 +23,15 @@ export default function App({ $target }) {
     if (pathname === '/') {
       const Home = new HomePage({ $target });
       Home.render();
-      Home.event();
-    } else if (pathname === '/search') {
-      const Search = new SearchResultPage({ $target });
-      Search.render();
-      Search.event();
-    } else if (pathname.indexOf('/detail/') === 0) {
+      Home.bindEvents();
+    } else if (pathname.indexOf('/search/') === 0) {
+      const [, , keyword] = pathname.split('/');
+      new SearchResultPage({ $target, initialState: keyword });
+    } else if (pathname.indexOf('/movies/') === 0) {
       const [, , movieId] = pathname.split('/');
-      const MovieDetail = new MovieDetailsPage({ $target, movieId });
-      MovieDetail.render();
-      MovieDetail.event();
+      new MovieDetailsPage({ $target, initialState: movieId });
     } else if (pathname === '/mypage') {
-      const MyPageP = new MyPage({ $target });
-      MyPageP.render();
-      MyPageP.event();
+      new MyPage({ $target });
     }
   };
 

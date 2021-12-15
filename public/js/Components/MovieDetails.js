@@ -1,12 +1,28 @@
-export function MovieDetails() {
-  return `
-  <section class="movie-details">
-      <div class="outer">
+export function MovieDetails({ $target, initialState }) {
+  const $movieDetails = document.createElement('div');
+  $target.appendChild($movieDetails);
+
+  this.state = {
+    movieDetails: initialState.movieDetails,
+  };
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    if (!this.state) return;
+
+    $movieDetails.innerHTML = `
+    <section class="movie-details">
+    <ul>
+    <div class="outer">
         <div class="inner">
           <div class="movie-header">
             <img class="movie-header_movie-poster" src="./img/poster.jpeg" />
             <div class="movie-header_movie-article">
-              <h1 class="movie-header_movie-title">듄</h1>
+              <h1 class="movie-header_movie-title">${this.state.movieDetails.title}</h1>
               <p class="movie-header_movie-etc">
                 <span class="movie-header_movie-yaer">2021</span>
                 <span class="movie-header_divide-letter">・</span>
@@ -154,6 +170,11 @@ export function MovieDetails() {
               </div>
         </div>
       </div>
-    </section>
-  `;
+      </ul>
+      </section>
+    `;
+    return $movieDetails;
+  };
+
+  this.render();
 }

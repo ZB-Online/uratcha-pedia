@@ -3,31 +3,43 @@ import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { getMoviesDetailsById, getPopularMovies } from '../modules/api';
 
-export default function MovieDetailsPage({ $target, movieId }) {
-  this.state = {
-    movieId,
-    movieDetails: {},
-  };
-  console.log(this.state);
+export default function MovieDetailsPage({ $target, initialState }) {
+  const $MovieDetailsPage = document.createElement('div');
+  $MovieDetailsPage.classList.add('MovieDetailsPage');
+  $MovieDetailsPage.classList.add('movie-detail-page');
+  $target.appendChild($MovieDetailsPage);
 
-  this.setState = nextState => {
-    this.state = nextState;
+  this.state = initialState;
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
-    $target.innerHTML = Wrapper(MovieDetails);
+    $MovieDetailsPage.appendChild(
+      new Wrapper({
+        $target: $MovieDetailsPage,
+        initialState: this.state,
+        components: [{ component: MovieDetails, props: { initialState: { movieDetails: this.state.movieDetails } } }],
+      }).render()
+    );
   };
 
-  this.event = () => {
+  this.bindEvents = () => {
     eventListeners();
+    // 추가
   };
 
   const fetchMovieDetails = async () => {
-    const movieDetailsData = await getMoviesDetailsById(589761);
-    console.log(movieDetailsData);
-    this.setState({
-      movieDetails: movieDetailsData,
-    });
+    try {
+      const movieDetailsData = await getMoviesDetailsById(589761);
+      this.setState({ ...this.state, movieDetails: movieDetailsData });
+    } catch (e) {
+      console.error('movie api not fetched: ', e);
+    }
   };
+
   fetchMovieDetails();
 }

@@ -1,26 +1,45 @@
 import Wrapper from '../Components/Wrapper';
-import { BoxOffice, HighestRates } from '../Components/Main';
+import { MovieRanking } from '../Components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 
 export default function HomePage({ $target }) {
-  const $main = document.createElement('div');
-  $target.appendChild($main);
+  const $homePage = document.createElement('div');
+  $target.appendChild($homePage);
 
-  this.render = () => {
-    $main.innerHTML = Wrapper(BoxOffice, HighestRates);
+  this.state = {
+    boxOffice: '박스 오피스',
+    highestRanking: '별점 순',
   };
 
-  this.event = () => {
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    $homePage.appendChild(
+      new Wrapper({
+        $target: $homePage,
+        initialState: this.state,
+        components: [
+          { component: MovieRanking, props: { initialState: this.state.boxOffice } },
+          { component: MovieRanking, props: { initialState: this.state.highestRanking } },
+        ],
+      }).render()
+    );
+  };
+
+  this.bindEvents = () => {
     eventListeners();
 
-    $main.addEventListener('click', ({ target }) => {
+    $homePage.addEventListener('click', ({ target }) => {
       if (!target.matches('.movie-item *')) return;
       if (target.matches('.box-office *')) {
-        const route = '/detail/1';
+        const route = '/movies/1';
         routeChange(route);
       } else {
-        const route = '/detail/2';
+        const route = '/movies/2';
         routeChange(route);
       }
     });

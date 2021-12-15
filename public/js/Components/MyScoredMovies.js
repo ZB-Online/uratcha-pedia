@@ -1,6 +1,21 @@
-export function MyPageContents() {
-  return `
-  <section class="mypage">
+export function MyScoredMovies({ $target, initialState }) {
+  const $myScoredMovies = document.createElement('div');
+  $target.appendChild($myScoredMovies);
+
+  this.state = {
+    myScoredMovies: initialState.myScoredMovies,
+  };
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    if (!this.state) return;
+
+    $myScoredMovies.innerHTML = `
+    <section class="mypage">
       <article class="container">
         <div class="my-scored-movies-header">
           <div class="my-scored-movies-header__back-button">&lt;-</div>
@@ -306,4 +321,9 @@ export function MyPageContents() {
         </section>
       </article>
     </section>`;
+
+    return $myScoredMovies;
+  };
+
+  this.render();
 }

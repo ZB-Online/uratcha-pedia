@@ -1,87 +1,131 @@
-export function Header() {
-  return `
-  <header>
-      <div class="outer">
-        <div class="inner">
-          <ul>
-            <li>
-              <a href="javascript:void(0)" class="logo">
-                <img src="/img/watcha_logo.png" alt="LOGO" />
-              </a>
-            </li>
-            <li class="search">
-              <form class="search-form" action="#">
-                <span class="material-icons">search</span>
-                <label for="search-input">
-                  <input type="text" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
-                  <!-- 입력 시 hidden 제거 -->
-                  <div class="cancel-btn hidden"> 
-                    <span class="material-icons ">
-                      cancel
-                      </span>
-                  </div>
-                </label>
-              </form>
-            </li>
-            <li class='sign-in hidden'>
-              <button class="btn">로그인</button>
-            </li>
-            <li class='sign-up hidden'>
-              <button class="btn btn--white">회원가입</button>
-            </li>
-            <li class='my-page '>
-              <button class="btn">마이페이지</button>
-            </li>
-          </ul>
-        </div>
+export function Header({ $target, initialState }) {
+  const $header = document.createElement('header');
+  $target.appendChild($header);
+
+  this.state = initialState;
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    if (!this.state) return;
+
+    $header.innerHTML = `
+    <div class="outer">
+      <div class="inner">
+        <ul>
+          <li>
+            <a href="javascript:void(0)" class="logo">
+              <img src="/img/watcha_logo.png" alt="LOGO" />
+            </a>
+          </li>
+          <li class="search">
+            <form class="search-form" action="#">
+              <span class="material-icons">search</span>
+              <label for="search-input">
+                <input type="text" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
+                <!-- 입력 시 hidden 제거 -->
+                <div class="cancel-btn hidden"> 
+                  <span class="material-icons ">
+                    cancel
+                    </span>
+                </div>
+              </label>
+            </form>
+          </li>
+          <li class='sign-in hidden'>
+            <button class="btn">로그인</button>
+          </li>
+          <li class='sign-up hidden'>
+            <button class="btn btn--white">회원가입</button>
+          </li>
+          <li class='my-page '>
+            <button class="btn">마이페이지</button>
+          </li>
+        </ul>
       </div>
-    </header>
-  `;
+    </div>
+    `;
+
+    return $header;
+  };
+
+  this.render();
 }
 
-function Footer() {
-  return `
-  <!-- FOOTER -->
-    <footer>
-      <section class="score-info">
-        <div class="outer">
-          <div class="inner">
-            <div >
-              <span class="total-scores">지금까지 <em>★ 1,000,000,000 개의 평가가</em> 쌓였어요.</span>
+function Footer({ $target, initialState }) {
+  const $footer = document.createElement('footer');
+  $target.appendChild($footer);
+
+  this.state = initialState;
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    if (!this.state) return;
+
+    $footer.innerHTML = `
+    <!-- FOOTER -->
+      <footer>
+        <section class="score-info">
+          <div class="outer">
+            <div class="inner">
+              <div >
+                <span class="total-scores">지금까지 <em>★ 1,000,000,000 개의 평가가</em> 쌓였어요.</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      <section class="info">
-        <div class="outer">
-          <div class="inner">
-            <ul class="menu">
-              <li><a href="javascript:void(0)">데이터 출처</a></li>
-              <li><a href="javascript:void(0)">서비스 이용약관</a></li>
-              <li><a href="javascript:void(0)">개인정보 처리방침</a></li>
-              <li><a href="javascript:void(0)">회사 안내</a></li>
-            </ul>
-            <ul class="customer-service">
-              <li><a href="javascript:void(0)">고객센터</a></li>
-              <li><a href="javascript:void(0)">support@watcha.com</a></li>
-            </ul>
-            <ul class="logo">
-              <li>
-                <a href="javascript:void(0)"><img src="./img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
-              </li>
-              <li>
-                <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
-              </li>              
-            </ul>
+        </section>
+        <section class="info">
+          <div class="outer">
+            <div class="inner">
+              <ul class="menu">
+                <li><a href="javascript:void(0)">데이터 출처</a></li>
+                <li><a href="javascript:void(0)">서비스 이용약관</a></li>
+                <li><a href="javascript:void(0)">개인정보 처리방침</a></li>
+                <li><a href="javascript:void(0)">회사 안내</a></li>
+              </ul>
+              <ul class="customer-service">
+                <li><a href="javascript:void(0)">고객센터</a></li>
+                <li><a href="javascript:void(0)">support@watcha.com</a></li>
+              </ul>
+              <ul class="logo">
+                <li>
+                  <a href="javascript:void(0)"><img src="./img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
+                </li>
+                <li>
+                  <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
+                </li>              
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
-    </footer>
-  `;
+        </section>
+      </footer>
+    `;
+  };
+
+  this.render();
 }
 
-function Sign() {
-  return `
+function Sign({ $target, initialState }) {
+  const $sign = document.createElement('sign');
+  $target.appendChild($sign);
+
+  this.state = initialState;
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    if (!this.state) return;
+    $sign.innerHTML = `
   <!-- SIGNIN / SIGNUP POPUP -->
     <div class="sign-modal hidden">
       <div class="backdrop"></div>
@@ -195,12 +239,34 @@ function Sign() {
       </div>
     </div>
   `;
+  };
+
+  this.render();
 }
 
-export default function Wrapper(...Components) {
-  return `
-  ${Header()}${Sign()}
-  ${Components.reduce((html, Component) => html + Component(), '')}
-  ${Footer()}
-  `;
+export default function Wrapper({ $target, initialState, components }) {
+  $target.innerHTML = ``;
+
+  const $wrapper = document.createElement('div');
+  $target.appendChild($wrapper);
+
+  this.state = initialState;
+
+  this.setState = newState => {
+    this.state = newState;
+    this.render();
+  };
+
+  this.render = () => {
+    if (!this.state) return;
+
+    new Header({ $target: $wrapper, initialState });
+    new Sign({ $target: $wrapper, initialState });
+    components.forEach(
+      ({ component, props }) => new component({ $target: $wrapper, initialState: props.initialState })
+    );
+    new Footer({ $target: $wrapper, initialState });
+
+    return $wrapper;
+  };
 }
