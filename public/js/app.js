@@ -15,6 +15,7 @@ import MovieDetailPage from './pages/MovieDetail';
 import MyPage from './pages/MyPage';
 import { init } from './router';
 import { eventListeners } from './eventListeners';
+import useFetch from './utils/useFetch'
 
 export default function App({ $target }) {
   this.route = () => {

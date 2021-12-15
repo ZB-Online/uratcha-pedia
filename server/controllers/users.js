@@ -17,7 +17,7 @@ const signin = (req, res) => {
   if (userInfo.password !== signinUser.password) {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
-  res.status(200).json(resData.successTrue(resMessage.LOGIN_SUCCESS));
+  res.status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS));
 };
 
 const signup = (req, res) => {
@@ -29,10 +29,10 @@ const signup = (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_ALREADY_EXIST));
 
   if (userDao.findUserByName(signupUser.username))
-    return res.status(400).json(resData.successFalse(resMessage.NAME_ALREADY_EXIST));
+    return res.status(400).json(resData.successFalse(resMessage.USERNAME_ALREADY_EXIST));
 
   userDao.addUser(signupUser);
-  res.status(200).json(resData.successTrue(resMessage.JOIN_SUCCESS, signupUser));
+  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS, signupUser));
 };
 
 module.exports = {
