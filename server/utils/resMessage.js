@@ -27,6 +27,8 @@ const responseMessage = {
   STAR_ALREADY_EXIST: '존재하는 평점입니다.',
   MOVIE_GET_SUCCESS: '영화 조회 성공',
 
+  AUTH_SUCCESS: "토큰 인증 성공",
+  AUTH_FAIL: "토큰 인증 실패",
   VALUE_INVALID: "파라미터 값이 잘못 되었습니다.",
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
 };
