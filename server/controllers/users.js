@@ -19,6 +19,7 @@ const signin = (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
   const token = generateToken(signinUser.email);
+  // TODO: client에서 확인하면 resData 지우기
   res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
 };
 
@@ -38,7 +39,7 @@ const signup = (req, res) => {
 };
 
 const generateToken = email => {
-  const token = jwt.sign(email, 'secretToken');
+  const token = jwt.sign(email, process.env.JWT_ACCESS_SECRET);
   userDao.addToken(email, token);
   return token;
 };

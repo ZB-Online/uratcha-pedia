@@ -8,7 +8,7 @@ let auth = (req, res, next) => {
   // const token = req.cookies.x_auth
   const token = req.headers.authorization.split('Bearer ')[1];
   try {
-    const decoded = jwt.verify(token, 'secretToken');
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
     if (!useDao.findToken(decoded, token)) return res.status(400).json(resData.successFalse(resMessage.AUTH_FAIL));
     const user = useDao.findUserByEmail(decoded);
     req.user = user;
