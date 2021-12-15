@@ -10,7 +10,7 @@ const findUserByName = username => {
   return isUser ?? false;
 };
 
-const addUser = newUser => (userModel = [...userModel, newUser]);
+const addUser = newUser => (userModel = [...userModel, {...newUser, token: null}]);
 
 const getUsers = () => userModel;
 

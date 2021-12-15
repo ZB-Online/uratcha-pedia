@@ -2,12 +2,14 @@ const userDao = require('../dao/users');
 const resData = require('../utils/resData');
 const resMessage = require('../utils/resMessage');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const getUsers = (req, res) => {
   res.send(userDao.getUsers());
 };
 
-const signin = (req, res) => {
+const signin = async (req, res) => {
   const signinUser = req.body;
   if (Object.values(signinUser).some(info => !info) || Object.values(signinUser).length !== 2)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
@@ -15,15 +17,20 @@ const signin = (req, res) => {
   if (!userInfo) {
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   }
-  if (userInfo.password !== signinUser.password) {
-    return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
+  try {
+    const passwordMatch = await bcrypt.compare(signinUser.password, userInfo.password);
+    if (!passwordMatch) {
+      return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
+    }
+    const token = generateToken(signinUser.email);
+    // TODO: client에서 확인하면 resData 지우기
+    res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
+  } catch (error) {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  const token = generateToken(signinUser.email);
-  // TODO: client에서 확인하면 resData 지우기
-  res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
 };
 
-const signup = (req, res) => {
+const signup = async (req, res) => {
   const signupUser = req.body;
   if (Object.values(signupUser).some(info => !info) || Object.values(signupUser).length !== 3)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
@@ -34,8 +41,16 @@ const signup = (req, res) => {
   if (userDao.findUserByName(signupUser.username))
     return res.status(400).json(resData.successFalse(resMessage.USERNAME_ALREADY_EXIST));
 
-  userDao.addUser(signupUser);
-  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS, signupUser));
+  await bcrypt.genSalt(saltRounds, (error, salt) => {
+    if (error) return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+    bcrypt.hash(signupUser.password, salt, (error, hash) => {
+      if (error) return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+      signupUser.password = hash;
+      // BUG : await 해결하기
+      userDao.addUser(signupUser);
+    });
+  });
+  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS));
 };
 
 const generateToken = email => {
