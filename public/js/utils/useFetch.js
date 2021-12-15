@@ -75,7 +75,6 @@ import fetch from './fetch.js';
 // resData
 // 리뷰 있을 때 : 객체
 // 리뷰 등록 안했을 때 : false
-
 // message format :
 // VALUE_INVALID
 // EMAIL_NOT_EXIST

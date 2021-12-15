@@ -3,36 +3,33 @@ const resData = require('../utils/resData');
 const resMessage = require('../utils/resMessage');
 
 const getBoxoffices = async (req, res) => {
-  let boxoffices;
   try {
     const movies = await theMovie.getPopularMovies();
-    boxoffices = await theMovie.getMoviesWithCountry(movies);
-  } catch {
+    const boxoffices = await theMovie.getMoviesWithCountry(movies);
+    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, boxoffices));
+  } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, boxoffices));
 };
 
 const getMovieDetailById = async (req, res) => {
   const { movieId } = req.params;
-  let movieDetail;
   try {
-    movieDetail = await theMovie.getMoviesDetailsById(movieId);
-  } catch {
+    const movieDetail = await theMovie.getMoviesDetailsById(movieId);
+    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieDetail));
+  } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieDetail));
 };
 
 const getSearchMovies = async (req, res) => {
   const { keyword } = req.params;
-  let searchMovies;
   try {
-    searchMovies = await theMovie.searchMoviesById(keyword);
-  } catch {
+    const searchMovies = await theMovie.searchMoviesByKeyword(keyword);
+    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, searchMovies));
+  } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, searchMovies));
 };
 
 module.exports = {

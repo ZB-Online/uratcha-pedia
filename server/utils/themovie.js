@@ -3,11 +3,10 @@ const { apiKey, apiBaseUrl } = movieConfig;
 const fetch = require('node-fetch');
 
 const getPopularMovies = async (page = 1) => {
-  let data = [];
   try {
     const response = await fetch(`${apiBaseUrl}movie/popular?api_key=${apiKey}&page=${page}`);
     const responseData = await response.json();
-    data = responseData?.results.map(movie => ({
+    return responseData?.results.map(movie => ({
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
@@ -15,9 +14,8 @@ const getPopularMovies = async (page = 1) => {
       release_date: movie.release_date,
     }));
   } catch (error) {
-    return new Error(error);
+    throw new Error(error);
   }
-  return data;
 };
 
 const findCertification = async (certificationData, country) => {
@@ -27,7 +25,6 @@ const findCertification = async (certificationData, country) => {
 };
 
 const getMoviesDetailsById = async movieId => {
-  let data = {};
   try {
     const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
     const responseData = await response.json();
@@ -38,7 +35,7 @@ const getMoviesDetailsById = async movieId => {
     const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
     const certification = findCertification(responseCertificationData?.results, country);
 
-    data = {
+    return {
       id: responseData?.id,
       title: responseData?.title,
       overview: responseData?.overview,
@@ -53,24 +50,22 @@ const getMoviesDetailsById = async movieId => {
         character: cast.character,
       })),
     };
+
   } catch (error) {
-    return new Error(error);
+    throw new Error(error);
   }
-  return data;
 };
 
 const getMoviesMainDetails = async movieId => {
-  let data = {};
   try {
     const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
     const responseData = await response.json();
-    data = {
+    return {
       country: responseData?.production_countries.map(country => country.iso_3166_1)[0],
     };
   } catch (error) {
-    return new Error(error);
+    throw new Error(error);
   }
-  return data;
 };
 
 const getMoviesWithCountry = async movies => {
@@ -82,16 +77,13 @@ const getMoviesWithCountry = async movies => {
   return data;
 };
 
-const searchMoviesById = async keyword => {
-  let data = {};
+const searchMoviesByKeyword = async keyword => {
   try {
     const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
-    const responseData = await response.json();
-    data = responseData;
+    return await response.json();
   } catch (error) {
-    return new Error(error);
+    throw new Error(error);
   }
-  return data;
 };
 
 module.exports = {
@@ -99,5 +91,5 @@ module.exports = {
   getMoviesDetailsById,
   getMoviesMainDetails,
   getMoviesWithCountry,
-  searchMoviesById,
+  searchMoviesByKeyword,
 };
