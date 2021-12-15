@@ -78,6 +78,7 @@ import fetch from './fetch.js';
 
 // message format :
 // VALUE_INVALID
+// EMAIL_NOT_EXIST
 // REVIEW_GET_SUCCESS
 (async () => {
   const res = await fetch.get('api/reviews/movies/1/users/test2@test.com');
@@ -155,6 +156,7 @@ import fetch from './fetch.js';
 // 별점 등록 안했을 때 : {star: false}
 // message format :
 // VALUE_INVALID
+// EMAIL_NOT_EXIST
 // STAR_GET_SUCCESS
 (async () => {
   const res = await fetch.get('api/stars/movies/1/users/test1@test.com');
@@ -167,6 +169,7 @@ import fetch from './fetch.js';
 // 별점 등록 안했을 때 : []
 // message format :
 // VALUE_INVALID
+// EMAIL_NOT_EXIST
 // STAR_GET_SUCCESS
 (async () => {
   const res = await fetch.get('api/stars/users/test3@test.com');
