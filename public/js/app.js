@@ -9,9 +9,9 @@ import '../css/search-result.css';
 // import watchaLogo from '../img/watcha_logo.png';
 // import poster from '../img/poster.jpeg';
 
-import HomePage from './pages/Home';
-import SearchPage from './pages/Search';
-import MovieDetailPage from './pages/MovieDetail';
+import HomePage from './pages/HomePage';
+import SearchResultPage from './pages/SearchResultPage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
 import MyPage from './pages/MyPage';
 import { init } from './router';
 import { eventListeners } from './eventListeners';
@@ -25,20 +25,15 @@ export default function App({ $target }) {
     if (pathname === '/') {
       const Home = new HomePage({ $target });
       Home.render();
-      Home.event();
-    } else if (pathname === '/search') {
-      const Search = new SearchPage({ $target });
-      Search.render();
-      Search.event();
-    } else if (pathname.indexOf('/detail/') === 0) {
+      Home.bindEvents();
+    } else if (pathname.indexOf('/search/') === 0) {
+      const [, , keyword] = pathname.split('/');
+      new SearchResultPage({ $target, initialState: keyword });
+    } else if (pathname.indexOf('/movies/') === 0) {
       const [, , movieId] = pathname.split('/');
-      const MovieDetail = new MovieDetailPage({ $target, movieId });
-      MovieDetail.render();
-      MovieDetail.event();
+      new MovieDetailsPage({ $target, initialState: movieId });
     } else if (pathname === '/mypage') {
-      const MyPageP = new MyPage({ $target });
-      MyPageP.render();
-      MyPageP.event();
+      new MyPage({ $target });
     }
   };
 

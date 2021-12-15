@@ -9,7 +9,7 @@ import fetch from './fetch.js';
 // PW_MISMATCH
 // SIGNIN_SUCCESS
 (async () => {
-  const res = await fetch.post('api/users/signin', {
+  const res = await fetch.post('/api/users/signin', {
     email: "test@test.com",
     password: 'test1',
   });
@@ -24,7 +24,7 @@ import fetch from './fetch.js';
 // USERNAME_ALREADY_EXIST
 // SIGNUP_SUCCESS
 (async () => {
-  const res = await fetch.post('api/users/signup', {
+  const res = await fetch.post('/api/users/signup', {
     email: "test4@test.com",
     password: 'test4',
     username: '테스트계정4'
@@ -38,7 +38,7 @@ import fetch from './fetch.js';
 // MOVIE_GET_SUCCESS
 // INTERNAL_SERVER_ERROR
 (async () => {
-  const res = await fetch.get("api/movies");
+  const res = await fetch.get("/api/movies");
   console.log("GET", res);
 })();
 
@@ -48,7 +48,7 @@ import fetch from './fetch.js';
 // MOVIE_GET_SUCCESS
 // INTERNAL_SERVER_ERROR
 (async () => {
-  const res = await fetch.get("api/movies/565");
+  const res = await fetch.get("/api/movies/565");
   console.log("GET", res);
 })();
 
@@ -58,7 +58,7 @@ import fetch from './fetch.js';
 // MOVIE_GET_SUCCESS
 // INTERNAL_SERVER_ERROR
 (async () => {
-  const res = await fetch.get("api/movies/search/ring");
+  const res = await fetch.get("/api/movies/search/ring");
   console.log("GET", res);
 })();
 
@@ -67,7 +67,7 @@ import fetch from './fetch.js';
 // VALUE_INVALID
 // REVIEW_GET_SUCCESS
 (async () => {
-  const res = await fetch.get('api/reviews/1');
+  const res = await fetch.get('/api/reviews/1');
   console.log('GET', res);
 })();
 
@@ -80,7 +80,7 @@ import fetch from './fetch.js';
 // EMAIL_NOT_EXIST
 // REVIEW_GET_SUCCESS
 (async () => {
-  const res = await fetch.get('api/reviews/movies/1/users/test2@test.com');
+  const res = await fetch.get('/api/reviews/movies/1/users/test2@test.com');
   console.log('GET', res);
 })();
 
@@ -93,7 +93,7 @@ import fetch from './fetch.js';
 // REVIEW_ALREADY_EXIST
 // REVIEW_CREATE_SUCCESS
 (async () => {
-  const res = await fetch.post('api/reviews', {
+  const res = await fetch.post('/api/reviews', {
     id: 5,
     userEmail: 'test1@test.com',
     movieId: 10,
@@ -109,7 +109,7 @@ import fetch from './fetch.js';
 // ID_NOT_EXIST
 // REVIEW_UPDATE_SUCCESS
 (async () => {
-  const res = await fetch.patch('api/reviews', {
+  const res = await fetch.patch('/api/reviews', {
     id: 1,
     userEmail: 'test1',
     movieId: 1,
@@ -125,7 +125,7 @@ import fetch from './fetch.js';
 // ID_NOT_EXIST
 // REVIEW_DELETE_SUCCESS
 (async () => {
-  const res = await fetch.delete('api/reviews/2');
+  const res = await fetch.delete('/api/reviews/2');
   console.log('DELETE', res);
 })();
 
@@ -135,7 +135,7 @@ import fetch from './fetch.js';
 // STAR_GET_SUCCESS
 // REVIEW_GET_SUCCESS
 (async () => {
-  const res = await fetch.get('api/stars');
+  const res = await fetch.get('/api/stars');
   console.log('GET', res);
 })();
 
@@ -145,7 +145,7 @@ import fetch from './fetch.js';
 // VALUE_INVALID
 // STAR_GET_SUCCESS
 (async () => {
-  const res = await fetch.get('api/stars/1');
+  const res = await fetch.get('/api/stars/1');
   console.log('GET', res);
 })();
 
@@ -158,7 +158,7 @@ import fetch from './fetch.js';
 // EMAIL_NOT_EXIST
 // STAR_GET_SUCCESS
 (async () => {
-  const res = await fetch.get('api/stars/movies/1/users/test1@test.com');
+  const res = await fetch.get('/api/stars/movies/1/users/test1@test.com');
   console.log('GET', res);
 })();
 
@@ -171,7 +171,7 @@ import fetch from './fetch.js';
 // EMAIL_NOT_EXIST
 // STAR_GET_SUCCESS
 (async () => {
-  const res = await fetch.get('api/stars/users/test3@test.com');
+  const res = await fetch.get('/api/stars/users/test3@test.com');
   console.log('GET', res);
 })();
 
@@ -184,7 +184,7 @@ import fetch from './fetch.js';
 // STAR_ALREADY_EXIST
 // STAR_CREATE_SUCCESS
 (async () => {
-  const res = await fetch.post('api/stars', {
+  const res = await fetch.post('/api/stars', {
     id: 6,
     userEmail: 'test1@test.com',
     movieId: 81,
@@ -200,7 +200,7 @@ import fetch from './fetch.js';
 // ID_NOT_EXIST
 // STAR_UPDATE_SUCCESS
 (async () => {
-  const res = await fetch.patch('api/stars', {
+  const res = await fetch.patch('/api/stars', {
     id: 1,
     userEmail: 'test1',
     movieId: 1,
@@ -216,6 +216,6 @@ import fetch from './fetch.js';
 // ID_NOT_EXIST
 // STAR_DELETE_SUCCESS
 (async () => {
-  const res = await fetch.delete('api/stars/2');
+  const res = await fetch.delete('/api/stars/2');
   console.log('DELETE', res);
 })();

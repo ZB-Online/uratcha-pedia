@@ -2,35 +2,36 @@ import { routeChange } from './router';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
-  const $serachForm = document.querySelector('.search-form');
+  const $searchForm = document.querySelector('.search-form');
   const $myPageBtn = document.querySelector('.my-page .btn');
-  const $signInBtn = document.querySelector('.sign-in .btn');
-  const $signUpBtn = document.querySelector('.sign-up .btn');
+  const $signinBtn = document.querySelector('.sign-in .btn');
+  const $signupBtn = document.querySelector('.sign-up .btn');
   const $signModal = document.querySelector('.sign-modal');
-  const $signInModal = document.querySelector('.signin-modal');
-  const $signUpModal = document.querySelector('.signup-modal');
+  const $signinModal = document.querySelector('.signin-modal');
+  const $signupModal = document.querySelector('.signup-modal');
 
   $headerLogo.onclick = () => {
     const route = '/';
     routeChange(route);
   };
 
-  $serachForm.onsubmit = e => {
+  $searchForm.onsubmit = e => {
     e.preventDefault();
-    const route = '/search';
+    const keyword = document.querySelector('.search-input').value;
+    const route = `/search/${keyword}`;
     routeChange(route);
   };
 
-  $signInBtn.onclick = () => {
+  $signinBtn.onclick = () => {
     $signModal.classList.remove('hidden');
-    $signInModal.classList.remove('hidden');
-    $signUpModal.classList.add('hidden');
+    $signinModal.classList.remove('hidden');
+    $signupModal.classList.add('hidden');
   };
 
-  $signUpBtn.onclick = () => {
+  $signupBtn.onclick = () => {
     $signModal.classList.remove('hidden');
-    $signUpModal.classList.remove('hidden');
-    $signInModal.classList.add('hidden');
+    $signupModal.classList.remove('hidden');
+    $signinModal.classList.add('hidden');
   };
 
   $myPageBtn.onclick = () => {
