@@ -49,10 +49,16 @@ const auth = (req, res) => {
     .json(resData.successTrue(resMessage.AUTH_SUCCESS, { email: req.user.email, username: req.user.username }));
 };
 
+const logout = (req, res) => {
+  userDao.removeToken(req.user.email);
+  res.status(200).json(resData.successTrue(resMessage.LOGOUT_SUCCESS));
+};
+
 module.exports = {
   getUsers,
   signin,
   signup,
   generateToken,
   auth,
+  logout,
 };

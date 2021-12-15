@@ -14,8 +14,14 @@ const addUser = newUser => (userModel = [...userModel, newUser]);
 
 const getUsers = () => userModel;
 
+const findToken = (email, token) => userModel.find(user => user.email === email && user.token === token);
+
 const addToken = (email, token) => {
   userModel = userModel.map(user => (user.email === email ? { ...user, token } : user));
+};
+
+const removeToken = email => {
+  userModel = userModel.map(user => (user.email === email ? { ...user, token: null } : user));
 };
 
 module.exports = {
@@ -23,5 +29,7 @@ module.exports = {
   findUserByName,
   addUser,
   getUsers,
+  findToken,
   addToken,
+  removeToken,
 };

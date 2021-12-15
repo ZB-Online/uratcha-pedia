@@ -9,8 +9,8 @@ let auth = (req, res, next) => {
   const token = req.headers.authorization.split('Bearer ')[1];
   try {
     const decoded = jwt.verify(token, 'secretToken');
+    if (!useDao.findToken(decoded, token)) return res.status(400).json(resData.successFalse(resMessage.AUTH_FAIL));
     const user = useDao.findUserByEmail(decoded);
-    if (!user) return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
     req.user = user;
     req.token = decoded;
   } catch (error) {

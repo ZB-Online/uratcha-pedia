@@ -7,5 +7,6 @@ router.get('/all', userCtrl.getUsers);
 router.post('/signin', userCtrl.signin);
 router.post('/signup', userCtrl.signup);
 router.get('/auth', auth, userCtrl.auth);
+router.get('/logout', auth, userCtrl.logout);
 
 module.exports = router;
