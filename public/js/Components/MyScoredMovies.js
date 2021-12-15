@@ -3,7 +3,7 @@ export function MyScoredMovies({ $target, initialState }) {
   $target.appendChild($myScoredMovies);
 
   this.state = {
-    myScoredMovies: initialState.myScoredMovies,
+    myScoredMovies: initialState.myStars,
   };
 
   this.setState = newState => {

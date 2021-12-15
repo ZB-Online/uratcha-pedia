@@ -56,8 +56,9 @@ export default function MyPage({ $target }) {
 
   const fetchMyStars = async () => {
     try {
-      // const movieDetailsData = await getMoviesDetailsById(589761);
-      const myStars = await stars;
+      const data = await fetch.get('/api/movies');
+      const myStars = data.resData;
+      // const myStars = await stars;
       // stars movieId mapping => movieDetails 취득
       this.setState({ ...this.state, myStars });
     } catch (e) {

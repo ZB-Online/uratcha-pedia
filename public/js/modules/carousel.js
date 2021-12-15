@@ -3,10 +3,12 @@ const titleFormat = title => {
   return title.length >= 33 ? title.slice(0, 33) + '...' : title;
 };
 
-const renderMovieCarousel = movies => {
+export const renderMovieCarousel = movies => {
   const template = [];
 
   template.push(`<ul class="carousel-slides">`);
+
+  console.log(movies);
 
   template.push(
     [...movies]

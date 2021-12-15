@@ -2,6 +2,7 @@ import Wrapper from '../Components/Wrapper';
 import { MovieRanking } from '../Components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
+import fetch from '../utils/fetch.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');
@@ -23,8 +24,14 @@ export default function HomePage({ $target }) {
         $target: $homePage,
         initialState: this.state,
         components: [
-          { component: MovieRanking, props: { initialState: this.state.boxOffice } },
-          { component: MovieRanking, props: { initialState: this.state.highestRanking } },
+          {
+            component: MovieRanking,
+            props: { initialState: { title: '박스 오피스', movieRanking: this.state.boxOffice } },
+          },
+          {
+            component: MovieRanking,
+            props: { initialState: { title: '별점 높은 순', movieRanking: this.state.highestRanking } },
+          },
         ],
       }).render()
     );
@@ -44,4 +51,16 @@ export default function HomePage({ $target }) {
       }
     });
   };
+
+  const fetchBoxOffice = async () => {
+    try {
+      const data = await fetch.get('/api/movies');
+      const boxOffice = data.resData;
+      this.setState({ ...this.state, boxOffice });
+    } catch (e) {
+      console.error('movie api not fetched: ', e);
+    }
+  };
+
+  fetchBoxOffice();
 }
