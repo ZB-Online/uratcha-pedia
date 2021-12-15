@@ -17,6 +17,8 @@ const getReviewsByMovieId = (req, res) => {
 const getReviewByMovieIdUserEmail = (req, res) => {
   const { movieId, userEmail } = req.params;
   if (!movieId || !userEmail) return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
+  if (!userDao.findUserByEmail(userEmail))
+    return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   const review = reviewDao.getReviewByMovieIdUserEmail(movieId, userEmail);
   res.status(200).json(resData.successTrue(resMessage.REVIEW_GET_SUCCESS, review));
 };

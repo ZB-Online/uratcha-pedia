@@ -53,6 +53,8 @@ const removeStar = (req, res) => {
 const getStarByMovieIdUserEmail = (req, res) => {
   const { movieId, userEmail } = req.params;
   if (!movieId || !userEmail) return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
+  if (!userDao.findUserByEmail(userEmail))
+    return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   const star = starDao.getStarByMovieIdUserEmail(movieId, userEmail);
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, { star }));
 };
@@ -60,6 +62,8 @@ const getStarByMovieIdUserEmail = (req, res) => {
 const getStarsByUserEmail = (req, res) => {
   const { userEmail } = req.params;
   if (!userEmail) return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
+  if (!userDao.findUserByEmail(userEmail))
+    return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   const stars = starDao.getStarsByUserEmail(userEmail);
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, stars));
 };
