@@ -14,10 +14,12 @@
   "dependencies": {
     "@babel/runtime-corejs3": "^7.16.3",
     "babel-loader": "^8.2.3",
+    "cookie-parser": "^1.4.6",
     "css-loader": "^6.5.1",
     "dotenv-webpack": "^7.0.3",
     "express": "^4.17.1",
     "http-server": "^14.0.0",
+    "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.6",
     "style-loader": "^3.3.1",
     "webpack": "^5.65.0",

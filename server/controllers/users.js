@@ -1,6 +1,8 @@
 const userDao = require('../dao/users');
 const resData = require('../utils/resData');
 const resMessage = require('../utils/resMessage');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const getUsers = (req, res) => {
   res.send(userDao.getUsers());
@@ -17,7 +19,8 @@ const signin = (req, res) => {
   if (userInfo.password !== signinUser.password) {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
-  res.status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS));
+  const token = generateToken(signinUser.email);
+  res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
 };
 
 const signup = (req, res) => {
@@ -35,8 +38,15 @@ const signup = (req, res) => {
   res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS, signupUser));
 };
 
+const generateToken = email => {
+  const token = jwt.sign(email, 'secretToken');
+  userDao.addToken(email, token);
+  return token;
+};
+
 module.exports = {
   getUsers,
   signin,
   signup,
+  generateToken,
 };
