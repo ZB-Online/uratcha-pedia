@@ -2,6 +2,7 @@ import Wrapper from '../Components/Wrapper';
 import { BoxOffice, HighestRates } from '../Components/Main';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
+import { renderMovies } from '../modules/movies';
 
 export default function Home({ $target }) {
   const $main = document.createElement('div');
@@ -9,6 +10,7 @@ export default function Home({ $target }) {
 
   this.render = () => {
     $main.innerHTML = Wrapper(BoxOffice, HighestRates);
+    renderMovies();
   };
 
   this.event = () => {

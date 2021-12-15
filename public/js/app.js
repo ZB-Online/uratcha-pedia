@@ -15,7 +15,6 @@ import MovieDetailPage from './pages/MovieDetail';
 import MyPage from './pages/MyPage';
 import { init } from './router';
 import { eventListeners } from './eventListeners';
-import { renderMovies, renderMyScoredMovies } from './modules/movies';
 
 export default function App({ $target }) {
   this.route = () => {
@@ -26,7 +25,6 @@ export default function App({ $target }) {
       const Home = new HomePage({ $target });
       Home.render();
       Home.event();
-      renderMovies();
     } else if (pathname === '/search') {
       const Search = new SearchPage({ $target });
       Search.render();

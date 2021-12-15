@@ -9,7 +9,7 @@ export function MyPageContents() {
         <section class="my-scored-movies-container">
           <div class="my-scored-movies-container__header">
             <h2 class="my-scored-movies-container__title">평가</h2>
-            <span class="my-scored-movies-container__number">9</span>
+            <span class="my-scored-movies-container__number"></span>
           </div>
           <div class="my-scored-movies-container__inner">
           </div>

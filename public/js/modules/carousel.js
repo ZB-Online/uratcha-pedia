@@ -100,13 +100,52 @@ const renderMyScoredMoviesCarousel = scoredMovies => {
   return template.join('');
 };
 
+const renderMovieCommentCarousel = movieComments => {
+  const template = [];
+
+  template.push(`
+    <div class="detail-container_comment-list carousel-slides">
+  `);
+
+  template.push(
+    [...movieComments]
+      .map(comment => {
+        let temp = `
+          <div class="detail-container_comment-item">
+          <div class="detail-container_comment-item-header">
+          <span class="detail-container_user-name">의식의 흐름</span>
+          <div class="detail-container_user-score">★ <span>5.0</span></div>
+        </div>
+        <p class="detail-container_user-content">
+          '듄'은 학생들이 무조건 봐야한다. 듄을 영어 타자로 치면 'ebs'이기
+          때문이다.
+        </p>
+        </div>
+      `;
+        return temp;
+      })
+      .join('')
+  );
+
+  template.push(`</div>
+  <button class="carousel-control prev">
+      <img
+        class="carousel-control-image prev"
+        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDEyIDE2Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgxMlYxNkgweiIgdHJhbnNmb3JtPSJyb3RhdGUoMTgwIDYgOCkiLz4KICAgICAgICA8cGF0aCBmaWxsPSIjMjkyQTMyIiBzdHJva2U9IiMyOTJBMzIiIHN0cm9rZS13aWR0aD0iLjM1IiBkPSJNMy40MjkgMTMuNDA5TDQuMzU0IDE0LjI1OCAxMC42OCA4LjQ2IDExLjE0MyA4LjAzNiA0LjM1NCAxLjgxMyAzLjQyOSAyLjY2MiA5LjI5MSA4LjAzNnoiIHRyYW5zZm9ybT0icm90YXRlKDE4MCA2IDgpIi8+CiAgICA8L2c+Cjwvc3ZnPgo="
+        alt="backward"
+      />
+    </button>
+    <button class="carousel-control next">
+      <img
+        class="carousel-control-image next"
+        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDEyIDE2Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMEgxMlYxNkgweiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiMyOTJBMzIiIHN0cm9rZT0iIzI5MkEzMiIgc3Ryb2tlLXdpZHRoPSIuMzUiIGQ9Ik0zLjQyOSAxMy40MDlMNC4zNTQgMTQuMjU4IDEwLjY4IDguNDYgMTEuMTQzIDguMDM2IDQuMzU0IDEuODEzIDMuNDI5IDIuNjYyIDkuMjkxIDguMDM2eiIvPgogICAgPC9nPgo8L3N2Zz4K"
+        alt="forward"
+      />
+    </button>`);
+  return template.join('');
+};
+
 export const mainCarousel = ($container, movies) => {
-  const DURATION = 500;
-  const PAGE_PER_MOVIES = 5;
-
-  let currentSlide = 0;
-  let isMoving = false;
-
   $container.innerHTML = renderMovieCarousel(movies);
 
   let $carouselPrevBtn = $container.querySelector('.carousel-control.prev');
@@ -114,6 +153,12 @@ export const mainCarousel = ($container, movies) => {
   let $carouselSlides = $container.querySelector('.carousel-slides');
 
   $carouselPrevBtn.style.visibility = 'hidden';
+
+  const DURATION = 500;
+  const PAGE_PER_MOVIES = 5;
+
+  let currentSlide = 0;
+  let isMoving = false;
 
   const move = (currentSlide, duration = 0) => {
     if (duration) isMoving = true;
@@ -167,6 +212,8 @@ export const myScoredCarousel = ($container, movies) => {
 
   $container.innerHTML = renderMyScoredMoviesCarousel(movies);
 
+  document.querySelector('.my-scored-movies-container__number').textContent = movies.length;
+
   let $carouselPrevBtn = $container.querySelector('.carousel-control.prev');
   let $carouselNextBtn = $container.querySelector('.carousel-control.next');
   let $carouselSlides = $container.querySelector('.carousel-slides');
@@ -205,6 +252,67 @@ export const myScoredCarousel = ($container, movies) => {
     if (currentSlide > 0) {
       $carouselPrevBtn.style.visibility = 'visible';
       $carouselNextBtn.style.visibility = currentSlide >= movies.length / PAGE_PER_MOVIES - 1 ? 'hidden' : 'visible';
+    } else if (currentSlide === 0) {
+      $carouselPrevBtn.style.visibility = 'hidden';
+      $carouselNextBtn.style.visibility = 'visible';
+    }
+
+    move(currentSlide, DURATION);
+  };
+
+  $container.ontransitionend = () => {
+    isMoving = false;
+  };
+};
+
+export const movieDetailCommentCarousel = ($container, comments = []) => {
+  const DURATION = 500;
+  const PAGE_PER_COMMENTS = 3;
+
+  let currentSlide = 0;
+  let isMoving = false;
+
+  $container.innerHTML = renderMovieCommentCarousel(comments);
+
+  let $carouselPrevBtn = $container.querySelector('.carousel-control.prev');
+  let $carouselNextBtn = $container.querySelector('.carousel-control.next');
+  let $carouselSlides = $container.querySelector('.carousel-slides');
+
+  if (comments.length < PAGE_PER_COMMENTS) $carouselNextBtn.style.visibility = 'hidden';
+
+  $carouselPrevBtn.style.visibility = 'hidden';
+
+  const move = (currentSlide, duration = 0) => {
+    if (duration) isMoving = true;
+
+    $carouselSlides.style.setProperty('--duration', duration);
+
+    $carouselSlides.style.setProperty('--currentSlide', currentSlide);
+  };
+
+  $container.onclick = ({ target }) => {
+    if (
+      (!target.classList.contains('carousel-control') && !target.classList.contains('carousel-control-image')) ||
+      isMoving
+    )
+      return;
+
+    let nextSlide = target.classList.contains('prev') ? -1 : 1;
+
+    currentSlide += 1 * nextSlide;
+
+    if (currentSlide < 0) currentSlide = 0;
+
+    let restComments = comments.length - currentSlide * PAGE_PER_COMMENTS;
+
+    if (restComments < PAGE_PER_COMMENTS) {
+      currentSlide += +(restComments / PAGE_PER_COMMENTS - 1).toFixed(3);
+    }
+
+    if (currentSlide > 0) {
+      $carouselPrevBtn.style.visibility = 'visible';
+      $carouselNextBtn.style.visibility =
+        currentSlide >= +(comments.length / PAGE_PER_COMMENTS - 1).toFixed(3) ? 'hidden' : 'visible';
     } else if (currentSlide === 0) {
       $carouselPrevBtn.style.visibility = 'hidden';
       $carouselNextBtn.style.visibility = 'visible';

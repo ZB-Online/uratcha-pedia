@@ -1,6 +1,7 @@
 import { MovieDetail } from '../Components/MovieDetails';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
+import { renderMovieComments } from '../modules/comments';
 
 export default function Detail({ $target, movieId }) {
   this.state = {
@@ -14,6 +15,7 @@ export default function Detail({ $target, movieId }) {
 
   this.render = () => {
     $target.innerHTML = Wrapper(MovieDetail);
+    renderMovieComments();
   };
 
   this.event = () => {
