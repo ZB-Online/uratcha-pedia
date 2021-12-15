@@ -1,21 +1,21 @@
-const theMovie = require('../utils/themovie');
-const resData = require('../utils/resData');
-const resMessage = require('../utils/resMessage');
+const { movieConfig } = require('../config/themovie');
+const { apiKey, apiBaseUrl } = movieConfig;
+const fetch = require('node-fetch');
 
-const getBoxoffices = async (req, res) => {
+const getPopularMovies = async (page = 1) => {
   try {
-<<<<<<< HEAD
     const response = await fetch(`${apiBaseUrl}movie/popular?api_key=${apiKey}&page=${page}`);
     const responseData = await response.json();
-    data = responseData?.results.map(movie => ({
+    return responseData?.results.map(movie => ({
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
       poster_path: movieConfig.imageBaseUrl + movie.poster_path,
       release_date: movie.release_date,
     }));
-  } catch (error) {}
-  return data;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 const findCertification = async (certificationData, country) => {
@@ -25,7 +25,6 @@ const findCertification = async (certificationData, country) => {
 };
 
 const getMoviesDetailsById = async movieId => {
-  let data = {};
   try {
     const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
     const responseData = await response.json();
@@ -36,7 +35,7 @@ const getMoviesDetailsById = async movieId => {
     const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
     const certification = findCertification(responseCertificationData?.results, country);
 
-    data = {
+    return {
       id: responseData?.id,
       title: responseData?.title,
       overview: responseData?.overview,
@@ -51,52 +50,46 @@ const getMoviesDetailsById = async movieId => {
         character: cast.character,
       })),
     };
-=======
-    const movies = await theMovie.getPopularMovies();
-    const boxoffices = await theMovie.getMoviesWithCountry(movies);
-    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, boxoffices));
->>>>>>> bb91af3f797a266de0d7fcbfe7b4d209666b3231
+
   } catch (error) {
-    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+    throw new Error(error);
   }
 };
 
-const getMovieDetailById = async (req, res) => {
-  const { movieId } = req.params;
+const getMoviesMainDetails = async movieId => {
   try {
-    const movieDetail = await theMovie.getMoviesDetailsById(movieId);
-    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieDetail));
-  } catch (error) {
-    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
-  }
-};
-
-const getSearchMovies = async (req, res) => {
-  const { keyword } = req.params;
-  try {
-<<<<<<< HEAD
-    const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
+    const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
     const responseData = await response.json();
-    data = responseData;
-=======
-    const searchMovies = await theMovie.searchMoviesByKeyword(keyword);
-    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, searchMovies));
->>>>>>> bb91af3f797a266de0d7fcbfe7b4d209666b3231
+    return {
+      country: responseData?.production_countries.map(country => country.iso_3166_1)[0],
+    };
   } catch (error) {
-    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+    throw new Error(error);
+  }
+};
+
+const getMoviesWithCountry = async movies => {
+  let data = [];
+  for (let movie of movies) {
+    const additionalInfo = await getMoviesMainDetails(movie.id);
+    data = [...data, { ...movie, ...additionalInfo }];
+  }
+  return data;
+};
+
+const searchMoviesByKeyword = async keyword => {
+  try {
+    const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
+    return await response.json();
+  } catch (error) {
+    throw new Error(error);
   }
 };
 
 module.exports = {
-<<<<<<< HEAD
   getPopularMovies,
   getMoviesDetailsById,
   getMoviesMainDetails,
   getMoviesWithCountry,
-  searchMoviesById,
-=======
-  getBoxoffices,
-  getMovieDetailById,
-  getSearchMovies,
->>>>>>> bb91af3f797a266de0d7fcbfe7b4d209666b3231
+  searchMoviesByKeyword,
 };
