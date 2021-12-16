@@ -10,7 +10,9 @@ export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
   $target.appendChild($searchResultPage);
 
-  this.state = initialState;
+  this.state = {
+    keyword: initialState,
+  };
 
   this.setState = newState => {
     this.state = newState;

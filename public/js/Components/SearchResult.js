@@ -17,6 +17,8 @@ export function SearchResultContent({ $target, initialState }) {
   this.render = () => {
     if (!this.state) return;
 
+    console.log(this.state);
+
     $searchResult.innerHTML = `
       <section class="search-result">
       <article class="container">
@@ -24,7 +26,7 @@ export function SearchResultContent({ $target, initialState }) {
           <div class="outer">
             <div class="inner">
               <div class="search-result-title">
-                <span>${this.state.title}</span>의 검색결과
+                <span>${this.state.keyword}</span>의 검색결과
               </div>
             </div>
           </div>
