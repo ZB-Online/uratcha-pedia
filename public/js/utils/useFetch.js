@@ -8,13 +8,13 @@ import fetch from './fetch.js';
 // EMAIL_NOT_EXIST
 // PW_MISMATCH
 // SIGNIN_SUCCESS
-(async () => {
-  const res = await fetch.post('/api/users/signin', {
-    email: "test@test.com",
-    password: 'test1',
-  });
-  console.log('POST', res);
-})();
+// (async () => {
+//   const res = await fetch.post('/api/users/signin', {
+//     email: "test@test.com",
+//     password: 'test1',
+//   });
+//   console.log('POST', res);
+// })();
 
 // 유저 회원가입
 // resData: 객체

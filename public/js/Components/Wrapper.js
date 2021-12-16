@@ -35,13 +35,13 @@ export function Header({ $target, initialState }) {
               </label>
             </form>
           </li>
-          <li class='sign-in hidden'>
+          <li class='sign-in'>
             <button class="btn">로그인</button>
           </li>
-          <li class='sign-up hidden'>
+          <li class='sign-up'>
             <button class="btn btn--white">회원가입</button>
           </li>
-          <li class='my-page '>
+          <li class='my-page hidden'>
             <button class="btn">마이페이지</button>
           </li>
         </ul>
@@ -169,7 +169,7 @@ function Sign({ $target, initialState }) {
                   <i class="icon icon-error bx bxs-x-circle"></i>
                   <div class="error"></div>
                 </div>
-                <button class="signin button" disabled>SIGN IN</button>
+                <button type="submit" class="signin button">SIGN IN</button>
                 <div class="link">
                   Not a member? <button>Sign up now</a>
                 </div>
