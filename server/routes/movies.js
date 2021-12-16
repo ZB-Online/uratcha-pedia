@@ -7,6 +7,6 @@ router.get('/all', movieCtrl.getMovies);
 router.get('/', movieCtrl.getBoxoffices);
 router.get('/:movieId', movieCtrl.getMovieDetailById);
 router.get('/search/:keyword', movieCtrl.getSearchMovies);
-router.get('/stars/rank', movieCtrl.getStarLankMovies);
+router.get('/stars/rank', movieCtrl.getStarRankMovies);
 
 module.exports = router;

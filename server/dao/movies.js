@@ -9,12 +9,12 @@ const addMovie = newMovie => (movieModel = [...movieModel, newMovie]);
 const updateMovie = (movieId, average) =>
   (movieModel = movieModel.map(movie => (movie.movieId === +movieId ? { ...movie, average } : movie)));
 
-const getStarLankMovies = () => movieModel.sort((x, y) => y.average - x.average).slice(0, 20);
+const getStarRankMovies = () => movieModel.sort((x, y) => y.average - x.average).slice(0, 20);
 
 module.exports = {
   getMovies,
   findMovieByMovieId,
   addMovie,
   updateMovie,
-  getStarLankMovies,
+  getStarRankMovies,
 };

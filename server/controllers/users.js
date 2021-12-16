@@ -9,7 +9,7 @@ const getUsers = (req, res) => {
   res.send(userDao.getUsers());
 };
 
-const signin = (req, res) => {
+const signin = async (req, res) => {
   const signinUser = req.body;
   if (Object.values(signinUser).some(info => !info) || Object.values(signinUser).length !== 2)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
@@ -18,7 +18,7 @@ const signin = (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   }
 
-  const passwordMatch = bcrypt.compare(signinUser.password, userInfo.password);
+  const passwordMatch = await bcrypt.compare(signinUser.password, userInfo.password);
   if (!passwordMatch) {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }

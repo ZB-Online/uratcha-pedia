@@ -1,11 +1,11 @@
-import { getPopularMovies, getMoviesMainDetails } from './api.js';
+import { getPopularMovies, getMoviesBoxOfficeInfo } from './api.js';
 import { carousel } from './carousel.js';
 import '../../css/main.css';
 
 async function getBoxOfficeMovies(movies) {
   let data = [];
   for (let movie of movies) {
-    const additionalInfo = await getMoviesMainDetails(movie.id);
+    const additionalInfo = await getMoviesBoxOfficeInfo(movie.id);
     data = [...data, { ...movie, ...additionalInfo }];
   }
   return data;
