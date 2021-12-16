@@ -34,7 +34,6 @@ const getMoviesDetailsById = async movieId => {
     const responseCertificationData = await responseCertification.json();
     const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
     const certification = findCertification(responseCertificationData?.results, country);
-
     return {
       id: responseData?.id,
       title: responseData?.title,
@@ -50,7 +49,6 @@ const getMoviesDetailsById = async movieId => {
         character: cast.character,
       })),
     };
-
   } catch (error) {
     throw new Error(error);
   }

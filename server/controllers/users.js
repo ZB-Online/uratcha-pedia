@@ -9,7 +9,7 @@ const getUsers = (req, res) => {
   res.send(userDao.getUsers());
 };
 
-const signin = async (req, res) => {
+const signin = (req, res) => {
   const signinUser = req.body;
   if (Object.values(signinUser).some(info => !info) || Object.values(signinUser).length !== 2)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
@@ -17,17 +17,14 @@ const signin = async (req, res) => {
   if (!userInfo) {
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   }
-  try {
-    const passwordMatch = await bcrypt.compare(signinUser.password, userInfo.password);
-    if (!passwordMatch) {
-      return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
-    }
-    const token = generateToken(signinUser.email);
-    // TODO: client에서 확인하면 resData 지우기
-    res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
-  } catch (error) {
-    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+
+  const passwordMatch = bcrypt.compare(signinUser.password, userInfo.password);
+  if (!passwordMatch) {
+    return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
+  const token = generateToken(signinUser.email);
+  // TODO: client에서 확인하면 resData 지우기
+  res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
 };
 
 const signup = async (req, res) => {
@@ -41,15 +38,13 @@ const signup = async (req, res) => {
   if (userDao.findUserByName(signupUser.username))
     return res.status(400).json(resData.successFalse(resMessage.USERNAME_ALREADY_EXIST));
 
-  await bcrypt.genSalt(saltRounds, (error, salt) => {
-    if (error) return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
-    bcrypt.hash(signupUser.password, salt, (error, hash) => {
-      if (error) return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
-      signupUser.password = hash;
-      // BUG : await 해결하기
-      userDao.addUser(signupUser);
-    });
-  });
+  try {
+    signupUser.password = await hashPassword(signupUser.password);
+  } catch (error) {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+  }
+
+  userDao.addUser(signupUser);
   res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS));
 };
 
@@ -68,6 +63,18 @@ const auth = (req, res) => {
 const logout = (req, res) => {
   userDao.removeToken(req.user.email);
   res.status(200).json(resData.successTrue(resMessage.LOGOUT_SUCCESS));
+};
+
+const hashPassword = password => {
+  return new Promise((resolve, reject) => {
+    bcrypt.genSalt(saltRounds, (error, salt) => {
+      if (error) reject(error);
+      bcrypt.hash(password, salt, (error, hash) => {
+        if (error) reject(error);
+        resolve(hash);
+      });
+    });
+  });
 };
 
 module.exports = {
