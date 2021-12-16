@@ -137,6 +137,8 @@ section.movie-details .outer .inner {
 .detail-container_cast,
 .detail-container_comment {
   margin-top: 20px;
+  overflow: hidden;
+  position: relative;
 }
 
 .detail-container_cast-container {
@@ -190,16 +192,21 @@ section.movie-details .outer .inner {
   margin: 5px 0px 0px 12px;
 }
 .detail-container_comment-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
+  display: flex;
+  white-space: nowrap;
 }
+.detail-container_comment-list {
+  width: 100%;
+}
+
 .detail-container_comment-item {
+  display: inline-block;
+  width: 285px;
+  margin: 0 11px;
   height: 200px;
   background-color: rgb(242, 242, 242);
   padding: 0 12px;
   border-radius: 6px;
-  overflow: hidden;
 }
 .detail-container_comment-item-header {
   display: grid;
@@ -237,5 +244,18 @@ section.movie-details .outer .inner {
 .detail-container_user-content {
   height: 120px;
   margin-top: 12px;
-  overflow: auto;
+  display: inline-block;
+  white-space: normal;
+}
+
+.detail-container_comment .carousel-control {
+  top: 54.5%;
+}
+
+.detail-container_comment .carousel-control.prev {
+  left: -5px;
+}
+
+.detail-container_comment .carousel-control.next {
+  right: -3.5px;
 }

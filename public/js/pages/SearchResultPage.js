@@ -1,13 +1,16 @@
-import { SearchResultContent } from '../Components/SearchResult';
+import { SearchResult } from '../Components/SearchResult';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
-import fetch from '../utils/fetch';
+import fetch from '../utils/fetch.js';
+import { searchMovieCarousel } from '../utils/carousel.js';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
   $target.appendChild($searchResultPage);
 
-  this.state = initialState;
+  this.state = {
+    keyword: initialState,
+  };
 
   this.setState = newState => {
     this.state = newState;
@@ -24,7 +27,7 @@ export default function SearchResultPage({ $target, initialState }) {
         initialState: this.state,
         components: [
           {
-            component: SearchResultContent,
+            component: SearchResult,
             props: { initialState: { keyword: this.state.keyword, searchResult: this.state.searchResult } },
           },
         ],
@@ -35,12 +38,13 @@ export default function SearchResultPage({ $target, initialState }) {
   this.bindEvents = () => {
     eventListeners();
     // 추가
+    searchMovieCarousel(document.querySelector('.search-result-container'), this.state.searchResult);
   };
 
   const fetchSearchResult = async () => {
     const { keyword } = this.state;
     const searchResults = await getSearchMovies(keyword);
-    // console.log('46', keyword, searchResults);
+    console.log('searchResults', searchResults);
     this.setState({ ...this.state, searchResult: searchResults });
   };
 

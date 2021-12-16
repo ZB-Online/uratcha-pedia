@@ -1,9 +1,12 @@
+import { renderMovieCommentCarousel } from '../utils/carousel';
+
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
 
   this.state = {
     movieDetails: initialState.movieDetails,
+    reviewsByMovieId: initialState.reviewsByMovieId,
   };
 
   this.setState = newState => {
@@ -20,7 +23,7 @@ export function MovieDetails({ $target, initialState }) {
     <div class="outer">
         <div class="inner">
           <div class="movie-header">
-            <img class="movie-header_movie-poster" src="./img/poster.jpeg" />
+            <img class="movie-header_movie-poster" src="/img/poster.jpeg" />
             <div class="movie-header_movie-article">
               <h1 class="movie-header_movie-title">${this.state.movieDetails.title}</h1>
               <p class="movie-header_movie-etc">
@@ -129,42 +132,7 @@ export function MovieDetails({ $target, initialState }) {
                     <a class="detail-container_comment-more">더보기</a>
                   </div>
                   <div class="detail-container_comment-container">
-                    <div class="detail-container_comment-item">
-                      <div class="detail-container_comment-item-header">
-                        <span class="detail-container_user-name">의식의 흐름</span>
-                        <div class="detail-container_user-score">★ <span>5.0</span></div>
-                      </div>
-                      <p class="detail-container_user-content">
-                        '듄'은 학생들이 무조건 봐야한다. 듄을 영어 타자로 치면 'ebs'이기
-                        때문이다.
-                      </p>
-                    </div>
-                    <div class="detail-container_comment-item">
-                      <div class="detail-container_comment-item-header">
-                        <span class="detail-container_user-name"
-                          >긴이름긴이름긴이름긴이름긴이름긴이름</span
-                        >
-                        <div class="detail-container_user-score">★ <span>5.0</span></div>
-                      </div>
-                      <p class="detail-container_user-content">
-                        방대한 원작을 압축하는 과정에서 마주하는 친절하지 않은 스토리는
-                        다소 정신없이 산만하고, 어쩌면 지루하게 느껴질 수 있다. (전체 중
-                        전반부에만 해당하기도 하고) 그럼에도, 그런 아쉬움을 뛰어넘는 '눈을
-                        만족시키는 압도적인 비주얼'을 체험한다는 것 만으로도 이 영화는
-                        후속작을 기다리며 즐길만한 가치가 충분히 있을 듯 하다.
-                        ------------------------------------ 드니 빌뇌브 X 티모시 샬라메
-                        와우!! 조합 미쳤다...👍 믿고 기대해도 되는거겠죠?
-                      </p>
-                    </div>
-                    <div class="detail-container_comment-item">
-                      <div class="detail-container_comment-item-header">
-                        <span class="detail-container_user-name">이동진 평론가</span>
-                        <div class="detail-container_user-score">★ <span>5.0</span></div>
-                      </div>
-                      <p class="detail-container_user-content">
-                        하나의 세계를 명확히 채운 온도 습도 채도.
-                      </p>
-                    </div>
+                    ${renderMovieCommentCarousel(this.state.reviewsByMovieId)}
                   </div>
                 </div>
               </div>

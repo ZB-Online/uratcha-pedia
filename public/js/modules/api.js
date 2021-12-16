@@ -1,5 +1,5 @@
 import { config } from './config.js';
-const movieConfig = require("../")
+const movieConfig = require('../');
 
 const BASE_URL = config.api_base_url;
 const API_KEY = config.api_key;
@@ -60,7 +60,7 @@ export async function getMoviesDetailsById(movieId) {
 }
 
 // 국가 가져오기
-export async function getMoviesMainDetails(movieId) {
+export async function getMoviesBoxOfficeInfo(movieId) {
   let data = {};
   try {
     const response = await fetch(`${BASE_URL}movie/${movieId}?api_key=${API_KEY}`);
@@ -75,7 +75,7 @@ export async function getMoviesMainDetails(movieId) {
 export async function getMoviesWithCountry(movies) {
   let data = [];
   for (let movie of movies) {
-    const additionalInfo = await getMoviesMainDetails(movie.id);
+    const additionalInfo = await getMoviesBoxOfficeInfo(movie.id);
     data = [...data, { ...movie, ...additionalInfo }];
   }
   return data;
