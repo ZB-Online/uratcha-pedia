@@ -10,7 +10,7 @@ const getMovies = (req, res) => {
 const getBoxoffices = async (req, res) => {
   try {
     const movies = await theMovie.getPopularMovies();
-    const boxoffices = await theMovie.getMoviesWithCountry(movies);
+    const boxoffices = await theMovie.getMoviesForBoxOffice(movies);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, boxoffices));
   } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
@@ -37,9 +37,10 @@ const getSearchMovies = async (req, res) => {
   }
 };
 
-const getStarLankMovies = async (req, res) => {
-  const movieLank = movieDao.getStarLankMovies().map(movie => movie.movieId);
-  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieLank));
+const getStarRankMovies = async (req, res) => {
+  const movieRank = movieDao.getStarRankMovies();
+  const movies = await theMovie.getMoviesForStars(movieRank);
+  res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movies));
 };
 
 module.exports = {
@@ -47,5 +48,5 @@ module.exports = {
   getBoxoffices,
   getMovieDetailById,
   getSearchMovies,
-  getStarLankMovies,
+  getStarRankMovies,
 };

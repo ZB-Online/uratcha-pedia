@@ -39,7 +39,7 @@ const getMoviesDetailsById = async movieId => {
       id: responseData?.id,
       title: responseData?.title,
       overview: responseData?.overview,
-      poster_path: responseData?.poster_path,
+      poster_path: movieConfig.imageBaseUrl + responseData?.poster_path,
       release_date: responseData?.release_date,
       genres: responseData?.genres.map(genre => genre.name),
       country,
@@ -55,7 +55,7 @@ const getMoviesDetailsById = async movieId => {
   }
 };
 
-const getMoviesMainDetails = async movieId => {
+const getMoviesWithCountry = async movieId => {
   try {
     const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
     const responseData = await response.json();
@@ -67,8 +67,8 @@ const getMoviesMainDetails = async movieId => {
   }
 };
 
-const getMoviesWithCountry = async movies =>
-  await Promise.all(movies.map(async movie => ({ ...movie, ...(await getMoviesMainDetails(movie.id)) })));
+const getMoviesForBoxOffice = async movies =>
+  await Promise.all(movies.map(async movie => ({ ...movie, ...(await getMoviesWithCountry(movie.id)) })));
 
 const searchMoviesByKeyword = async keyword => {
   try {
@@ -79,10 +79,35 @@ const searchMoviesByKeyword = async keyword => {
   }
 };
 
+const getMyScoredMoviesInfo = async movieId => {
+  try {
+    const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
+    const responseData = await response.json();
+    return {
+      title: responseData?.title,
+      release_date: responseData?.release_date,
+      country: responseData?.production_countries?.map(country => country.iso_3166_1)[0],
+      poster_path: movieConfig.imageBaseUrl + responseData?.poster_path,
+    };
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const getMoviesForStars = async movieRank =>
+  await Promise.all(
+    movieRank.map(async ({ movieId, average }) => ({
+      id: movieId,
+      average,
+      ...(await getMyScoredMoviesInfo(movieId)),
+    }))
+  );
+
 module.exports = {
   getPopularMovies,
   getMoviesDetailsById,
-  getMoviesMainDetails,
   getMoviesWithCountry,
+  getMoviesForBoxOffice,
+  getMoviesForStars,
   searchMoviesByKeyword,
 };
