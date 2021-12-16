@@ -10,6 +10,8 @@ export const eventListeners = () => {
   const $signinModal = document.querySelector('.signin-modal');
   const $signupModal = document.querySelector('.signup-modal');
 
+  console.log($headerLogo);
+
   $headerLogo.onclick = () => {
     const route = '/';
     routeChange(route);

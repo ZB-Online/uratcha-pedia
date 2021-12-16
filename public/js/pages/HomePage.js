@@ -10,8 +10,8 @@ export default function HomePage({ $target }) {
   $target.appendChild($homePage);
 
   this.state = {
-    boxOffice: '박스 오피스',
-    highestRanking: '별점 순',
+    boxOffice: [],
+    highestRanking: [],
   };
 
   this.setState = newState => {

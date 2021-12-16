@@ -10,7 +10,9 @@ export default function MovieDetailsPage({ $target, initialState }) {
   $MovieDetailsPage.classList.add('movie-detail-page');
   $target.appendChild($MovieDetailsPage);
 
-  this.state = initialState;
+  this.state = {
+    movieId: initialState,
+  };
 
   this.setState = newState => {
     this.state = newState;
@@ -44,25 +46,31 @@ export default function MovieDetailsPage({ $target, initialState }) {
     );
   };
 
-  const fetchMovieDetails = async () => {
+  const fetchMovieDetails = async movieId => {
     try {
-      const movieDetailsData = await fetch.get('/api/movies/589761');
-      this.setState({ ...this.state, movieDetails: movieDetailsData });
+      const data = await fetch.get(`/api/movies/${movieId}`);
+      const movieDetailsData = await data?.resData;
+      return movieDetailsData;
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }
   };
 
-  const fetchReviewsByMovieId = async () => {
+  const fetchReviewsByMovieId = async movieId => {
     try {
-      const data = await fetch.get('/api/reviews/1');
-      const reviewsByMovieId = data?.resData;
-      this.setState({ ...this.state, reviewsByMovieId });
+      const data = await fetch.get(`/api/reviews/${movieId}`);
+      const reviewsByMovieId = await data?.resData;
+      return reviewsByMovieId;
     } catch (e) {
       console.error('reviews not fetched: ', e);
     }
   };
 
-  fetchMovieDetails();
-  fetchReviewsByMovieId();
+  const fetchMovieDetailData = async () => {
+    const movieDetailsData = await fetchMovieDetails(this.state.movieId);
+    const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
+    this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: reviewsByMovieId });
+  };
+
+  fetchMovieDetailData();
 }

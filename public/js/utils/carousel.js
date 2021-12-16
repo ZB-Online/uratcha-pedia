@@ -9,7 +9,7 @@ export const renderMovieCarousel = movies => {
   template.push(`<ul class="carousel-slides">`);
 
   template.push(
-    [...movies]
+    movies
       .map((movie, i) => {
         let temp = `
           <li class="movie-item" data-movie-id="${movie?.id}">
@@ -59,7 +59,7 @@ export const renderMyScoredMoviesCarousel = scoredMovies => {
   template.push(`<ul class="my-scored-movies-container__list carousel-slides">`);
 
   template.push(
-    [...scoredMovies]
+    scoredMovies
       .map((movie, i) => {
         let temp = `<li class="my-scored-movies-item" data-movie-id="${movie?.id}">
           <a
@@ -108,7 +108,7 @@ export const renderMovieCommentCarousel = movieComments => {
   `);
 
   template.push(
-    [...movieComments]
+    movieComments
       .map(comment => {
         let temp = `
           <div class="detail-container_comment-item" data-movie-id="${comment?.movieId}">
@@ -150,7 +150,7 @@ export const renderSearchedMovieCarousel = movies => {
   template.push(`<ul class="search-result-container__list carousel-slides">`);
 
   template.push(
-    [...movies]
+    movies
       .map((movie, i) => {
         let temp = `
           <li class="search-result-item" data-movie-id="${movie?.id}">
