@@ -171,7 +171,7 @@ function Sign({ $target, initialState }) {
                 </div>
                 <button type="submit" class="signin button">SIGN IN</button>
                 <div class="link">
-                  Not a member? <button>Sign up now</a>
+                  Not a member? <button class="to-signup-btn">Sign up now</button>
                 </div>
               </form>
             </div>
@@ -230,7 +230,7 @@ function Sign({ $target, initialState }) {
                 </div>
                 <button type="submit" class="signup button">SIGN UP</button>
                 <div class="link">
-                  Already a member? <button>Sign up now</a>
+                  Already a member? <button class="to-signin-btn">Sign up now</button>
                 </div>
               </form>
             </div>
