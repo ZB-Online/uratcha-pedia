@@ -50,7 +50,6 @@ const getMoviesDetailsById = async movieId => {
         character: cast.character,
       })),
     };
-
   } catch (error) {
     throw new Error(error);
   }

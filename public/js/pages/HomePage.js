@@ -3,6 +3,7 @@ import { MovieRanking } from '../Components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
+import { mainCarousel } from '../modules/carousel.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');
@@ -16,6 +17,7 @@ export default function HomePage({ $target }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -38,18 +40,23 @@ export default function HomePage({ $target }) {
   };
 
   this.bindEvents = () => {
+    // Routing Events
     eventListeners();
 
     $homePage.addEventListener('click', ({ target }) => {
       if (!target.matches('.movie-item *')) return;
+      const movieId = target.closest('.movie-item').dataset.movieId;
       if (target.matches('.box-office *')) {
-        const route = '/movies/1';
+        const route = `/movies/${movieId}`;
         routeChange(route);
       } else {
         const route = '/movies/2';
         routeChange(route);
       }
     });
+
+    // Carousel Events
+    mainCarousel(document.querySelector('.carousel.box-office'), this.state.boxOffice);
   };
 
   const fetchBoxOffice = async () => {

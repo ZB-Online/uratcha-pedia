@@ -1,9 +1,11 @@
+import { renderMyScoredMoviesCarousel } from '../modules/carousel.js';
+
 export function MyScoredMovies({ $target, initialState }) {
   const $myScoredMovies = document.createElement('div');
   $target.appendChild($myScoredMovies);
 
   this.state = {
-    myScoredMovies: initialState.myStars,
+    myScoredMovies: initialState,
   };
 
   this.setState = newState => {
@@ -27,6 +29,7 @@ export function MyScoredMovies({ $target, initialState }) {
             <span class="my-scored-movies-container__number"></span>
           </div>
           <div class="my-scored-movies-container__inner">
+          ${renderMyScoredMoviesCarousel(this.state.myScoredMovies)}
           </div>
         </section>
       </article>

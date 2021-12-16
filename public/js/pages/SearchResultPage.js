@@ -1,8 +1,10 @@
 import { SearchResultContent } from '../Components/SearchResult';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
+import fetch from '../utils/fetch.js';
+import { searchMovieCarousel } from '../modules/carousel.js';
 
-const searchResults = () => new Promise((resolve, reject) => resolve());
+// const searchResults = () => new Promise((resolve, reject) => resolve());
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
@@ -22,7 +24,10 @@ export default function SearchResultPage({ $target, initialState }) {
         $target: $searchResultPage,
         initialState: this.state,
         components: [
-          { component: SearchResultContent, props: { initialState: { searchResult: this.state.searchResult } } },
+          {
+            component: SearchResultContent,
+            props: { initialState: { keyword: this.state.keyword, searchResult: this.state.searchResult } },
+          },
         ],
       }).render()
     );
@@ -31,13 +36,15 @@ export default function SearchResultPage({ $target, initialState }) {
   this.bindEvents = () => {
     eventListeners();
     // 추가
+    searchMovieCarousel(document.querySelector('.search-result-container'), this.state.searchResult);
   };
 
   const fetchSearchResult = async () => {
     try {
       // const searchResultData = await getMoviesDetailsById(589761);
-      const results = await searchResults();
-      this.setState({ ...this.state, searchResult: results });
+      const data = await fetch.get('/api/movies');
+      const searchResultData = data.resData;
+      this.setState({ ...this.state, searchResult: searchResultData });
     } catch (e) {
       console.error('search-result api not fetched: ', e);
     }

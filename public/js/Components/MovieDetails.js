@@ -1,9 +1,12 @@
+import { renderMovieCommentCarousel } from '../modules/carousel';
+
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
 
   this.state = {
     movieDetails: initialState.movieDetails,
+    reviewsByMovieId: initialState.reviewsByMovieId,
   };
 
   this.setState = newState => {
@@ -20,7 +23,7 @@ export function MovieDetails({ $target, initialState }) {
     <div class="outer">
         <div class="inner">
           <div class="movie-header">
-            <img class="movie-header_movie-poster" src="./img/poster.jpeg" />
+            <img class="movie-header_movie-poster" src="/img/poster.jpeg" />
             <div class="movie-header_movie-article">
               <h1 class="movie-header_movie-title">${this.state.movieDetails.title}</h1>
               <p class="movie-header_movie-etc">
@@ -129,6 +132,7 @@ export function MovieDetails({ $target, initialState }) {
                     <a class="detail-container_comment-more">더보기</a>
                   </div>
                   <div class="detail-container_comment-container">
+                    ${renderMovieCommentCarousel(this.state.reviewsByMovieId)}
                   </div>
                 </div>
               </div>
