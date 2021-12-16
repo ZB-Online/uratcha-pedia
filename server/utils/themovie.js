@@ -26,12 +26,13 @@ const findCertification = async (certificationData, country) => {
 
 const getMoviesDetailsById = async movieId => {
   try {
-    const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
-    const responseData = await response.json();
-    const responseCredits = await fetch(`${apiBaseUrl}movie/${movieId}/credits?api_key=${apiKey}`);
-    const responseCreditsData = await responseCredits.json();
-    const responseCertification = await fetch(`${apiBaseUrl}movie/${movieId}/release_dates?api_key=${apiKey}`);
-    const responseCertificationData = await responseCertification.json();
+    const [responseData, responseCreditsData, responseCertificationData] = await Promise.all(
+      await Promise.all([
+        fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`),
+        fetch(`${apiBaseUrl}movie/${movieId}/credits?api_key=${apiKey}`),
+        fetch(`${apiBaseUrl}movie/${movieId}/release_dates?api_key=${apiKey}`),
+      ]).then(promises => promises.map(promise => promise.json()))
+    );
     const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
     const certification = findCertification(responseCertificationData?.results, country);
     return {
@@ -66,14 +67,8 @@ const getMoviesMainDetails = async movieId => {
   }
 };
 
-const getMoviesWithCountry = async movies => {
-  let data = [];
-  for (let movie of movies) {
-    const additionalInfo = await getMoviesMainDetails(movie.id);
-    data = [...data, { ...movie, ...additionalInfo }];
-  }
-  return data;
-};
+const getMoviesWithCountry = async movies =>
+  await Promise.all(movies.map(async movie => ({ ...movie, ...(await getMoviesMainDetails(movie.id)) })));
 
 const searchMoviesByKeyword = async keyword => {
   try {
