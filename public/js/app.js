@@ -15,7 +15,7 @@ import MovieDetailsPage from './pages/MovieDetailsPage';
 import MyPage from './pages/MyPage';
 import { init } from './router';
 import { eventListeners } from './eventListeners';
-import useFetch from './utils/useFetch'
+import useFetch from './utils/useFetch';
 
 export default function App({ $target }) {
   this.route = () => {
@@ -28,7 +28,7 @@ export default function App({ $target }) {
       Home.bindEvents();
     } else if (pathname.indexOf('/search/') === 0) {
       const [, , keyword] = pathname.split('/');
-      new SearchResultPage({ $target, initialState: keyword });
+      new SearchResultPage({ $target, initialState: { keyword: keyword } });
     } else if (pathname.indexOf('/movies/') === 0) {
       const [, , movieId] = pathname.split('/');
       new MovieDetailsPage({ $target, initialState: movieId });
@@ -45,6 +45,6 @@ export default function App({ $target }) {
 }
 
 // fetch 로 옮기기
-import { renderMovies } from './modules/movies.js';
+// import { renderMovies } from './modules/movies.js';
 
-renderMovies();
+// renderMovies();

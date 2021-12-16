@@ -73,7 +73,10 @@ const getMoviesWithCountry = async movies =>
 const searchMoviesByKeyword = async keyword => {
   try {
     const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
-    return await response.json();
+    const responseData = await response.json();
+    console.log('77', responseData);
+    const searchMovies = await getMoviesWithCountry(responseData.results);
+    return searchMovies;
   } catch (error) {
     throw new Error(error);
   }

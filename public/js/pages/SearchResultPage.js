@@ -1,8 +1,7 @@
 import { SearchResultContent } from '../Components/SearchResult';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
-
-const searchResults = () => new Promise((resolve, reject) => resolve());
+import fetch from '../utils/fetch';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
@@ -13,6 +12,8 @@ export default function SearchResultPage({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    console.log('setState', this.state);
+
     this.bindEvents();
   };
 
@@ -22,7 +23,10 @@ export default function SearchResultPage({ $target, initialState }) {
         $target: $searchResultPage,
         initialState: this.state,
         components: [
-          { component: SearchResultContent, props: { initialState: { searchResult: this.state.searchResult } } },
+          {
+            component: SearchResultContent,
+            props: { initialState: { keyword: this.state.keyword, searchResult: this.state.searchResult } },
+          },
         ],
       }).render()
     );
@@ -34,14 +38,20 @@ export default function SearchResultPage({ $target, initialState }) {
   };
 
   const fetchSearchResult = async () => {
-    try {
-      // const searchResultData = await getMoviesDetailsById(589761);
-      const results = await searchResults();
-      this.setState({ ...this.state, searchResult: results });
-    } catch (e) {
-      console.error('search-result api not fetched: ', e);
-    }
+    const { keyword } = this.state;
+    const searchResults = await getSearchMovies(keyword);
+    // console.log('46', keyword, searchResults);
+    this.setState({ ...this.state, searchResult: searchResults });
   };
 
   fetchSearchResult();
 }
+
+const getSearchMovies = async keyword => {
+  try {
+    const { resData } = await fetch.get(`/api/movies/search/${keyword}`);
+    return resData;
+  } catch (e) {
+    console.error('search-result api not fetched: ', e);
+  }
+};
