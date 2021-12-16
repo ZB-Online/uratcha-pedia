@@ -60,8 +60,7 @@
 
 .my-scored-movies-container__inner {
   height: 100%;
-  overflow-x: auto;
-
+  overflow: hidden;
   display: flex;
   justify-content: center;
   flex-wrap: row wrap;
@@ -77,9 +76,6 @@
 .my-scored-movies-container__list {
   width: 100%;
   display: flex;
-  overflow-y: hidden;
-  overflow-x: auto;
-
   /* no list style */
   list-style: none;
   padding: 0;
@@ -130,10 +126,8 @@
 }
 
 .my-scored-movies-item img {
-  width: 100%;
-  height: auto;
+  height: 200px;
   max-height: 265px;
-
   margin-bottom: 8px;
   border-radius: 4px;
   vertical-align: top;

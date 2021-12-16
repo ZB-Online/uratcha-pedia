@@ -1,7 +1,7 @@
 import { MovieDetails } from '../Components/MovieDetails';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
-import { getMoviesDetailsById, getPopularMovies } from '../modules/api';
+import { movieDetailCommentCarousel } from '../utils/carousel.js';
 import fetch from '../utils/fetch';
 
 export default function MovieDetailsPage({ $target, initialState }) {
@@ -23,7 +23,14 @@ export default function MovieDetailsPage({ $target, initialState }) {
       new Wrapper({
         $target: $MovieDetailsPage,
         initialState: this.state,
-        components: [{ component: MovieDetails, props: { initialState: { movieDetails: this.state.movieDetails } } }],
+        components: [
+          {
+            component: MovieDetails,
+            props: {
+              initialState: { movieDetails: this.state.movieDetails, reviewsByMovieId: this.state.reviewsByMovieId },
+            },
+          },
+        ],
       }).render()
     );
   };
@@ -31,6 +38,10 @@ export default function MovieDetailsPage({ $target, initialState }) {
   this.bindEvents = () => {
     eventListeners();
     // 추가
+    movieDetailCommentCarousel(
+      document.querySelector('.detail-container_comment-container'),
+      this.state.reviewsByMovieId
+    );
   };
 
   const fetchMovieDetails = async () => {
@@ -42,5 +53,16 @@ export default function MovieDetailsPage({ $target, initialState }) {
     }
   };
 
+  const fetchReviewsByMovieId = async () => {
+    try {
+      const data = await fetch.get('/api/reviews/1');
+      const reviewsByMovieId = data?.resData;
+      this.setState({ ...this.state, reviewsByMovieId });
+    } catch (e) {
+      console.error('reviews not fetched: ', e);
+    }
+  };
+
   fetchMovieDetails();
+  fetchReviewsByMovieId();
 }

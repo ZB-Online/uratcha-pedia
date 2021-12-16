@@ -32,13 +32,12 @@
   width: 100%;
   list-style: none;
   white-space: nowrap;
-  position: relative;
 }
 
 .movie-container ul li.movie-item {
   display: inline-block;
   padding: 0 5px;
-  width: 17.9em;
+  width: 16.36em;
 }
 
 .movie-container ul li.movie-item.movie-item-container {
@@ -80,7 +79,7 @@
 .movie-container ul li .movie-poster img {
   border-radius: 5px;
   width: 100%;
-  height: auto;
+  height: 400px;
 }
 
 .movie-container ul li.movie-item .movie-detail span {
@@ -119,9 +118,10 @@
   margin: auto;
   display: flex;
   align-items: center;
-  max-width: 1500px;
-  position: relative;
+  max-width: 1330px;
   overflow: hidden;
+  cursor: pointer;
+  position: relative;
 }
 
 .carousel-slides {
@@ -134,13 +134,13 @@
 
 .carousel-control {
   position: absolute;
-  top: 35%;
+  top: 38%;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(250, 250, 250);
   box-sizing: border-box;
   border: 1px solid rgb(249, 249, 249);
   border-radius: 50%;
@@ -149,6 +149,7 @@
   width: 34px;
   height: 34px;
   cursor: pointer;
+  opacity: 0;
   transition: opacity 300ms ease 0s;
 }
 
@@ -156,12 +157,16 @@
   outline: none;
 }
 
+.carousel-control:hover {
+  opacity: 1;
+}
+
 /* carousel의 prev 버튼 */
 .carousel-control.prev {
-  left: 0;
+  left: -8.5px;
 }
 
 /* carousel의 next 버튼 */
 .carousel-control.next {
-  right: 0;
+  right: -8.5px;
 }
