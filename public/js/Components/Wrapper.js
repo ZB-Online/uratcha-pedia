@@ -228,7 +228,7 @@ function Sign({ $target, initialState }) {
                   <i class="icon icon-error bx bxs-x-circle"></i>
                   <div class="error"></div>
                 </div>
-                <button class="signup button" disabled>SIGN UP</button>
+                <button type="submit" class="signup button">SIGN UP</button>
                 <div class="link">
                   Already a member? <button>Sign up now</a>
                 </div>

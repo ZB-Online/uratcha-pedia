@@ -14,6 +14,7 @@ export const eventListeners = () => {
   const $myPage = document.querySelector('.my-page');
   const $signin = document.querySelector('.sign-in');
   const $signup = document.querySelector('.sign-up');
+  const $singupForm = document.querySelector('.form.signup');
 
   $headerLogo.onclick = () => {
     const route = '/';
@@ -52,12 +53,12 @@ export const eventListeners = () => {
       return;
     }
     try {
-      const data = await fetch.post('/api/users/signin', {
+      const response = await fetch.post('/api/users/signin', {
         email,
         password,
       });
-      if (!data.success) {
-        alert('아이디/비밀번호가 틀렸습니다.');
+      if (!response.success) {
+        alert(response.message);
         $singinForm.email.value = '';
         $singinForm.password.value = '';
         return;
@@ -72,4 +73,36 @@ export const eventListeners = () => {
       alert(err);
     }
   });
+
+  $singupForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const username = $singupForm.username.value;
+    const email = $singupForm.email.value;
+    const password = $singupForm.password.value;
+
+    if (username.trim() === '' || email.trim() === '' || password.trim() === '') {
+      return;
+    }
+    try {
+      const response = await fetch.post('/api/users/signup', {
+        email,
+        password,
+        username
+      });
+      if (!response.success) {
+        alert(response.message);
+        $singupForm.username.value = '';
+        $singupForm.email.value = '';
+        $singupForm.password.value = '';
+        return;
+      }
+      $signModal.classList.add('hidden');
+      $signupModal.classList.add('hidden');
+      $signin.classList.add('hidden');
+      $signup.classList.add('hidden');
+      $myPage.classList.remove('hidden');
+    } catch (err) {
+      alert(err)
+    }
+  })
 };
