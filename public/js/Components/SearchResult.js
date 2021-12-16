@@ -1,4 +1,4 @@
-import { renderSearchedMovieCarousel } from '../modules/carousel.js';
+import { renderSearchedMovieCarousel } from '../utils/carousel.js';
 
 export function SearchResultContent({ $target, initialState }) {
   const $searchResult = document.createElement('div');

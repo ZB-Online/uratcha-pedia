@@ -33,7 +33,6 @@ export default function App({ $target }) {
       const [, , movieId] = pathname.split('/');
       new MovieDetailsPage({ $target, initialState: movieId });
     } else if (pathname === '/mypage') {
-      // renderMyScoredMovies();
       new MyPage({ $target });
     }
   };

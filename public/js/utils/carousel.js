@@ -117,8 +117,7 @@ export const renderMovieCommentCarousel = movieComments => {
           <div class="detail-container_user-score">★ <span>5.0</span></div>
         </div>
         <p class="detail-container_user-content">
-          '듄'은 학생들이 무조건 봐야한다. 듄을 영어 타자로 치면 'ebs'이기
-          때문이다.
+          ${comment?.comment}
         </p>
         </div>
       `;
@@ -311,8 +310,6 @@ export const movieDetailCommentCarousel = ($container, comments = []) => {
 
   let currentSlide = 0;
   let isMoving = false;
-
-  console.log($container);
 
   let $carouselPrevBtn = $container.querySelector('.carousel-control.prev');
   let $carouselNextBtn = $container.querySelector('.carousel-control.next');

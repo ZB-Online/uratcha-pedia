@@ -3,7 +3,7 @@ import { MovieRanking } from '../Components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
-import { mainCarousel } from '../modules/carousel.js';
+import { mainCarousel } from '../utils/carousel.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');

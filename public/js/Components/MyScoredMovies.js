@@ -1,4 +1,4 @@
-import { renderMyScoredMoviesCarousel } from '../modules/carousel.js';
+import { renderMyScoredMoviesCarousel } from '../utils/carousel.js';
 
 export function MyScoredMovies({ $target, initialState }) {
   const $myScoredMovies = document.createElement('div');

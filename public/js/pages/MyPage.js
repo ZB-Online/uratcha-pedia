@@ -1,9 +1,8 @@
 import { MyScoredMovies } from '../Components/MyScoredMovies';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
-import { renderMyScoredMovies } from '../modules/movies';
 import fetch from '../utils/fetch.js';
-import { myScoredCarousel } from '../modules/carousel.js';
+import { myScoredCarousel } from '../utils/carousel.js';
 
 const stars = () =>
   new Promise((resolve, reject) =>
@@ -42,7 +41,6 @@ export default function MyPage({ $target }) {
   };
 
   this.render = () => {
-    // renderMyScoredMovies();
     $myPage.appendChild(
       new Wrapper({
         $target: $myPage,
@@ -63,7 +61,6 @@ export default function MyPage({ $target }) {
     try {
       const data = await fetch.get('/api/movies');
       const myScoredMovies = data.resData;
-      console.log(data);
       // const myScoredMovies = await stars;
       // stars movieId mapping => movieDetails 취득
       this.setState({ ...this.state, myScoredMovies });

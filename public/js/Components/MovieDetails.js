@@ -1,4 +1,4 @@
-import { renderMovieCommentCarousel } from '../modules/carousel';
+import { renderMovieCommentCarousel } from '../utils/carousel';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');

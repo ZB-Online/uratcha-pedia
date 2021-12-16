@@ -2,9 +2,7 @@ import { SearchResultContent } from '../Components/SearchResult';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
-import { searchMovieCarousel } from '../modules/carousel.js';
-
-// const searchResults = () => new Promise((resolve, reject) => resolve());
+import { searchMovieCarousel } from '../utils/carousel.js';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');

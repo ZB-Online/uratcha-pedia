@@ -1,4 +1,4 @@
-import { renderMovieCarousel } from '../modules/carousel.js';
+import { renderMovieCarousel } from '../utils/carousel.js';
 
 export function MovieRanking({ $target, initialState }) {
   const $movieRanking = document.createElement('div');

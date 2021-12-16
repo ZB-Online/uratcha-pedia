@@ -1,7 +1,7 @@
 import { MovieDetails } from '../Components/MovieDetails';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
-import { movieDetailCommentCarousel } from '../modules/carousel.js';
+import { movieDetailCommentCarousel } from '../utils/carousel.js';
 import fetch from '../utils/fetch';
 
 export default function MovieDetailsPage({ $target, initialState }) {
