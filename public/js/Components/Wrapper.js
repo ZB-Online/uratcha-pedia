@@ -201,27 +201,34 @@ function Sign({ $target, initialState }) {
                       autocomplete="off"
                       placeholder="username"
                       autofocus
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  />
+                  <span class="icon-valid hidden">
+                  <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                </span>
+                <span class="icon-invalid hidden">
+                <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                </span>
+              </label>
+              <span class="error"></span>
                 </div>
   
                 <div class="input-container">
                   <label for="signup-email" class="input-label">
                     <input
-                      type="text"
+                      type="email"
                       id="signup-email"
                       name="email"
                       required
                       autocomplete="off"
                       placeholder="email"
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  /><span class="icon-valid hidden">
+                  <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                </span>
+                <span class="icon-invalid hidden">
+                <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                </span>
+              </label>
+              <span class="error"></span>
                 </div>
   
                 <div class="input-container">
@@ -233,11 +240,14 @@ function Sign({ $target, initialState }) {
                       required
                       autocomplete="off"
                       placeholder="password"
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  /><span class="icon-valid hidden">
+                  <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                </span>
+                <span class="icon-invalid hidden">
+                <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                </span>
+              </label>
+              <span class="error"></span>
                 </div>
                 <button type="submit" class="signup button">SIGN UP</button>
                 <div class="link">
