@@ -57,17 +57,38 @@ export default function HomePage({ $target }) {
 
     // Carousel Events
     bindBoxOfficeMovieCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
+    bindHighestRankingMovieCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
   };
 
   const fetchBoxOffice = async () => {
     try {
       const data = await fetch.get('/api/movies');
       const boxOffice = data.resData;
-      this.setState({ ...this.state, boxOffice });
+      return boxOffice;
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }
   };
 
-  fetchBoxOffice();
+  const fetchHighestRanking = async () => {
+    try {
+      const data = await fetch.get('/api/movies');
+      const highestRanking = data.resData;
+      return highestRanking;
+    } catch (e) {
+      console.error('movie api not fetched: ', e);
+    }
+  };
+
+  const fetchMovieRanking = async () => {
+    try {
+      const boxOffice = await fetchBoxOffice();
+      const highestRanking = await fetchHighestRanking();
+      this.setState({ ...this.state, boxOffice, highestRanking });
+    } catch (e) {
+      console.error('movie api not fetched: ', e);
+    }
+  };
+
+  fetchMovieRanking();
 }
