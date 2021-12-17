@@ -1,4 +1,4 @@
-import { renderSearchedMovieCarousel } from '../utils/carousel.js';
+import SearchedMovieCarousel from './global/SearchedMovieCarousel';
 
 export function SearchResult({ $target, initialState }) {
   const $searchResult = document.createElement('div');
@@ -31,9 +31,14 @@ export function SearchResult({ $target, initialState }) {
         </section>
         <section class="search-result-container">
           <div class="search-result-container__inner">
-          </div>
-          ${new renderSearchedMovieCarousel({ $target: $searchResult, initialState: initialState }).render().innerHTML}
-      </section>
+          ${
+            new SearchedMovieCarousel({
+              $target: $searchResult,
+              initialState: { searchResult: this.state.searchResult },
+            }).render().innerHTML
+          }
+          </div>      
+        </section>
   `;
     return $searchResult;
   };

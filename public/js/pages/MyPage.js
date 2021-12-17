@@ -1,8 +1,8 @@
-import { MyScoredMovies } from '../Components/MyScoredMovies';
+import MyScoredMovies from '../Components/MyScoredMovies';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
-import { myScoredCarousel } from '../utils/carousel.js';
+import { bindSearchedMovieCarouselEvents } from '../utils/carousel';
 
 const stars = () =>
   new Promise((resolve, reject) =>
@@ -45,7 +45,9 @@ export default function MyPage({ $target }) {
       new Wrapper({
         $target: $myPage,
         initialState: this.state,
-        components: [{ component: MyScoredMovies, props: { initialState: this.state.myScoredMovies } }],
+        components: [
+          { component: MyScoredMovies, props: { initialState: { myScoredMovies: this.state.myScoredMovies } } },
+        ],
       }).render()
     );
   };
@@ -53,8 +55,10 @@ export default function MyPage({ $target }) {
   this.bindEvents = () => {
     eventListeners();
 
-    // Carousel Events
-    myScoredCarousel(document.querySelector('.my-scored-movies-container__inner'), this.state.myScoredMovies);
+    bindSearchedMovieCarouselEvents(
+      document.querySelector('.my-scored-movies-container__inner'),
+      this.state.myScoredMovies
+    );
   };
 
   const fetchMyScoredMovies = async () => {
@@ -63,7 +67,7 @@ export default function MyPage({ $target }) {
       const myScoredMovies = data.resData;
       // const myScoredMovies = await stars;
       // stars movieId mapping => movieDetails 취득
-      this.setState({ ...this.state, myScoredMovies });
+      this.setState({ ...this.state, myScoredMovies: myScoredMovies });
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }

@@ -1,11 +1,11 @@
-import { renderMyScoredMoviesCarousel } from '../utils/carousel.js';
+import MyScoredMoviesCarousel from './global/MyScoredMoviesCarousel';
 
-export function MyScoredMovies({ $target, initialState }) {
+export default function MyScoredMovies({ $target, initialState }) {
   const $myScoredMovies = document.createElement('div');
   $target.appendChild($myScoredMovies);
 
   this.state = {
-    myScoredMovies: initialState,
+    myScoredMovies: initialState.myScoredMovies,
   };
 
   this.setState = newState => {
@@ -29,7 +29,7 @@ export function MyScoredMovies({ $target, initialState }) {
             <span class="my-scored-movies-container__number"></span>
           </div>
           <div class="my-scored-movies-container__inner">
-          ${renderMyScoredMoviesCarousel(this.state.myScoredMovies)}
+          ${new MyScoredMoviesCarousel({ $target: $myScoredMovies, initialState: initialState }).render().innerHTML}
           </div>
         </section>
       </article>
