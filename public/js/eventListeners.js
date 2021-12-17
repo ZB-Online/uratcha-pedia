@@ -4,6 +4,7 @@ import fetch from './utils/fetch.js';
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
   const $searchForm = document.querySelector('.search-form');
+  const $logoutBtn = document.querySelector('.logout .btn');
   const $myPageBtn = document.querySelector('.my-page .btn');
   const $signinBtn = document.querySelector('.sign-in .btn');
   const $signupBtn = document.querySelector('.sign-up .btn');
@@ -11,6 +12,7 @@ export const eventListeners = () => {
   const $signinModal = document.querySelector('.signin-modal');
   const $signupModal = document.querySelector('.signup-modal');
   const $singinForm = document.querySelector('.form.signin');
+  const $logout = document.querySelector('.logout');
   const $myPage = document.querySelector('.my-page');
   const $signin = document.querySelector('.sign-in');
   const $signup = document.querySelector('.sign-up');
@@ -49,6 +51,9 @@ export const eventListeners = () => {
     const route = '/mypage';
     routeChange(route);
   };
+
+  $logoutBtn.addEventListener('click', () => {
+  })
 
   const emailValid = new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/);
   const passwordValid = new RegExp(/[\w]{5,12}/);
@@ -93,6 +98,7 @@ export const eventListeners = () => {
       $signin.classList.add('hidden');
       $signup.classList.add('hidden');
       $myPage.classList.remove('hidden');
+      $logout.classList.remove('hidden');
     } catch (err) {
       alert(err);
     }
@@ -144,6 +150,7 @@ export const eventListeners = () => {
       $signin.classList.add('hidden');
       $signup.classList.add('hidden');
       $myPage.classList.remove('hidden');
+      $logout.classList.remove('hidden');
     } catch (err) {
       alert(err);
     }

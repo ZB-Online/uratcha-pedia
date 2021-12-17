@@ -42,7 +42,10 @@ export function Header({ $target, initialState }) {
             <button class="btn btn--white">회원가입</button>
           </li>
           <li class='my-page hidden'>
-            <button class="btn">마이페이지</button>
+            <button class="btn btn--border">마이페이지</button>
+          </li>
+          <li class='logout hidden'>
+            <button class="btn">로그아웃</button>
           </li>
         </ul>
       </div>
