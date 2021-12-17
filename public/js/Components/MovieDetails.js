@@ -101,7 +101,7 @@ export function MovieDetails({ $target, initialState }) {
                 <div class="detail-container_comment">
                   <div class="detail-container_title-container">
                     <h2 class="detail-container_title">코멘트</h2>
-                    <span class="detail-container_comment-count">7500+</span>
+                    <span class="detail-container_comment-count">${this.state.reviewsByMovieId.length}</span>
                     <a class="detail-container_comment-more">더보기</a>
                   </div>
                   <div class="detail-container_comment-container">
@@ -119,38 +119,3 @@ export function MovieDetails({ $target, initialState }) {
 
   this.render();
 }
-
-// <div class="detail-container_cast-item">
-//                   <p class="detail-container_real-name">드니 빌뇌브</p>
-//                   <span class="detail-container_role">감독</span>
-//                 </div>
-//                 <div class="detail-container_cast-item">
-//                   <p class="detail-container_real-name">티모시 샬라메</p>
-//                   <span class="detail-container_role">주연</span
-//                   ><span class="detail-container_cast-divider">|</span
-//                   ><span class="detail-container_role-name">폴 아트레이드</span>
-//                 </div>
-//                 <div class="detail-container_cast-item">
-//                   <p class="detail-container_real-name">레베카 퍼거슨</p>
-//                   <span class="detail-container_role">주연</span
-//                   ><span class="detail-container_cast-divider">|</span
-//                   ><span class="detail-container_role-name">레이디 제시카</span>
-//                 </div>
-//                 <div class="detail-container_cast-item">
-//                   <p class="detail-container_real-name">오스카 아이삭</p>
-//                   <span class="detail-container_role">주연</span
-//                   ><span class="detail-container_cast-divider">|</span
-//                   ><span class="detail-container_role-name">레토 아트레이드</span>
-//                 </div>
-//                 <div class="detail-container_cast-item">
-//                   <p class="detail-container_real-name">젠데이아</p>
-//                   <span class="detail-container_role">주연</span
-//                   ><span class="detail-container_cast-divider">|</span
-//                   ><span class="detail-container_role-name">챠니</span>
-//                 </div>
-//                 <div class="detail-container_cast-item">
-//                   <p class="detail-container_real-name">조쇠 브롤린</p>
-//                   <span class="detail-container_role">주연</span
-//                   ><span class="detail-container_cast-divider">|</span
-//                   ><span class="detail-container_role-name">거니 할렉</span>
-//                 </div>

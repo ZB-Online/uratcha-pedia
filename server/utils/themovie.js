@@ -34,7 +34,7 @@ const getMoviesDetailsById = async movieId => {
       ]).then(promises => promises.map(promise => promise.json()))
     );
     const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
-    const certification = findCertification(responseCertificationData?.results, country);
+    const certification = await findCertification(responseCertificationData?.results, country);
     return {
       id: responseData?.id,
       title: responseData?.title,

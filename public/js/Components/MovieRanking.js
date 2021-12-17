@@ -15,7 +15,7 @@ export function MovieRanking({ $target, initialState }) {
     if (!this.state) return;
 
     $movieRanking.innerHTML = `
-    <section class="movie-container carousel box-office">
+    <section class="movie-container">
       <div class="outer">
         <div class="inner">
           <div class="movie-ranking">
@@ -23,8 +23,11 @@ export function MovieRanking({ $target, initialState }) {
           </div>
         </div>
       </div> 
-    ${renderMovieCarousel(this.state.movieRanking)}
-    </section>`;
+      <div class="carousel box-office">
+      ${renderMovieCarousel(this.state.movieRanking)}
+      </div>
+    </section>
+    `;
   };
   this.render();
 }

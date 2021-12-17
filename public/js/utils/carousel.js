@@ -113,7 +113,7 @@ export const renderMovieCommentCarousel = movieComments => {
         let temp = `
           <div class="detail-container_comment-item" data-movie-id="${comment?.movieId}">
           <div class="detail-container_comment-item-header">
-          <span class="detail-container_user-name">의식의 흐름</span>
+          <span class="detail-container_user-name">${comment.userEmail}</span>
           <div class="detail-container_user-score">★ <span>5.0</span></div>
         </div>
         <p class="detail-container_user-content">
@@ -230,7 +230,8 @@ export const mainCarousel = ($container, movies) => {
 
     if (currentSlide > 0) {
       $carouselPrevBtn.style.visibility = 'visible';
-      $carouselNextBtn.style.visibility = currentSlide >= movies.length / PAGE_PER_MOVIES - 1 ? 'hidden' : 'visible';
+      $carouselNextBtn.style.visibility =
+        currentSlide.toFixed(3) >= (movies.length / PAGE_PER_MOVIES - 1).toFixed(3) ? 'hidden' : 'visible';
     } else if (currentSlide === 0) {
       $carouselPrevBtn.style.visibility = 'hidden';
       $carouselNextBtn.style.visibility = 'visible';
@@ -290,7 +291,8 @@ export const myScoredCarousel = ($container, movies) => {
 
     if (currentSlide > 0) {
       $carouselPrevBtn.style.visibility = 'visible';
-      $carouselNextBtn.style.visibility = currentSlide >= movies.length / PAGE_PER_MOVIES - 1 ? 'hidden' : 'visible';
+      $carouselNextBtn.style.visibility =
+        currentSlide.toFixed(3) >= +(movies.length / PAGE_PER_MOVIES - 1).toFixed(3) ? 'hidden' : 'visible';
     } else if (currentSlide === 0) {
       $carouselPrevBtn.style.visibility = 'hidden';
       $carouselNextBtn.style.visibility = 'visible';
@@ -340,7 +342,8 @@ export const movieDetailCommentCarousel = ($container, comments = []) => {
 
     if (currentSlide < 0) currentSlide = 0;
 
-    let restComments = comments.length - currentSlide * PAGE_PER_COMMENTS;
+    let restComments =
+      comments.length - currentSlide * PAGE_PER_COMMENTS < 1 ? 0 : comments.length - currentSlide * PAGE_PER_COMMENTS;
 
     if (restComments < PAGE_PER_COMMENTS) {
       currentSlide += +(restComments / PAGE_PER_COMMENTS - 1).toFixed(3);
@@ -349,7 +352,7 @@ export const movieDetailCommentCarousel = ($container, comments = []) => {
     if (currentSlide > 0) {
       $carouselPrevBtn.style.visibility = 'visible';
       $carouselNextBtn.style.visibility =
-        currentSlide >= +(comments.length / PAGE_PER_COMMENTS - 1).toFixed(3) ? 'hidden' : 'visible';
+        currentSlide.toFixed(3) >= +(comments.length / PAGE_PER_COMMENTS - 1).toFixed(3) ? 'hidden' : 'visible';
     } else if (currentSlide === 0) {
       $carouselPrevBtn.style.visibility = 'hidden';
       $carouselNextBtn.style.visibility = 'visible';

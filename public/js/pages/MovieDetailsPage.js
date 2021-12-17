@@ -17,6 +17,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+
     this.bindEvents();
   };
 
@@ -39,11 +40,12 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   this.bindEvents = () => {
     eventListeners();
-    // 추가
+
     movieDetailCommentCarousel(
       document.querySelector('.detail-container_comment-container'),
       this.state.reviewsByMovieId
     );
+    // 추가
   };
 
   const fetchMovieDetails = async movieId => {
@@ -69,6 +71,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const fetchMovieDetailData = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
+    console.log(movieDetailsData);
     this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: reviewsByMovieId });
   };
 
