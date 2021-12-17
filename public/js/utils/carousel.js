@@ -153,7 +153,7 @@ export const mainCarousel = ($container, movies) => {
   };
 };
 
-export const myScoredCarousel = ($container, movies) => {
+export const bindMyScoredCarouselEvents = ($container, movies) => {
   const DURATION = 300;
   const PAGE_PER_MOVIES = 17;
 

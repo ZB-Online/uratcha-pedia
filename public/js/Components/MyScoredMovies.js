@@ -1,5 +1,6 @@
 import { routeChange } from '../router';
 import MyScoredMoviesCarousel from './global/MyScoredMoviesCarousel';
+import { bindMyScoredCarouselEvents } from '../utils/carousel';
 
 export default function MyScoredMovies({ $target, initialState }) {
   const $myScoredMovies = document.createElement('div');
@@ -14,6 +15,8 @@ export default function MyScoredMovies({ $target, initialState }) {
     this.render();
     this.bindEvents();
   };
+
+  let myScoredMoviesCarousel = null;
 
   this.render = () => {
     if (!this.state) return;
@@ -31,11 +34,16 @@ export default function MyScoredMovies({ $target, initialState }) {
             <span class="my-scored-movies-container__number"></span>
           </div>
           <div class="my-scored-movies-container__inner">
-          ${new MyScoredMoviesCarousel({ $target: $myScoredMovies, initialState: initialState }).render().innerHTML}
+          
           </div>
         </section>
       </article>
     </section>`;
+
+    myScoredMoviesCarousel = new MyScoredMoviesCarousel({
+      $target: $myScoredMovies.querySelector('.my-scored-movies-container__inner'),
+      initialState: { myScoredMovies: this.state.myScoredMovies },
+    });
 
     return $myScoredMovies;
   };

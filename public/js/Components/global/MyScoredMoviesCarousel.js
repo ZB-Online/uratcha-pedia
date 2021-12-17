@@ -1,3 +1,5 @@
+import { bindMyScoredCarouselEvents } from '../../utils/carousel';
+
 export default function MyScoredMoviesCarousel({ $target, initialState }) {
   const $myScoredMoviesCarousel = document.createElement('div');
   $target.appendChild($myScoredMoviesCarousel);
@@ -9,6 +11,7 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -50,6 +53,12 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
           alt="forward"
         />
       </button>`;
-    return $myScoredMoviesCarousel;
   };
+
+  this.bindEvents = () => {
+    bindMyScoredCarouselEvents(document.querySelector('.my-scored-movies-container'), this.state.searchResult);
+  };
+
+  this.render();
+  this.bindEvents();
 }

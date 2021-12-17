@@ -35,7 +35,6 @@ export default function SearchResultPage({ $target, initialState }) {
 
   this.bindEvents = () => {
     eventListeners();
-    bindSearchedMovieCarouselEvents(document.querySelector('.search-result-container'), this.state.searchResult);
   };
 
   const fetchSearchResult = async () => {
