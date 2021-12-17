@@ -2,6 +2,7 @@ import { MovieDetails } from '../Components/MovieDetails';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { movieDetailCommentCarousel } from '../utils/carousel.js';
+import { bindMovieCommentCarouselEvents } from '../utils/carousel';
 import fetch from '../utils/fetch';
 
 export default function MovieDetailsPage({ $target, initialState }) {
@@ -41,7 +42,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   this.bindEvents = () => {
     eventListeners();
 
-    movieDetailCommentCarousel(
+    bindMovieCommentCarouselEvents(
       document.querySelector('.detail-container_comment-container'),
       this.state.reviewsByMovieId
     );
@@ -71,7 +72,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const fetchMovieDetailData = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
-    console.log(movieDetailsData);
     this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: reviewsByMovieId });
   };
 

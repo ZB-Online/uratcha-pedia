@@ -3,7 +3,7 @@ import { MovieRanking } from '../Components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
-import { mainCarousel } from '../utils/carousel.js';
+import { bindBoxOfficeMovieCarouselEvents, bindHighestRankingMovieCarouselEvents } from '../utils/carousel.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');
@@ -56,7 +56,7 @@ export default function HomePage({ $target }) {
     });
 
     // Carousel Events
-    mainCarousel(document.querySelector('.carousel.box-office'), this.state.boxOffice);
+    bindBoxOfficeMovieCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
   };
 
   const fetchBoxOffice = async () => {

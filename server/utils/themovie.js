@@ -70,10 +70,22 @@ const getMoviesWithCountry = async movieId => {
 const getMoviesForBoxOffice = async movies =>
   await Promise.all(movies.map(async movie => ({ ...movie, ...(await getMoviesWithCountry(movie.id)) })));
 
+const getMoviesForAdditionalInfo = async movies =>
+  await Promise.all(
+    movies.map(async movie => ({
+      id: movie.id,
+      title: movie.title,
+      poster_path: movieConfig.imageBaseUrl + movie.poster_path,
+      release_date: movie.release_date,
+      ...(await getMoviesWithCountry(movie.id)),
+    }))
+  );
+
 const searchMoviesByKeyword = async keyword => {
   try {
     const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
-    return await response.json();
+    const movies = await response.json();
+    return await getMoviesForAdditionalInfo(movies.results);
   } catch (error) {
     throw new Error(error);
   }

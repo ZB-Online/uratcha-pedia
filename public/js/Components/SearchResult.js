@@ -1,6 +1,7 @@
-import { renderSearchedMovieCarousel } from '../utils/carousel.js';
+import { routeChange } from '../router';
+import SearchedMovieCarousel from './global/SearchedMovieCarousel';
 
-export function SearchResultContent({ $target, initialState }) {
+export function SearchResult({ $target, initialState }) {
   const $searchResult = document.createElement('div');
   $target.appendChild($searchResult);
 
@@ -12,12 +13,11 @@ export function SearchResultContent({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
     if (!this.state) return;
-
-    console.log(this.state);
 
     $searchResult.innerHTML = `
       <section class="search-result">
@@ -33,14 +33,27 @@ export function SearchResultContent({ $target, initialState }) {
         </section>
         <section class="search-result-container">
           <div class="search-result-container__inner">
-          </div>
-          ${renderSearchedMovieCarousel(this.state.searchResult)}
-      </section>
-    </article>
-    </section>
+          ${
+            new SearchedMovieCarousel({
+              $target: $searchResult,
+              initialState: { searchResult: this.state.searchResult },
+            }).render().innerHTML
+          }
+          </div>      
+        </section>
   `;
     return $searchResult;
   };
 
+  this.bindEvents = () => {
+    $searchResult.addEventListener('click', ({ target }) => {
+      if (!target.matches('.carousel-slides *')) return;
+
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
+  };
+
   this.render();
+  this.bindEvents();
 }

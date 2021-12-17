@@ -50,7 +50,6 @@ body {
 .search-result-container__inner {
   max-width: 1320px;
   height: 100%;
-  overflow-x: auto;
 
   display: flex;
   justify-content: center;

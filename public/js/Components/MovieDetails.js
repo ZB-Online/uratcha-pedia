@@ -1,4 +1,4 @@
-import { renderMovieCommentCarousel } from '../utils/carousel';
+import MovieCommentCarousel from './global/MovieCommentCarousel';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
@@ -105,7 +105,12 @@ export function MovieDetails({ $target, initialState }) {
                     <a class="detail-container_comment-more">더보기</a>
                   </div>
                   <div class="detail-container_comment-container">
-                    ${renderMovieCommentCarousel(this.state.reviewsByMovieId)}
+                    ${
+                      new MovieCommentCarousel({
+                        $target: $movieDetails,
+                        initialState: this.state.reviewsByMovieId,
+                      }).render().innerHTML
+                    }
                   </div>
                 </div>
               </div>
