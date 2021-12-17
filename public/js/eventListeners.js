@@ -19,7 +19,7 @@ export const eventListeners = () => {
   const $singupForm = document.querySelector('.form.signup');
   const $toSignupBtn = document.querySelector('.to-signup-btn');
   const $toSigninBtn = document.querySelector('.to-signin-btn');
-  const $title = document.querySelector('.title')
+  const $title = document.querySelector('.title');
 
   $headerLogo.onclick = () => {
     const route = '/';
@@ -37,14 +37,14 @@ export const eventListeners = () => {
     $signModal.classList.remove('hidden');
     $signinModal.classList.remove('hidden');
     $signupModal.classList.add('hidden');
-    $title.innerText = "SIGN IN"
+    $title.innerText = 'SIGN IN';
   };
 
   $signupBtn.onclick = () => {
     $signModal.classList.remove('hidden');
     $signupModal.classList.remove('hidden');
     $signinModal.classList.add('hidden');
-    $title.innerText = "SIGN UP"
+    $title.innerText = 'SIGN UP';
   };
 
   $myPageBtn.onclick = () => {
@@ -52,32 +52,68 @@ export const eventListeners = () => {
     routeChange(route);
   };
 
-  $logoutBtn.addEventListener('click', () => {
-  })
+  $logoutBtn.addEventListener('click', () => {});
 
-  const emailValid = new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/);
+  const emailValid = new RegExp(
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+  );
   const passwordValid = new RegExp(/[\w]{5,12}/);
   const usernameValid = new RegExp(/[\w]{2,8}/);
 
+  $singinForm.addEventListener('keyup', ({ target }) => {
+    const email = $singinForm.email.value.trim();
+    const password = $singinForm.password.value.trim();
+    const [$emailIconInvalid, $passowrdIconInvalid] = document.querySelectorAll('.icon-invalid');
+    const [$emailIconValid, $passowrdIconValid] = document.querySelectorAll('.icon-valid');
+    const [$emailError, $passowrdError] = document.querySelectorAll('.error');
+    if (target.matches('#signin-email')) {
+      if (email === '') {
+        target.parentNode.classList.remove('input-label--active');
+        $emailIconInvalid.classList.add('hidden');
+        $emailIconValid.classList.add('hidden');
+        $emailError.textContent = '';
+      } else if (!emailValid.test(email)) {
+        target.parentNode.classList.add('input-label--active');
+        $emailIconInvalid.classList.remove('hidden');
+        $emailIconValid.classList.add('hidden');
+        $emailError.textContent = '정확하지 않은 이메일입니다.';
+      } else if (emailValid.test(email)) {
+        target.parentNode.classList.remove('input-label--active');
+        $emailIconValid.classList.remove('hidden');
+        $emailIconInvalid.classList.add('hidden');
+        $emailError.textContent = '';
+      }
+    } else if (target.matches('#signin-password')){
+      if (password === '') {
+        $passowrdIconInvalid.classList.add('hidden');
+        $passowrdIconValid.classList.add('hidden');
+        target.parentNode.classList.remove('input-label--active');
+        $passowrdError.textContent = '';
+      } else if (!passwordValid.test(password)) {
+        target.parentNode.classList.add('input-label--active');
+        $passowrdIconValid.classList.add('hidden');
+        $passowrdIconInvalid.classList.remove('hidden');
+        $passowrdError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
+      } else if (passwordValid.test(password)) {
+        target.parentNode.classList.remove('input-label--active');
+        $passowrdIconValid.classList.remove('hidden');
+        $passowrdIconInvalid.classList.add('hidden');
+        $passowrdError.textContent = '';
+      }
+    }
+  });
+
   $singinForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const email = $singinForm.email.value;
-    const password = $singinForm.password.value;
-    if (email.trim() === '' || password.trim() === '') {
-      return;
-    }
+    const email = $singinForm.email.value.trim();
+    const password = $singinForm.password.value.trim();
 
     const resetValue = () => {
       $singinForm.email.value = '';
       $singinForm.password.value = '';
     };
 
-    if (!emailValid.test(email)) {
-      alert('이메일 형식으로 입력해주세요');
-      resetValue();
-      return;
-    } else if (!passwordValid.test(password)) {
-      alert('비밀번호는 5자리 이상 12자리 이하입니다.');
+    if (!emailIconValid.test(email) || !passwordValid.test(password)) {
       resetValue();
       return;
     }
@@ -159,13 +195,13 @@ export const eventListeners = () => {
   $toSignupBtn.addEventListener('click', _ => {
     $signinModal.classList.add('hidden');
     $signupModal.classList.remove('hidden');
-    $title.innerText = "SIGN UP"
+    $title.innerText = 'SIGN UP';
   });
 
   $toSigninBtn.addEventListener('click', _ => {
     $signupModal.classList.add('hidden');
     $signinModal.classList.remove('hidden');
-    $title.innerText = "SIGN IN"
+    $title.innerText = 'SIGN IN';
   });
 
   $signModal.addEventListener('click', ({ target }) => {
