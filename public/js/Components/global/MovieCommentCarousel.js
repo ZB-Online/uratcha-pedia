@@ -16,8 +16,6 @@ export default function MovieCommentCarousel({ $target, initialState }) {
 
     const { comments } = this.state;
 
-    console.log($movieCommentCarousel);
-
     $movieCommentCarousel.innerHTML = `<div class="detail-container_comment-list carousel-slides">
       ${comments
         .map(comment => {
