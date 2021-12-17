@@ -20,9 +20,17 @@ export const eventListeners = () => {
   const $toSignupBtn = document.querySelector('.to-signup-btn');
   const $toSigninBtn = document.querySelector('.to-signin-btn');
   const $title = document.querySelector('.title');
-  const $iconValid = document.querySelectorAll('.icon-invalid');
-  const $iconInvalid = document.querySelectorAll('.icon-valid');
-  const $error = document.querySelectorAll('.error');
+  const [$signinEmailValid, $signinPasswordValid, $signupUsernameValid, $signupEmailValid, $signupPasswordValid] =
+    document.querySelectorAll('.valid');
+  const [
+    $signinEmailInvalid,
+    $signinPasswordInvalid,
+    $signupUsernameInvalid,
+    $signupEmailInvalid,
+    $signupPasswordInvalid,
+  ] = document.querySelectorAll('.invalid');
+  const [$signinEmailError, $signinPasswordError, $signupUsernameError, $signupEmailError, $signupPasswordError] =
+    document.querySelectorAll('.error');
 
   $headerLogo.onclick = () => {
     const route = '/';
@@ -57,6 +65,29 @@ export const eventListeners = () => {
 
   $logoutBtn.addEventListener('click', () => {});
 
+  const resetValue = form => {
+    if (form === 'SIGNIN') {
+      $singinForm.email.value = '';
+      $singinForm.password.value = '';
+    } else {
+      $singupForm.username.value = '';
+      $singupForm.email.value = '';
+      $singupForm.password.value = '';
+    }
+  };
+
+  const hiddenSignModal = () => {
+    $signModal.classList.add('hidden');
+    $signinModal.classList.add('hidden');
+  };
+
+  const changeAuthHeader = () => {
+    $signin.classList.add('hidden');
+    $signup.classList.add('hidden');
+    $myPage.classList.remove('hidden');
+    $logout.classList.remove('hidden');
+  };
+
   const emailValid = new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/);
   const passwordValid = new RegExp(/[\w]{5,12}/);
   const usernameValid = new RegExp(/[\w]{2,8}/);
@@ -64,42 +95,39 @@ export const eventListeners = () => {
   $singinForm.addEventListener('keyup', ({ target }) => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
-    const [$emailIconInvalid, $passowrdIconInvalid] = $iconValid;
-    const [$emailIconValid, $passowrdIconValid] = $iconInvalid;
-    const [$emailError, $passowrdError] = $error;
     if (target.matches('#signin-email')) {
       if (email === '') {
         target.parentNode.classList.remove('input-label--active');
-        $emailIconInvalid.classList.add('hidden');
-        $emailIconValid.classList.add('hidden');
-        $emailError.textContent = '';
+        $signinEmailInvalid.classList.add('hidden');
+        $signinEmailValid.classList.add('hidden');
+        $signinEmailError.textContent = '';
       } else if (!emailValid.test(email)) {
         target.parentNode.classList.add('input-label--active');
-        $emailIconInvalid.classList.remove('hidden');
-        $emailIconValid.classList.add('hidden');
-        $emailError.textContent = '정확하지 않은 이메일입니다.';
+        $signinEmailInvalid.classList.remove('hidden');
+        $signinEmailValid.classList.add('hidden');
+        $signinEmailError.textContent = '정확하지 않은 이메일입니다.';
       } else if (emailValid.test(email)) {
         target.parentNode.classList.remove('input-label--active');
-        $emailIconValid.classList.remove('hidden');
-        $emailIconInvalid.classList.add('hidden');
-        $emailError.textContent = '';
+        $signinEmailValid.classList.remove('hidden');
+        $signinEmailInvalid.classList.add('hidden');
+        $signinEmailError.textContent = '';
       }
     } else if (target.matches('#signin-password')) {
       if (password === '') {
-        $passowrdIconInvalid.classList.add('hidden');
-        $passowrdIconValid.classList.add('hidden');
+        $signinPasswordInvalid.classList.add('hidden');
+        $signinPasswordValid.classList.add('hidden');
         target.parentNode.classList.remove('input-label--active');
-        $passowrdError.textContent = '';
+        $signinPasswordError.textContent = '';
       } else if (!passwordValid.test(password)) {
         target.parentNode.classList.add('input-label--active');
-        $passowrdIconValid.classList.add('hidden');
-        $passowrdIconInvalid.classList.remove('hidden');
-        $passowrdError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
+        $signinPasswordValid.classList.add('hidden');
+        $signinPasswordInvalid.classList.remove('hidden');
+        $signinPasswordError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
       } else if (passwordValid.test(password)) {
         target.parentNode.classList.remove('input-label--active');
-        $passowrdIconValid.classList.remove('hidden');
-        $passowrdIconInvalid.classList.add('hidden');
-        $passowrdError.textContent = '';
+        $signinPasswordValid.classList.remove('hidden');
+        $signinPasswordInvalid.classList.add('hidden');
+        $signinPasswordError.textContent = '';
       }
     }
   });
@@ -108,14 +136,8 @@ export const eventListeners = () => {
     e.preventDefault();
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
-
-    const resetValue = () => {
-      $singinForm.email.value = '';
-      $singinForm.password.value = '';
-    };
-
-    if (!emailIconValid.test(email) || !passwordValid.test(password)) {
-      resetValue();
+    if (!emailValid.test(email) || !passwordValid.test(password)) {
+      resetValue('SIGNIN');
       return;
     }
 
@@ -126,16 +148,11 @@ export const eventListeners = () => {
       });
       if (!response.success) {
         alert(response.message);
-        resetValue();
+        resetValue('SIGNIN');
         return;
       }
-
-      $signModal.classList.add('hidden');
-      $signinModal.classList.add('hidden');
-      $signin.classList.add('hidden');
-      $signup.classList.add('hidden');
-      $myPage.classList.remove('hidden');
-      $logout.classList.remove('hidden');
+      hiddenSignModal();
+      changeAuthHeader();
     } catch (err) {
       alert(err);
     }
@@ -146,59 +163,56 @@ export const eventListeners = () => {
     const email = $singupForm.email.value.trim();
     const password = $singupForm.password.value.trim();
 
-    const [, , $usernameIconInvalid, $emailIconInvalid, $passowrdIconInvalid] = $iconValid;
-    const [, , $usernameIconValid, $emailIconValid, $passowrdIconValid] = $iconInvalid;
-    const [, , $usernameError, $emailError, $passowrdError] = $error;
     if (target.matches('#signup-email')) {
       if (email === '') {
         target.parentNode.classList.remove('input-label--active');
-        $emailIconInvalid.classList.add('hidden');
-        $emailIconValid.classList.add('hidden');
-        $emailError.textContent = '';
+        $signupEmailInvalid.classList.add('hidden');
+        $signupEmailValid.classList.add('hidden');
+        $signupEmailError.textContent = '';
       } else if (!emailValid.test(email)) {
         target.parentNode.classList.add('input-label--active');
-        $emailIconInvalid.classList.remove('hidden');
-        $emailIconValid.classList.add('hidden');
-        $emailError.textContent = '정확하지 않은 이메일입니다.';
+        $signupEmailInvalid.classList.remove('hidden');
+        $signupEmailValid.classList.add('hidden');
+        $signupEmailError.textContent = '정확하지 않은 이메일입니다.';
       } else if (emailValid.test(email)) {
         target.parentNode.classList.remove('input-label--active');
-        $emailIconValid.classList.remove('hidden');
-        $emailIconInvalid.classList.add('hidden');
-        $emailError.textContent = '';
+        $signupEmailValid.classList.remove('hidden');
+        $signupEmailInvalid.classList.add('hidden');
+        $signupEmailError.textContent = '';
       }
     } else if (target.matches('#signup-password')) {
       if (password === '') {
-        $passowrdIconInvalid.classList.add('hidden');
-        $passowrdIconValid.classList.add('hidden');
+        $signupPasswordInvalid.classList.add('hidden');
+        $signupPasswordValid.classList.add('hidden');
         target.parentNode.classList.remove('input-label--active');
-        $passowrdError.textContent = '';
+        $signupPasswordError.textContent = '';
       } else if (!passwordValid.test(password)) {
         target.parentNode.classList.add('input-label--active');
-        $passowrdIconValid.classList.add('hidden');
-        $passowrdIconInvalid.classList.remove('hidden');
-        $passowrdError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
+        $signupPasswordValid.classList.add('hidden');
+        $signupPasswordInvalid.classList.remove('hidden');
+        $signupPasswordError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
       } else if (passwordValid.test(password)) {
         target.parentNode.classList.remove('input-label--active');
-        $passowrdIconValid.classList.remove('hidden');
-        $passowrdIconInvalid.classList.add('hidden');
-        $passowrdError.textContent = '';
+        $signupPasswordValid.classList.remove('hidden');
+        $signupPasswordInvalid.classList.add('hidden');
+        $signupPasswordError.textContent = '';
       }
     } else if (target.matches('#signup-username')) {
       if (username === '') {
-        $usernameIconInvalid.classList.add('hidden');
-        $usernameIconValid.classList.add('hidden');
+        $signupUsernameInvalid.classList.add('hidden');
+        $signupUsernameValid.classList.add('hidden');
         target.parentNode.classList.remove('input-label--active');
-        $usernameError.textContent = '';
+        $signupUsernameError.textContent = '';
       } else if (!usernameValid.test(username)) {
         target.parentNode.classList.add('input-label--active');
-        $usernameIconValid.classList.add('hidden');
-        $usernameIconInvalid.classList.remove('hidden');
-        $usernameError.textContent = '정확하지 않은 이름입니다.';
+        $signupUsernameValid.classList.add('hidden');
+        $signupUsernameInvalid.classList.remove('hidden');
+        $signupUsernameError.textContent = '정확하지 않은 이름입니다.';
       } else if (usernameValid.test(username)) {
         target.parentNode.classList.remove('input-label--active');
-        $usernameIconValid.classList.remove('hidden');
-        $usernameIconInvalid.classList.add('hidden');
-        $usernameError.textContent = '';
+        $signupUsernameValid.classList.remove('hidden');
+        $signupUsernameInvalid.classList.add('hidden');
+        $signupUsernameError.textContent = '';
       }
     }
   });
@@ -209,18 +223,12 @@ export const eventListeners = () => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
 
-    const resetValue = () => {
-      $singupForm.username.value = '';
-      $singupForm.email.value = '';
-      $singupForm.password.value = '';
-    };
-
     if (username === '' || email === '' || password === '') {
       return;
     }
 
-    if (!usernameValid.test(username) || !emailIconValid.test(email) || !passwordValid.test(password)) {
-      resetValue();
+    if (!usernameValid.test(username) || !emailValid.test(email) || !passwordValid.test(password)) {
+      resetValue('SIGNUP');
       return;
     }
 
@@ -232,15 +240,11 @@ export const eventListeners = () => {
       });
       if (!response.success) {
         alert(response.message);
-        resetValue();
+        resetValue('SIGNUP');
         return;
       }
-      $signModal.classList.add('hidden');
-      $signupModal.classList.add('hidden');
-      $signin.classList.add('hidden');
-      $signup.classList.add('hidden');
-      $myPage.classList.remove('hidden');
-      $logout.classList.remove('hidden');
+      hiddenSignModal();
+      changeAuthHeader();
     } catch (err) {
       alert(err);
     }
@@ -260,14 +264,9 @@ export const eventListeners = () => {
 
   $signModal.addEventListener('click', ({ target }) => {
     if (target.matches('#sign-modal')) {
-      $signModal.classList.add('hidden');
-      $signupModal.classList.add('hidden');
-      $signinModal.classList.add('hidden');
-      $singupForm.username.value = '';
-      $singupForm.email.value = '';
-      $singupForm.password.value = '';
-      $singinForm.email.value = '';
-      $singinForm.password.value = '';
+      hiddenSignModal()
+      resetValue('SIGNIN');
+      resetValue('SIGNUP');
       // css 활성화 해제
     }
   });

@@ -152,10 +152,10 @@ function Sign({ $target, initialState }) {
                       placeholder="email"
                       autofocus
                   />
-                    <span class="icon-valid hidden">
+                    <span class="valid hidden">
                       <box-icon name='check-circle' color="#1FA75C"></box-icon>
                     </span>
-                    <span class="icon-invalid hidden">
+                    <span class="invalid hidden">
                     <box-icon name='error-circle' color="#FF2F62" ></box-icon>
                     </span>
                   </label>
@@ -171,10 +171,10 @@ function Sign({ $target, initialState }) {
                       autocomplete="off"
                       placeholder="password"
                   />
-                  <span class="icon-valid hidden">
+                  <span class="valid hidden">
                       <box-icon name='check-circle' color="#1FA75C"></box-icon>
                     </span>
-                    <span class="icon-invalid hidden">
+                    <span class="invalid hidden">
                     <box-icon name='error-circle' color="#FF2F62" ></box-icon>
                     </span>
                   </label>
@@ -202,10 +202,10 @@ function Sign({ $target, initialState }) {
                       placeholder="username"
                       autofocus
                   />
-                  <span class="icon-valid hidden">
+                  <span class="valid hidden">
                   <box-icon name='check-circle' color="#1FA75C"></box-icon>
                 </span>
-                <span class="icon-invalid hidden">
+                <span class="invalid hidden">
                 <box-icon name='error-circle' color="#FF2F62" ></box-icon>
                 </span>
               </label>
@@ -221,10 +221,10 @@ function Sign({ $target, initialState }) {
                       required
                       autocomplete="off"
                       placeholder="email"
-                  /><span class="icon-valid hidden">
+                  /><span class="valid hidden">
                   <box-icon name='check-circle' color="#1FA75C"></box-icon>
                 </span>
-                <span class="icon-invalid hidden">
+                <span class="invalid hidden">
                 <box-icon name='error-circle' color="#FF2F62" ></box-icon>
                 </span>
               </label>
@@ -240,10 +240,10 @@ function Sign({ $target, initialState }) {
                       required
                       autocomplete="off"
                       placeholder="password"
-                  /><span class="icon-valid hidden">
+                  /><span class="valid hidden">
                   <box-icon name='check-circle' color="#1FA75C"></box-icon>
                 </span>
-                <span class="icon-invalid hidden">
+                <span class="invalid hidden">
                 <box-icon name='error-circle' color="#FF2F62" ></box-icon>
                 </span>
               </label>
