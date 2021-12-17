@@ -1,3 +1,4 @@
+import { routeChange } from '../router';
 import MyScoredMoviesCarousel from './global/MyScoredMoviesCarousel';
 
 export default function MyScoredMovies({ $target, initialState }) {
@@ -11,6 +12,7 @@ export default function MyScoredMovies({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -38,5 +40,15 @@ export default function MyScoredMovies({ $target, initialState }) {
     return $myScoredMovies;
   };
 
+  this.bindEvents = () => {
+    $myScoredMovies.addEventListener('click', ({ target }) => {
+      if (!target.matches('.carousel-slides *')) return;
+
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
+  };
+
   this.render();
+  this.bindEvents();
 }

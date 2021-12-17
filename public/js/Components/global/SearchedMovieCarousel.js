@@ -20,8 +20,8 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
     ${movies
       .map(
         movie => `
-          <li class="search-result-item" data-movie-id="${movie.id}">
-          <a title="반지의 제왕 : 반지 원정대" href="https://pedia.watcha.com/ko-KR/contents/mP5mPzd">
+        <li class="search-result-item" data-movie-id="${movie.id}">
+          <a href="javascript:void(0);">
             <img src="${movie.poster_path}" alt="movie-poster" />
             <div class="search-result-item__info">
               <div class="search-result-item__title">${movie.title}</div>
@@ -30,7 +30,7 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
               </div>
               <div class="search-result-item__category"><span>영화</span></div>
             </div>
-          </a>
+          </a> 
         </li>`
       )
       .join('')}

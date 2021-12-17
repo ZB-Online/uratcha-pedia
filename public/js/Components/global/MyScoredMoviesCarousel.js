@@ -19,22 +19,20 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
     $myScoredMoviesCarousel.innerHTML = `<ul class="my-scored-movies-container__list carousel-slides">
     ${movies
       .map(
-        movie => `<li class="my-scored-movies-item" data-movie-id="${movie.id}">
-        <a
-          title="반지의 제왕 : 반지 원정대"
-          href="https://pedia.watcha.com/ko-KR/contents/mP5mPzd"
-        >
-          <img src="${movie.poster_path}" alt="poster" />
-          <div class="my-scored-movies-item__info">
-            <div class="my-scored-movies-item__title">
-              ${movie.title}
+        movie => `
+        <li class="my-scored-movies-item" data-movie-id="${movie.id}">
+          <a href="javascript:void(0);">
+            <img src="${movie.poster_path}" alt="poster" />
+            <div class="my-scored-movies-item__info">
+              <div class="my-scored-movies-item__title">
+                ${movie.title}
+              </div>
+              <div class="my-scored-movies-item__score">
+                평가함<i class="bx bxs-star bx-flip-horizontal"></i>5.0
+              </div>
             </div>
-            <div class="my-scored-movies-item__score">
-              평가함<i class="bx bxs-star bx-flip-horizontal"></i>5.0
-            </div>
-          </div>
-        </a>
-      </li>`
+          </a>
+        </li>`
       )
       .join('')}
       </ul>

@@ -1,3 +1,4 @@
+import { routeChange } from '../router';
 import SearchedMovieCarousel from './global/SearchedMovieCarousel';
 
 export function SearchResult({ $target, initialState }) {
@@ -12,6 +13,7 @@ export function SearchResult({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -43,5 +45,15 @@ export function SearchResult({ $target, initialState }) {
     return $searchResult;
   };
 
+  this.bindEvents = () => {
+    $searchResult.addEventListener('click', ({ target }) => {
+      if (!target.matches('.carousel-slides *')) return;
+
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
+  };
+
   this.render();
+  this.bindEvents();
 }
