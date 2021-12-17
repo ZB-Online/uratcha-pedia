@@ -1,6 +1,5 @@
 import { routeChange } from '../router';
 import MyScoredMoviesCarousel from './global/MyScoredMoviesCarousel';
-import { bindMyScoredCarouselEvents } from '../utils/carousel';
 
 export default function MyScoredMovies({ $target, initialState }) {
   const $myScoredMovies = document.createElement('div');
@@ -25,7 +24,7 @@ export default function MyScoredMovies({ $target, initialState }) {
     <section class="mypage">
       <article class="container">
         <div class="my-scored-movies-header">
-          <div class="my-scored-movies-header__back-button">&lt;-</div>
+          <div class="my-scored-movies-header__back-button"></div>
           <div class="my-scored-movies-header__title">영화</div>
         </div>
         <section class="my-scored-movies-container">
