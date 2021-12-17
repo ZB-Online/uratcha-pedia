@@ -22,22 +22,22 @@ export function SearchResult({ $target, initialState }) {
     if (!this.state) return;
 
     $searchResult.innerHTML = `
-      <section class="search-result">
+    <section class="search-result"> 
       <article class="container">
         <section class="search-result-header">
           <div class="outer">
             <div class="inner">
               <div class="search-result-title">
-                <span>${this.state.keyword}</span>의 검색결과
+                <span>"${this.state.keyword}"</span>의 검색결과
               </div>
             </div>
           </div>
         </section>
         <section class="search-result-container">
-          <div class="search-result-container__inner">
-
-          </div>      
-        </section>`;
+        
+        </section>
+      </article>
+    </section>`;
 
     searchedMovieCarousel = new SearchedMovieCarousel({
       $target: $searchResult.querySelector('.search-result-container__inner'),
