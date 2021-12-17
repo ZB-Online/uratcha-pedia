@@ -1,4 +1,4 @@
-import { renderMovieCarousel } from '../utils/carousel.js';
+import BoxOfficeRankingCarousel from './global/BoxOfficeRankingCarousel';
 
 export function MovieRanking({ $target, initialState }) {
   const $movieRanking = document.createElement('div');
@@ -24,7 +24,10 @@ export function MovieRanking({ $target, initialState }) {
         </div>
       </div> 
       <div class="carousel box-office">
-      ${renderMovieCarousel(this.state.movieRanking)}
+      ${
+        new BoxOfficeRankingCarousel({ $target: $movieRanking, initialState: this.state.movieRanking }).render()
+          .innerHTML
+      }
       </div>
     </section>
     `;
