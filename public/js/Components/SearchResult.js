@@ -40,7 +40,7 @@ export function SearchResult({ $target, initialState }) {
     </section>`;
 
     searchedMovieCarousel = new SearchedMovieCarousel({
-      $target: $searchResult.querySelector('.search-result-container__inner'),
+      $target: $searchResult.querySelector('.search-result-container'),
       initialState: { searchResult: this.state.searchResult },
     });
 

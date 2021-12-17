@@ -2,6 +2,7 @@ import MyScoredMovies from '../Components/MyScoredMovies';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
+import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
 
 export default function MyPage({ $target }) {
   const $myPage = document.createElement('div');
@@ -31,6 +32,11 @@ export default function MyPage({ $target }) {
 
   this.bindEvents = () => {
     eventListeners();
+
+    bindMyScoredMovieCarouselEvents(
+      document.querySelector('.my-scored-movies-container__inner'),
+      this.state.myScoredMovies
+    );
   };
 
   const fetchMyScoredMovies = async () => {
