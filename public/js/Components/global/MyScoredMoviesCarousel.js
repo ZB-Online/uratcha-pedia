@@ -22,7 +22,7 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
         movie => `
         <li class="my-scored-movies-item" data-movie-id="${movie.id}">
           <a href="javascript:void(0);">
-            <img src="${movie.poster_path}" alt="poster" />
+            <img src="${movie.poster_path ? movie.poster_path : '../../../img/noImage.png'}" alt="poster" />
             <div class="my-scored-movies-item__info">
               <div class="my-scored-movies-item__title">
                 ${movie.title}

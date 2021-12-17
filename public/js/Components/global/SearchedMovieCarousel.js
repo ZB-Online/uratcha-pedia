@@ -22,7 +22,7 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
         movie => `
         <li class="search-result-item" data-movie-id="${movie.id}">
           <a href="javascript:void(0);">
-            <img src="${movie.poster_path}" alt="movie-poster" />
+            <img src="${movie.poster_path ? movie.poster_path : '../../../img/noImage.png'}" alt="movie-poster" />
             <div class="search-result-item__info">
               <div class="search-result-item__title">${movie.title}</div>
               <div class="search-result-item__subtitle">
