@@ -4,35 +4,13 @@ import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
 
-const stars = () =>
-  new Promise((resolve, reject) =>
-    resolve([
-      {
-        id: 3,
-        userEmail: 'test3@test.com',
-        movieId: 3,
-        score: 5,
-      },
-      {
-        id: 4,
-        userEmail: 'test3@test.com',
-        movieId: 6,
-        score: 1,
-      },
-      {
-        id: 5,
-        userEmail: 'test3@test.com',
-        movieId: 2,
-        score: 4,
-      },
-    ])
-  );
-
 export default function MyPage({ $target }) {
   const $myPage = document.createElement('div');
   $target.appendChild($myPage);
 
-  this.state = {};
+  this.state = {
+    myScoredMovies: [],
+  };
 
   this.setState = newState => {
     this.state = newState;
@@ -65,8 +43,6 @@ export default function MyPage({ $target }) {
     try {
       const data = await fetch.get('/api/movies');
       const myScoredMovies = data.resData;
-      // const myScoredMovies = await stars;
-      // stars movieId mapping => movieDetails 취득
       this.setState({ ...this.state, myScoredMovies: myScoredMovies });
     } catch (e) {
       console.error('movie api not fetched: ', e);

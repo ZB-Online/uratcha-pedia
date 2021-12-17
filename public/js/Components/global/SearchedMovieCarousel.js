@@ -1,5 +1,6 @@
 export default function SearchedMovieCarousel({ $target, initialState }) {
   const $searchedMovieCarousel = document.createElement('div');
+  $searchedMovieCarousel.classList.add('search-result-container__inner');
   $target.appendChild($searchedMovieCarousel);
 
   this.state = {
@@ -9,6 +10,7 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -52,4 +54,9 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
 
     return $searchedMovieCarousel;
   };
+
+  this.bindEvents = () => {};
+
+  this.render();
+  this.bindEvents();
 }

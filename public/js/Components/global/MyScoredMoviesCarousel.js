@@ -9,6 +9,7 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -50,6 +51,10 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
           alt="forward"
         />
       </button>`;
-    return $myScoredMoviesCarousel;
   };
+
+  this.bindEvents = () => {};
+
+  this.render();
+  this.bindEvents();
 }
