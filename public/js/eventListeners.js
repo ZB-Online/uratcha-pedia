@@ -17,6 +17,7 @@ export const eventListeners = () => {
   const $singupForm = document.querySelector('.form.signup');
   const $toSignupBtn = document.querySelector('.to-signup-btn');
   const $toSigninBtn = document.querySelector('.to-signin-btn');
+  const $title = document.querySelector('.title')
 
   $headerLogo.onclick = () => {
     const route = '/';
@@ -34,12 +35,14 @@ export const eventListeners = () => {
     $signModal.classList.remove('hidden');
     $signinModal.classList.remove('hidden');
     $signupModal.classList.add('hidden');
+    $title.innerText = "SIGN IN"
   };
 
   $signupBtn.onclick = () => {
     $signModal.classList.remove('hidden');
     $signupModal.classList.remove('hidden');
     $signinModal.classList.add('hidden');
+    $title.innerText = "SIGN UP"
   };
 
   $myPageBtn.onclick = () => {
@@ -149,11 +152,13 @@ export const eventListeners = () => {
   $toSignupBtn.addEventListener('click', _ => {
     $signinModal.classList.add('hidden');
     $signupModal.classList.remove('hidden');
+    $title.innerText = "SIGN UP"
   });
 
   $toSigninBtn.addEventListener('click', _ => {
     $signupModal.classList.add('hidden');
     $signinModal.classList.remove('hidden');
+    $title.innerText = "SIGN IN"
   });
 
   $signModal.addEventListener('click', ({ target }) => {

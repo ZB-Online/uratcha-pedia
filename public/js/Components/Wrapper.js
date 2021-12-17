@@ -134,7 +134,7 @@ function Sign({ $target, initialState }) {
           <div class="signin-header">
             <span class="sign-logo"></span>
           </div>
-          <h2 class="title">SIGN IN</h2>
+          <h2 class="title"></h2>
           <section>
             <div class="signin-modal">
               <form class="form signin" action="#">
