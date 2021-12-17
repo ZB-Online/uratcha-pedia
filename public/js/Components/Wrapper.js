@@ -137,7 +137,7 @@ function Sign({ $target, initialState }) {
           <h2 class="title">SIGN IN</h2>
           <section>
             <div class="signin-modal">
-              <form class="form signin" novalidate>
+              <form class="form signin" action="#">
                 <div class="input-container">
                   <label for="signin-email" class="input-label">
                     <input
@@ -179,7 +179,7 @@ function Sign({ $target, initialState }) {
   
           <section>
             <div class="signup-modal hidden">
-              <form class="form signup" novalidate>
+              <form class="form signup">
                 <div class="input-container">
                   <label for="signup-username" class="input-label"
                     ><input

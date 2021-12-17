@@ -115,8 +115,7 @@ export const eventListeners = () => {
       alert('닉네임은 2자 이상 8자리 이하입니다.');
       resetValue();
       return;
-    }
-    else if (!emailValid.test(email)) {
+    } else if (!emailValid.test(email)) {
       alert('이메일 형식으로 입력해주세요');
       resetValue();
       return;
@@ -155,5 +154,13 @@ export const eventListeners = () => {
   $toSigninBtn.addEventListener('click', _ => {
     $signupModal.classList.add('hidden');
     $signinModal.classList.remove('hidden');
+  });
+
+  $signModal.addEventListener('click', ({ target }) => {
+    if (target.matches('#sign-modal')) {
+      $signModal.classList.add('hidden');
+      $signupModal.classList.add('hidden');
+      $signinModal.classList.add('hidden');
+    }
   });
 };
