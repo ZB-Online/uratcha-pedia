@@ -15,8 +15,6 @@ export default function MyScoredMovies({ $target, initialState }) {
     this.bindEvents();
   };
 
-  let myScoredMoviesCarousel = null;
-
   this.render = () => {
     if (!this.state) return;
 
@@ -39,7 +37,7 @@ export default function MyScoredMovies({ $target, initialState }) {
       </article>
     </section>`;
 
-    myScoredMoviesCarousel = new MyScoredMoviesCarousel({
+    new MyScoredMoviesCarousel({
       $target: $myScoredMovies.querySelector('.my-scored-movies-container__inner'),
       initialState: { myScoredMovies: this.state.myScoredMovies },
     });

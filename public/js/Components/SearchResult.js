@@ -16,8 +16,6 @@ export function SearchResult({ $target, initialState }) {
     this.bindEvents();
   };
 
-  let searchedMovieCarousel = null;
-
   this.render = () => {
     if (!this.state) return;
 
@@ -39,7 +37,7 @@ export function SearchResult({ $target, initialState }) {
       </article>
     </section>`;
 
-    searchedMovieCarousel = new SearchedMovieCarousel({
+    new SearchedMovieCarousel({
       $target: $searchResult.querySelector('.search-result-container'),
       initialState: { searchResult: this.state.searchResult },
     });
