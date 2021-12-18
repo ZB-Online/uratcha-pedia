@@ -2,6 +2,7 @@ import { titleFormat } from '../../utils/carousel';
 
 export default function BoxOfficeRankingCarousel({ $target, initialState }) {
   const $boxOfficeRankingCarousel = document.createElement('div');
+  $boxOfficeRankingCarousel.classList.add('carousel', 'box-office');
   $target.appendChild($boxOfficeRankingCarousel);
 
   this.state = {

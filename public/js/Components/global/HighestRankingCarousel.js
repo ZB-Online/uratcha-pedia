@@ -2,6 +2,7 @@ import { titleFormat } from '../../utils/carousel';
 
 export default function HighestRankingCarousel({ $target, initialState }) {
   const $highestRankingCarousel = document.createElement('div');
+  $highestRankingCarousel.classList.add('carousel', 'highest-ranking');
   $target.appendChild($highestRankingCarousel);
 
   this.state = {

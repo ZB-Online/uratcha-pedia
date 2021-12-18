@@ -67,10 +67,17 @@ module.exports = {
   //   path: path.resolve(__dirname, "dist")
   // },
   devServer: {
+    historyApiFallback: {
+      index: '/index.html',
+    },
     port: 5500,
     open: true,
-    // proxy: {
-    //   "/api": "http://localhost:8080"
-    // },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:7979',
+        changeOrigin: true,
+      },
+      secure: false,
+    },
   },
 };

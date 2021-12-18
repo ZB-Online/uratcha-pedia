@@ -15,8 +15,7 @@ export function MovieRanking({ $target, initialState }) {
   this.render = () => {
     if (!this.state) return;
 
-    if (this.state.title === '박스 오피스') {
-      $movieRanking.innerHTML = `
+    $movieRanking.innerHTML = `
       <section class="movie-container">
         <div class="outer">
           <div class="inner">
@@ -25,30 +24,20 @@ export function MovieRanking({ $target, initialState }) {
             </div>
           </div>
         </div> 
-        <div class="carousel box-office">
-        ${
-          new BoxOfficeRankingCarousel({ $target: $movieRanking, initialState: this.state.movieRanking }).render()
-            .innerHTML
-        }
+        <div class="carousel ${this.state.title === '별점 높은 순' ? 'box-office' : 'highest-ranking'}">
+        
         </div>
       </section>`;
-    } else if (this.state.title === '별점 높은 순') {
-      $movieRanking.innerHTML = `<section class="movie-container">
-      <div class="outer">
-        <div class="inner">
-          <div class="movie-ranking">
-            <span>${this.state.title}</span>
-          </div>
-        </div>
-      </div> 
-      <div class="carousel highest-ranking">
-      ${
-        new HighestRankingCarousel({ $target: $movieRanking, initialState: this.state.movieRanking }).render().innerHTML
-      }
-      </div>
-    </section>
-    `;
-    }
+
+    this.state.title === '별점 높은 순'
+      ? new BoxOfficeRankingCarousel({
+          $target: $movieRanking.querySelector('.carousel'),
+          initialState: this.state.movieRanking,
+        }).render().innerHTML
+      : new HighestRankingCarousel({
+          $target: $movieRanking.querySelector('.carousel'),
+          initialState: this.state.movieRanking,
+        }).render().innerHTML;
   };
   this.render();
 }
