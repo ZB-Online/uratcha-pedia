@@ -67,6 +67,9 @@ module.exports = {
   //   path: path.resolve(__dirname, "dist")
   // },
   devServer: {
+    historyApiFallback: {
+      index: '/index.html',
+    },
     port: 5500,
     open: true,
     // proxy: {

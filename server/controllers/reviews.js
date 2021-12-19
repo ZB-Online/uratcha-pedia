@@ -25,7 +25,7 @@ const getReviewByMovieIdUserEmail = (req, res) => {
 
 const addReview = (req, res) => {
   const newReview = req.body;
-  if (Object.values(newReview).some(info => !info) || Object.values(newReview).length !== 4)
+  if (Object.values(newReview).some(info => !info) || Object.values(newReview).length !== 3)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
   if (reviewDao.findReviewById(newReview.id))
     return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));

@@ -13,6 +13,10 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   this.state = {
     movieId: initialState,
+    user: {
+      email: 'test1@test.com',
+      username: '테스트계정1',
+    },
   };
 
   this.setState = newState => {
@@ -46,44 +50,93 @@ export default function MovieDetailsPage({ $target, initialState }) {
       document.querySelector('.detail-container_comment-container'),
       this.state.reviewsByMovieId
     );
-    const starRating = document.querySelector('.star-rating');
-    console.log(starRating);
-    console.log('----------------');
-    starRating.addEventListener('click', async e => {
+
+    document.querySelector('.star-rating').addEventListener('click', e => {
       e.preventDefault();
-      console.log(e.target);
-      const score = e.target.previousElementSibling.value;
-      // console.log(e.target.previousElementSibling.value)
-      try {
-        const res = await fetch.post('/api/stars', {
-          id: 6,
-          userEmail: 'test1@test.com',
-          movieId: 81,
-          score,
-        });
-        console.log(res);
-      } catch (err) {
-        alert(err);
+      const score = +e.target.previousElementSibling.value;
+      const currentScore = this.state.userScore?.score
+      if (!currentScore) {
+        fetchAddUserScore(score);
+      } else if (currentScore !== score) {
+        fetchUpdateUserScore(score);
+      } else if (currentScore === score) {
+        fetchDeleteUserScore(this.state.userScore.id);
       }
     });
   };
 
-  const fetchInitialScore = async () => {
+  const checkedStar = () => {
+    const currentScore = this.state.userScore.score;
+    if (currentScore) document.getElementById(`${currentScore}-star`).checked = true;
+    let text;
+    switch (currentScore) {
+      case 1:
+        text = '싫어요';
+        break;
+      case 2:
+        text = '별로에요';
+        break;
+      case 3:
+        text = '보통이에요';
+        break;
+      case 4:
+        text = '재미있어요';
+        break;
+      case 5:
+        text = '최고에요!';
+        break;
+      default:
+        text = '평가하기';
+    }
+    document.querySelector('.movie-header_score-letter').textContent = text;
+  };
+
+  const fetchInitialUserScore = async () => {
     try {
-      const data = await fetch.get('/api/stars/movies/843241/users/test1@test.com');
-      const userStar = data?.resData?.star;
-      console.log('before state', this.state);
-      console.log(userStar);
-      this.setState({ ...this.state, userStar });
-      console.log('after state', this.state);
-      // const $cbox = document.getElementById('5-stars');
-      // console.log($cbox);
-      // cbox.checked = true;
+      const data = await fetch.get(`/api/stars/movies/${this.state.movieId}/users/${this.state.user.email}`);
+      return data?.resData?.star;
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
-  // 추가
+
+  const fetchAddUserScore = async score => {
+    try {
+      const data = await fetch.post('/api/stars', {
+        userEmail: this.state.user.email,
+        movieId: this.state.movieId,
+        score,
+      });
+      this.setState({ ...this.state, userScore: data?.resData });
+      checkedStar();
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const fetchUpdateUserScore = async score => {
+    try {
+      await fetch.patch('/api/stars', {
+        id: this.state.userScore.id,
+        movieId: this.state.movieId,
+        score,
+      });
+      this.setState({ ...this.state, userScore: { ...this.state.userScore, score } });
+      checkedStar();
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  const fetchDeleteUserScore = async () => {
+    try {
+      await fetch.delete(`/api/stars/${this.state.userScore.id}`);
+      this.setState({ ...this.state, userScore: false });
+      checkedStar();
+    } catch (err) {
+      alert(err);
+    }
+  };
 
   const fetchMovieDetails = async movieId => {
     try {
@@ -105,7 +158,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
     }
   };
 
-  const fetchMovieDetailData = async () => {
+  const fetchInitialState = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
 
@@ -116,10 +169,11 @@ export default function MovieDetailsPage({ $target, initialState }) {
         return { ...review, score };
       })
     );
-    this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: scoredReview });
-    console.log('=========', this.state);
-  };
 
-  fetchMovieDetailData();
-  fetchInitialScore();
+    const userScore = await fetchInitialUserScore();
+    this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: scoredReview, userScore });
+    checkedStar();
+  };
+  
+  fetchInitialState();
 }

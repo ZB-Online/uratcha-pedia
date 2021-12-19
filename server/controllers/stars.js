@@ -24,7 +24,7 @@ const getAverageStarByMovieId = (req, res) => {
 const addStar = (req, res) => {
   const newStar = req.body;
   const movieId = newStar.movieId;
-  if (Object.values(newStar).some(info => !info) || Object.values(newStar).length !== 4)
+  if (Object.values(newStar).some(info => !info) || Object.values(newStar).length !== 3)
     return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
   if (starDao.findStarById(newStar.id)) return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
   if (!userDao.findUserByEmail(newStar.userEmail))
@@ -32,12 +32,11 @@ const addStar = (req, res) => {
   // TODO : movieId validation
   if (starDao.getStarByMovieIdUserEmail(newStar.movieId, newStar.userEmail))
     return res.status(400).json(resData.successFalse(resMessage.STAR_ALREADY_EXIST));
-  starDao.addStar(newStar);
+  const star = starDao.addStar(newStar);
   movieDao.findMovieByMovieId(movieId)
     ? movieDao.updateMovie(movieId, starDao.getAverageStarByMovieId(movieId))
     : movieDao.addMovie({ movieId, average: newStar.score });
-
-  res.status(200).json(resData.successTrue(resMessage.STAR_CREATE_SUCCESS));
+  res.status(200).json(resData.successTrue(resMessage.STAR_CREATE_SUCCESS,star));
 };
 
 const updateStar = (req, res) => {
