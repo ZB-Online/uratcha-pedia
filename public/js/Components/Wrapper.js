@@ -48,7 +48,7 @@ export function Header({ $target, initialState }) {
           <li class='my-page hidden'>
             <button class="btn btn--border">마이페이지</button>
           </li>
-          <li class='logout hidden'>
+          <li class='logout'>
             <button class="btn">로그아웃</button>
           </li>
         </ul>

@@ -63,11 +63,24 @@ export const eventListeners = () => {
     routeChange(route);
   };
 
-  $logoutBtn.addEventListener('click', () => {});
+  $logoutBtn.addEventListener('click', async () => {
+    // var bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
+    // try {
+    //   const res = await fetch.get('/api/users/logout', {
+    //     mothod: 'GET',
+    //     headers: {
+    //       Authorization: bearer,
+    //       'content-type': 'application/json',
+    //     },
+    //   });
+    //   console.log(res);
+    // } catch (err) {
+    //   alert(err);
+    // }
+  });
 
-  // signin : 1 signup: 0
-  const resetValue = form => {
-    if (form) {
+  const resetValue = sign => {
+    if (sign === 'signin') {
       $singinForm.email.value = '';
       $singinForm.password.value = '';
     } else {
@@ -89,47 +102,44 @@ export const eventListeners = () => {
     $logout.classList.remove('hidden');
   };
 
-  const emailValid = new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/);
-  const passwordValid = new RegExp(/[\w]{5,12}/);
-  const usernameValid = new RegExp(/[\w]{2,8}/);
+  const inputValid = (type, value, target, $valid, $invalid, $error) => {
+    const errorMessage = {
+      email: '정확하지 않은 이메일입니다.',
+      password: '비밀번호는 최소 5자리 이상이어야 합니다.',
+      username: '정확하지 않은 이름입니다.',
+    };
+
+    const regExp = {
+      email: new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/),
+      password: new RegExp(/[\w]{5,12}/),
+      username: new RegExp(/[\w]{2,8}/),
+    };
+
+    if (value === '') {
+      target.parentNode.classList.remove('input-label--active');
+      $error.textContent = '';
+      $valid.classList.add('hidden');
+      $invalid.classList.add('hidden');
+    } else if (!regExp[type].test(value)) {
+      target.parentNode.classList.add('input-label--active');
+      $error.textContent = errorMessage[type];
+      $valid.classList.add('hidden');
+      $invalid.classList.remove('hidden');
+    } else if (regExp[type].test(value)) {
+      target.parentNode.classList.remove('input-label--active');
+      $error.textContent = '';
+      $valid.classList.remove('hidden');
+      $invalid.classList.add('hidden');
+    }
+  };
 
   $singinForm.addEventListener('keyup', ({ target }) => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
     if (target.matches('#signin-email')) {
-      if (email === '') {
-        target.parentNode.classList.remove('input-label--active');
-        $signinEmailInvalid.classList.add('hidden');
-        $signinEmailValid.classList.add('hidden');
-        $signinEmailError.textContent = '';
-      } else if (!emailValid.test(email)) {
-        target.parentNode.classList.add('input-label--active');
-        $signinEmailInvalid.classList.remove('hidden');
-        $signinEmailValid.classList.add('hidden');
-        $signinEmailError.textContent = '정확하지 않은 이메일입니다.';
-      } else if (emailValid.test(email)) {
-        target.parentNode.classList.remove('input-label--active');
-        $signinEmailValid.classList.remove('hidden');
-        $signinEmailInvalid.classList.add('hidden');
-        $signinEmailError.textContent = '';
-      }
+      inputValid('email', email, target, $signinEmailValid, $signinEmailInvalid, $signinEmailError);
     } else if (target.matches('#signin-password')) {
-      if (password === '') {
-        $signinPasswordInvalid.classList.add('hidden');
-        $signinPasswordValid.classList.add('hidden');
-        target.parentNode.classList.remove('input-label--active');
-        $signinPasswordError.textContent = '';
-      } else if (!passwordValid.test(password)) {
-        target.parentNode.classList.add('input-label--active');
-        $signinPasswordValid.classList.add('hidden');
-        $signinPasswordInvalid.classList.remove('hidden');
-        $signinPasswordError.textContent = '비밀번호는 최소 5자리 이상이어야 합니다.';
-      } else if (passwordValid.test(password)) {
-        target.parentNode.classList.remove('input-label--active');
-        $signinPasswordValid.classList.remove('hidden');
-        $signinPasswordInvalid.classList.add('hidden');
-        $signinPasswordError.textContent = '';
-      }
+      inputValid('password', password, target, $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
     }
   });
 
@@ -138,7 +148,7 @@ export const eventListeners = () => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
     if (!emailValid.test(email) || !passwordValid.test(password)) {
-      resetValue(1);
+      resetValue('signin');
       return;
     }
 
@@ -149,7 +159,7 @@ export const eventListeners = () => {
       });
       if (!response.success) {
         alert(response.message);
-        resetValue(1);
+        resetValue('signin');
         return;
       }
       hiddenSignModal();
@@ -165,56 +175,11 @@ export const eventListeners = () => {
     const password = $singupForm.password.value.trim();
 
     if (target.matches('#signup-email')) {
-      if (email === '') {
-        target.parentNode.classList.remove('input-label--active');
-        $signupEmailInvalid.classList.add('hidden');
-        $signupEmailValid.classList.add('hidden');
-        $signupEmailError.textContent = '';
-      } else if (!emailValid.test(email)) {
-        target.parentNode.classList.add('input-label--active');
-        $signupEmailInvalid.classList.remove('hidden');
-        $signupEmailValid.classList.add('hidden');
-        $signupEmailError.textContent = '정확하지 않은 이메일입니다.';
-      } else if (emailValid.test(email)) {
-        target.parentNode.classList.remove('input-label--active');
-        $signupEmailValid.classList.remove('hidden');
-        $signupEmailInvalid.classList.add('hidden');
-        $signupEmailError.textContent = '';
-      }
+      inputValid('email', email, target, $signupEmailValid, $signupEmailInvalid, $signupEmailError);
     } else if (target.matches('#signup-password')) {
-      if (password === '') {
-        $signupPasswordInvalid.classList.add('hidden');
-        $signupPasswordValid.classList.add('hidden');
-        target.parentNode.classList.remove('input-label--active');
-        $signupPasswordError.textContent = '';
-      } else if (!passwordValid.test(password)) {
-        target.parentNode.classList.add('input-label--active');
-        $signupPasswordValid.classList.add('hidden');
-        $signupPasswordInvalid.classList.remove('hidden');
-        $signupPasswordError.textContent = '비밀번호는 최소 5자리 이상이어야 합니다.';
-      } else if (passwordValid.test(password)) {
-        target.parentNode.classList.remove('input-label--active');
-        $signupPasswordValid.classList.remove('hidden');
-        $signupPasswordInvalid.classList.add('hidden');
-        $signupPasswordError.textContent = '';
-      }
+      inputValid('password', password, target, $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
     } else if (target.matches('#signup-username')) {
-      if (username === '') {
-        $signupUsernameInvalid.classList.add('hidden');
-        $signupUsernameValid.classList.add('hidden');
-        target.parentNode.classList.remove('input-label--active');
-        $signupUsernameError.textContent = '';
-      } else if (!usernameValid.test(username)) {
-        target.parentNode.classList.add('input-label--active');
-        $signupUsernameValid.classList.add('hidden');
-        $signupUsernameInvalid.classList.remove('hidden');
-        $signupUsernameError.textContent = '정확하지 않은 이름입니다.';
-      } else if (usernameValid.test(username)) {
-        target.parentNode.classList.remove('input-label--active');
-        $signupUsernameValid.classList.remove('hidden');
-        $signupUsernameInvalid.classList.add('hidden');
-        $signupUsernameError.textContent = '';
-      }
+      inputValid('username', username, target, $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
     }
   });
 
@@ -225,7 +190,7 @@ export const eventListeners = () => {
     const password = $singinForm.password.value.trim();
 
     if (!usernameValid.test(username) || !emailValid.test(email) || !passwordValid.test(password)) {
-      resetValue(0);
+      resetValue('signup');
       return;
     }
 
@@ -237,7 +202,7 @@ export const eventListeners = () => {
       });
       if (!response.success) {
         alert(response.message);
-        resetValue(0);
+        resetValue('signup');
         return;
       }
       hiddenSignModal();
@@ -260,11 +225,20 @@ export const eventListeners = () => {
   });
 
   $signModal.addEventListener('click', ({ target }) => {
-    if (target.matches('#sign-modal')) {
-      hiddenSignModal()
-      resetValue(1);
-      resetValue(0);
-      // css 활성화 해제
-    }
+    if (!target.matches('#sign-modal')) return;
+    hiddenSignModal();
+    resetValue('signin');
+    resetValue('signup');
+    const resetStyle = (target, $valid, $invalid, $error) => {
+      document.getElementById(target).parentNode.classList.remove('input-label--active');
+      $valid.classList.add('hidden');
+      $invalid.classList.add('hidden');
+      $error.textContent = '';
+    };
+    resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+    resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
+    resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+    resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+    resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
   });
 };
