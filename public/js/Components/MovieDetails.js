@@ -37,7 +37,7 @@ export function MovieDetails({ $target, initialState }) {
               <div class="movie-header_user-interaction">
                 <div class="movie-header_score-container">
                   <p class="movie-header_score-letter">평가하기</p>
-                  <div class="movie-header_star-rating">
+                  <div class="star-rating">
                   <input type="radio" id="5-stars" name="rating" value="5" />
                   <label for="5-stars" class="star">&#9733;</label>
                   <input type="radio" id="4-stars" name="rating" value="4" />

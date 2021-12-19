@@ -67,7 +67,7 @@ section.movie-details .outer .inner {
   border-right: 1px solid rgb(237, 237, 237);
 }
 
-.movie-header_star-rating {
+.star-rating {
   display: flex;
   flex-direction: row-reverse;
   font-size: 42px;
@@ -76,22 +76,22 @@ section.movie-details .outer .inner {
   text-align: center;
 }
 
-.movie-header_star-rating input {
-  display: none;
+.star-rating input {
+  display:none;
 }
 
-.movie-header_star-rating label {
-  color: #ccc;
-  cursor: pointer;
+.star-rating label {
+  color:#ccc;
+  cursor:pointer;
 }
 
-.movie-header_star-rating :checked ~ label {
-  color: #fc0;
+.star-rating :checked ~ label {
+  color:#fc0;
 }
 
-.movie-header_star-rating label:hover,
-.movie-header_star-rating label:hover ~ label {
-  color: #fc0;
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color:#fc0;
 }
 
 .movie-header_score-letter {
