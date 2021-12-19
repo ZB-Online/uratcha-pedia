@@ -9,6 +9,7 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use('/', router);
 app.use(cookieParser());
+
 // app.use(cors());
 // app.options('/api/users/signin', cors());
 // app.options('*', cors());
