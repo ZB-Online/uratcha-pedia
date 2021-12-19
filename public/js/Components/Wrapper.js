@@ -48,7 +48,7 @@ export function Header({ $target, initialState }) {
           <li class='my-page hidden'>
             <button class="btn btn--border">마이페이지</button>
           </li>
-          <li class='logout'>
+          <li class='logout hidden'>
             <button class="btn">로그아웃</button>
           </li>
         </ul>
@@ -261,6 +261,19 @@ function Sign({ $target, initialState }) {
             </div>
           </section>
         </div>
+      </div>
+    </div>
+    <div class="confirm-modal hidden">
+      <div class="backdrop"></div>
+      <div class="modal-container">
+       <div class="confirm-main">
+         <div class="confirm-title">알림</div>
+         <div class="confirm-content">로그아웃 하시겠어요?</div>
+       </div>
+       <div class="confirm-btn-container">
+        <button class="confirm-btn confirm-cancel-btn">취소</button>
+        <button class="confirm-btn confirm-ok-btn">확인</button>
+       </div>
       </div>
     </div>
   `;

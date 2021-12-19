@@ -31,6 +31,7 @@ export const eventListeners = () => {
   ] = document.querySelectorAll('.invalid');
   const [$signinEmailError, $signinPasswordError, $signupUsernameError, $signupEmailError, $signupPasswordError] =
     document.querySelectorAll('.error');
+  const $confirmModal = document.querySelector('.confirm-modal');
 
   $headerLogo.onclick = () => {
     const route = '/';
@@ -63,7 +64,22 @@ export const eventListeners = () => {
     routeChange(route);
   };
 
-  $logoutBtn.addEventListener('click', async () => {
+  $logoutBtn.addEventListener('click', () => {
+    $confirmModal.classList.remove('hidden');
+  });
+
+  $confirmModal.addEventListener('click', ({ target }) => {
+    if (!target.matches('.backdrop')) return;
+    $confirmModal.classList.add('hidden');
+  });
+
+  document.querySelector('.confirm-cancel-btn').addEventListener('click', () => {
+    $confirmModal.classList.add('hidden');
+  });
+
+  document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
+    $confirmModal.classList.add('hidden');
+    console.log("logout")
     // var bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
     // try {
     //   const res = await fetch.get('/api/users/logout', {
@@ -102,17 +118,16 @@ export const eventListeners = () => {
     $logout.classList.remove('hidden');
   };
 
+  const regExp = {
+    email: new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/),
+    password: new RegExp(/[\w]{5,12}/),
+    username: new RegExp(/[\w]{2,8}/),
+  };
   const inputValid = (type, value, target, $valid, $invalid, $error) => {
     const errorMessage = {
       email: '정확하지 않은 이메일입니다.',
       password: '비밀번호는 최소 5자리 이상이어야 합니다.',
       username: '정확하지 않은 이름입니다.',
-    };
-
-    const regExp = {
-      email: new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/),
-      password: new RegExp(/[\w]{5,12}/),
-      username: new RegExp(/[\w]{2,8}/),
     };
 
     if (value === '') {
@@ -147,7 +162,7 @@ export const eventListeners = () => {
     e.preventDefault();
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
-    if (!emailValid.test(email) || !passwordValid.test(password)) {
+    if (!regExp['email'].test(email) || !regExp['password'].test(password)) {
       resetValue('signin');
       return;
     }
@@ -189,7 +204,7 @@ export const eventListeners = () => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
 
-    if (!usernameValid.test(username) || !emailValid.test(email) || !passwordValid.test(password)) {
+    if (!regExp['username'].test(username) || !regExp['email'].test(email) || !regExp['password'].test(password)) {
       resetValue('signup');
       return;
     }
