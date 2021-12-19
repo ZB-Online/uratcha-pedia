@@ -1,4 +1,5 @@
 import MovieCommentCarousel from './global/MovieCommentCarousel';
+import SimilarWorks from './SimilarWorks';
 import StarsGraph from './StarsGraph';
 
 export function MovieDetails({ $target, initialState }) {
@@ -10,6 +11,7 @@ export function MovieDetails({ $target, initialState }) {
     reviewsByMovieId: initialState.reviewsByMovieId,
     starsData: initialState.starsData,
     averageStarsData: initialState.averageStarsData,
+    similarWorksData: initialState.similarWorksData,
   };
 
   this.setState = newState => {
@@ -19,8 +21,6 @@ export function MovieDetails({ $target, initialState }) {
 
   this.render = () => {
     if (!this.state) return;
-
-    console.log('MovieDetails: ', this.state);
 
     const { cast, certification, country, genres, id, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
@@ -135,6 +135,13 @@ export function MovieDetails({ $target, initialState }) {
                 }
               </div>
             </div>
+
+            <div class="detail-container__similar-works">
+              <h2 class="detail-container__title">비슷한 작품</h2>
+              <div class="detail-container__similar-works-container">
+                
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -145,6 +152,11 @@ export function MovieDetails({ $target, initialState }) {
     new StarsGraph({
       $target: $movieDetails.querySelector('.detail-container__graph-container'),
       initialState: { starsData: this.state.starsData },
+    });
+
+    new SimilarWorks({
+      $target: $movieDetails.querySelector('.detail-container__similar-works-container'),
+      initialState: { similarWorksData: this.state.similarWorksData },
     });
 
     return $movieDetails;

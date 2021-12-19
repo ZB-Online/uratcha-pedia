@@ -4,6 +4,7 @@ import { eventListeners } from '../eventListeners';
 import { movieDetailCommentCarousel } from '../utils/carousel.js';
 import { bindMovieCommentCarouselEvents } from '../utils/carousel';
 import fetch from '../utils/fetch';
+import { routeChange } from '../router';
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');
@@ -23,7 +24,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   };
 
   this.render = () => {
-    const { movieDetails, reviewsByMovieId, starsData, averageStarsData } = this.state;
+    const { movieDetails, reviewsByMovieId, starsData, averageStarsData, similarWorksData } = this.state;
 
     $MovieDetailsPage.appendChild(
       new Wrapper({
@@ -38,6 +39,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
                 reviewsByMovieId: reviewsByMovieId,
                 starsData: starsData,
                 averageStarsData: averageStarsData,
+                similarWorksData: similarWorksData,
               },
             },
           },
@@ -53,6 +55,13 @@ export default function MovieDetailsPage({ $target, initialState }) {
       document.querySelector('.detail-container_comment-container'),
       this.state.reviewsByMovieId
     );
+
+    $MovieDetailsPage.addEventListener('click', ({ target }) => {
+      if (!target.matches('.similar-works-container *')) return;
+
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
   };
 
   const fetchMovieDetails = async movieId => {
@@ -78,7 +87,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const fetchStarsByMovieId = async movieId => {
     try {
       const { resData } = await fetch.get(`/api/stars/movies/${movieId}`);
-      console.log(resData);
       return resData;
     } catch (e) {
       console.error('starsByMovieId not fetched: ', e);
@@ -94,6 +102,15 @@ export default function MovieDetailsPage({ $target, initialState }) {
     }
   };
 
+  const fetchSimilarWorksByGenre = async genre => {
+    try {
+      const { resData } = await fetch.get(`/api/movies/genre/${genre}`);
+      return resData;
+    } catch (e) {
+      console.error('averageStarsByMovieId not fetched: ', e);
+    }
+  };
+
   const fetchMovieDetailData = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
@@ -101,6 +118,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
     const starsData = await fetchStarsByMovieId(843241);
     // & : 평균 별점 가져오기
     const averageStarsData = await fetchAverageStarsByMovieId(843241);
+    // & : 비슷한 작품 가져오기
+    const similarWorksData = await fetchSimilarWorksByGenre(movieDetailsData.genres[0]);
 
     this.setState({
       ...this.state,
@@ -108,6 +127,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
       reviewsByMovieId: reviewsByMovieId,
       starsData: starsData,
       averageStarsData: averageStarsData,
+      similarWorksData: similarWorksData,
     });
   };
 

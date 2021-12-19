@@ -375,3 +375,47 @@ section.movie-details .outer .inner {
 .detail-container_comment .carousel-control.next {
   right: -3.5px;
 }
+
+.detail-container__similar-works .detail-container__similar-works-container {
+  /* margin-bottom: 20px; */
+}
+.detail-container__similar-works .detail-container__similar-works-container .similar-works-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  column-gap: 20px;
+}
+.similar-works-container {
+  margin-top: 20px;
+  overflow: hidden;
+  position: relative;
+  /* display: flex; */
+}
+.detail-container__similar-works
+  .detail-container__similar-works-container
+  .similar-works-container
+  .similar-works-item {
+  margin: 0 0 24px;
+  padding: 0 5px;
+}
+.detail-container__similar-works
+  .detail-container__similar-works-container
+  .similar-works-container
+  .similar-works-item
+  img {
+  border-radius: 6px;
+  max-width: 140px;
+  max-height: 205px;
+}
+.detail-container__similar-works
+  .detail-container__similar-works-container
+  .similar-works-container
+  .similar-works-item
+  .similar-works-item__info
+  .similar-works-item__title {
+  max-width: 140px;
+  max-height: 205px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
