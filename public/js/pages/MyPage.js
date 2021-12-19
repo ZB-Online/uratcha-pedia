@@ -41,6 +41,7 @@ export default function MyPage({ $target }) {
 
   const fetchMyScoredMovies = async () => {
     try {
+      // & : userId에 맞는 별점을 가진 영화들을 가져오도록 수정필요
       const data = await fetch.get('/api/movies');
       const myScoredMovies = data.resData;
       this.setState({ ...this.state, myScoredMovies: myScoredMovies });

@@ -10,7 +10,7 @@ import fetch from './fetch.js';
 // SIGNIN_SUCCESS
 (async () => {
   const res = await fetch.post('/api/users/signin', {
-    email: "test@test.com",
+    email: 'test@test.com',
     password: 'test1',
   });
   console.log('POST', res);
@@ -25,9 +25,9 @@ import fetch from './fetch.js';
 // SIGNUP_SUCCESS
 (async () => {
   const res = await fetch.post('/api/users/signup', {
-    email: "test4@test.com",
+    email: 'test4@test.com',
     password: 'test4',
-    username: '테스트계정4'
+    username: '테스트계정4',
   });
   console.log('POST', res);
 })();
@@ -38,8 +38,8 @@ import fetch from './fetch.js';
 // MOVIE_GET_SUCCESS
 // INTERNAL_SERVER_ERROR
 (async () => {
-  const res = await fetch.get("/api/movies");
-  console.log("GET", res);
+  const res = await fetch.get('/api/movies');
+  console.log('GET', res);
 })();
 
 // 영화id로 영화 상세정보 가져오기
@@ -48,8 +48,8 @@ import fetch from './fetch.js';
 // MOVIE_GET_SUCCESS
 // INTERNAL_SERVER_ERROR
 (async () => {
-  const res = await fetch.get("/api/movies/565");
-  console.log("GET", res);
+  const res = await fetch.get('/api/movies/565');
+  console.log('GET', res);
 })();
 
 // 검색어로 검색결과 가져오기
@@ -58,8 +58,8 @@ import fetch from './fetch.js';
 // MOVIE_GET_SUCCESS
 // INTERNAL_SERVER_ERROR
 (async () => {
-  const res = await fetch.get("/api/movies/search/ring");
-  console.log("GET", res);
+  const res = await fetch.get('/api/movies/search/ring');
+  console.log('GET', res);
 })();
 
 // 영화id로 해당 영화의 리뷰들 가져오기
@@ -147,6 +147,18 @@ import fetch from './fetch.js';
 (async () => {
   const res = await fetch.get('/api/stars/1');
   console.log('GET', res);
+})();
+
+// 영화id로 해당 영화의 별점 배열 가져오기
+// resData
+// 별점 있을 때 : 배열
+// 별점 등록 안했을 때 : []
+// message format :
+// VALUE_INVALID
+// STAR_GET_SUCCESS
+(async () => {
+  const res = await fetch.get('/api/stars/movies/843241');
+  console.log('GET#########', res);
 })();
 
 // 영화id와 userEmail로 별점 가져오기(Max 1개)

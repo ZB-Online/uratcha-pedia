@@ -69,9 +69,23 @@ export default function MovieDetailsPage({ $target, initialState }) {
     }
   };
 
+  const fetchStarsByMovieId = async movieId => {
+    try {
+      const data = await fetch.get(`/api/stars/movies/${movieId}`);
+      console.log('data', data);
+      return await data.resData;
+      // const starsByMovieId = await data?.resData;
+      // return starsByMovieId;
+    } catch (e) {
+      console.error('stars not fetched: ', e);
+    }
+  };
+
   const fetchMovieDetailData = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
+    const starsData = await fetchStarsByMovieId(this.state.movieId);
+    console.log('starsData', starsData);
     this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: reviewsByMovieId });
   };
 

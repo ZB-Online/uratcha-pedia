@@ -16,6 +16,7 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
     if (!this.state) return;
 
     const { movies } = this.state;
+    console.log(movies);
 
     $myScoredMoviesCarousel.innerHTML = `<ul class="my-scored-movies-container__list carousel-slides">
     ${movies
@@ -29,7 +30,7 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
                 ${movie.title}
               </div>
               <div class="my-scored-movies-item__score">
-                평가함<i class="bx bxs-star bx-flip-horizontal"></i>5.0
+                평가함 ★ 3.9
               </div>
             </div>
           </a>
