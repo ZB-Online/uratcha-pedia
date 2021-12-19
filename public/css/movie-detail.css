@@ -10,11 +10,9 @@ section.movie-details .outer .inner {
 
 .movie-header {
   width: 976px;
-  /* width:100% */
-  height: 202px;
+  height: 224px;
   display: grid;
   grid-template-columns: 1fr 6fr;
-  /* padding: 0 8px; */
   column-gap: 20px;
 }
 .movie-header_movie-poster {
@@ -63,11 +61,39 @@ section.movie-details .outer .inner {
   margin-top: 20px;
 }
 .movie-header_score-container {
-  width: 238px;
+  width: 260px;
   text-align: center;
   margin: 0px 0px;
   border-right: 1px solid rgb(237, 237, 237);
 }
+
+.movie-header_star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 42px;
+  justify-content: space-around;
+  padding: 0 45px;
+  text-align: center;
+}
+
+.movie-header_star-rating input {
+  display: none;
+}
+
+.movie-header_star-rating label {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.movie-header_star-rating :checked ~ label {
+  color: #fc0;
+}
+
+.movie-header_star-rating label:hover,
+.movie-header_star-rating label:hover ~ label {
+  color: #fc0;
+}
+
 .movie-header_score-letter {
   font-size: 12px;
   line-height: 16px;

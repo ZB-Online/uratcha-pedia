@@ -65,8 +65,9 @@ export const eventListeners = () => {
 
   $logoutBtn.addEventListener('click', () => {});
 
+  // signin : 1 signup: 0
   const resetValue = form => {
-    if (form === 'SIGNIN') {
+    if (form) {
       $singinForm.email.value = '';
       $singinForm.password.value = '';
     } else {
@@ -122,7 +123,7 @@ export const eventListeners = () => {
         target.parentNode.classList.add('input-label--active');
         $signinPasswordValid.classList.add('hidden');
         $signinPasswordInvalid.classList.remove('hidden');
-        $signinPasswordError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
+        $signinPasswordError.textContent = '비밀번호는 최소 5자리 이상이어야 합니다.';
       } else if (passwordValid.test(password)) {
         target.parentNode.classList.remove('input-label--active');
         $signinPasswordValid.classList.remove('hidden');
@@ -137,7 +138,7 @@ export const eventListeners = () => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
     if (!emailValid.test(email) || !passwordValid.test(password)) {
-      resetValue('SIGNIN');
+      resetValue(1);
       return;
     }
 
@@ -148,7 +149,7 @@ export const eventListeners = () => {
       });
       if (!response.success) {
         alert(response.message);
-        resetValue('SIGNIN');
+        resetValue(1);
         return;
       }
       hiddenSignModal();
@@ -190,7 +191,7 @@ export const eventListeners = () => {
         target.parentNode.classList.add('input-label--active');
         $signupPasswordValid.classList.add('hidden');
         $signupPasswordInvalid.classList.remove('hidden');
-        $signupPasswordError.textContent = '비밀번호는 최소 6자리 이상이어야 합니다.';
+        $signupPasswordError.textContent = '비밀번호는 최소 5자리 이상이어야 합니다.';
       } else if (passwordValid.test(password)) {
         target.parentNode.classList.remove('input-label--active');
         $signupPasswordValid.classList.remove('hidden');
@@ -223,12 +224,8 @@ export const eventListeners = () => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
 
-    if (username === '' || email === '' || password === '') {
-      return;
-    }
-
     if (!usernameValid.test(username) || !emailValid.test(email) || !passwordValid.test(password)) {
-      resetValue('SIGNUP');
+      resetValue(0);
       return;
     }
 
@@ -240,7 +237,7 @@ export const eventListeners = () => {
       });
       if (!response.success) {
         alert(response.message);
-        resetValue('SIGNUP');
+        resetValue(0);
         return;
       }
       hiddenSignModal();
@@ -265,8 +262,8 @@ export const eventListeners = () => {
   $signModal.addEventListener('click', ({ target }) => {
     if (target.matches('#sign-modal')) {
       hiddenSignModal()
-      resetValue('SIGNIN');
-      resetValue('SIGNUP');
+      resetValue(1);
+      resetValue(0);
       // css 활성화 해제
     }
   });
