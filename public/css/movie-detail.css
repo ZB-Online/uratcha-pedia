@@ -98,12 +98,90 @@ section.movie-details .outer .inner {
   padding: 20px;
 }
 .detail-container_movie-info,
-.detail-container_cast {
+.detail-container_cast,
+.detail-container__stars-graph {
   border-bottom: 1px solid rgb(237, 237, 237);
 }
+
+.detail-container__stars-graph {
+  padding: 8px 0px 0px;
+  height: 255px;
+}
+
 .detail-container_title {
   margin-top: 0;
 }
+.detail-container__title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-container__title {
+}
+
+.detail-container__info {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-container__info > p {
+  margin: 0;
+  color: rgb(40, 40, 40);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: right;
+}
+
+.detail-container__info > strong {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19px;
+  color: rgb(120, 120, 120);
+  text-align: right;
+}
+
+.detail-container__graph-container {
+  position: absolute;
+  bottom: 0;
+
+  width: 100%;
+}
+
+.detail-container__graph-container > svg {
+}
+/* & : stars-graph */
+.stars-graph-container {
+  position: relative;
+  border: 1px solid #fff;
+
+  height: 131px;
+  margin-top: 80px;
+  margin-bottom: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+.stars-graph-container .bar--color-normal {
+  background: rgb(255, 221, 99);
+}
+.stars-graph-container .bar--color-most {
+  background: rgb(255, 161, 54);
+}
+.stars-graph-container span {
+  font-size: 20px;
+  line-height: 1.8em;
+  color: #fff;
+  text-align: center;
+
+  margin-top: auto;
+  width: 36px;
+}
+
 .detail-container_summary {
   color: rgb(74, 74, 74);
   font-size: 15px;
@@ -136,6 +214,7 @@ section.movie-details .outer .inner {
   line-height: 24px;
 }
 .detail-container_cast,
+.detail-container__stars-graph,
 .detail-container_comment {
   margin-top: 20px;
   overflow: hidden;

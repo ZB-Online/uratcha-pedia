@@ -77,6 +77,13 @@ const getStarsByUserEmail = (req, res) => {
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, stars));
 };
 
+const getStarsByMovieId = (req, res) => {
+  const { movieId } = req.params;
+  if (!movieId) return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
+  const stars = starDao.getStarsByMovieId(movieId);
+  res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, stars));
+};
+
 module.exports = {
   getStars,
   getStarsCount,
@@ -86,4 +93,5 @@ module.exports = {
   removeStar,
   getStarByMovieIdUserEmail,
   getStarsByUserEmail,
+  getStarsByMovieId,
 };

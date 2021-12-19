@@ -9,6 +9,7 @@ router.post('/', starCtrl.addStar);
 router.patch('/', starCtrl.updateStar);
 router.delete('/:id', starCtrl.removeStar);
 router.get('/movies/:movieId/users/:userEmail', starCtrl.getStarByMovieIdUserEmail);
+router.get('/movies/:movieId', starCtrl.getStarsByMovieId);
 router.get('/users/:userEmail', starCtrl.getStarsByUserEmail);
 
 module.exports = router;
