@@ -56,6 +56,9 @@ export default function HighestRankingCarousel({ $target, initialState }) {
             alt="forward"
         />
         </button>`;
+
     return $highestRankingCarousel;
   };
+
+  this.render();
 }
