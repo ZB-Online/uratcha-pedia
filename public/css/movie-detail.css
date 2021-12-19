@@ -111,6 +111,7 @@ section.movie-details .outer .inner {
   border: none;
   background: none;
   margin-left: 32px;
+  cursor: pointer;
 }
 
 .detail-container {
@@ -223,12 +224,13 @@ section.movie-details .outer .inner {
 }
 .detail-container_comment-list {
   width: 100%;
+  display: flex;
 }
 
 .detail-container_comment-item {
   display: inline-block;
   width: 285px;
-  margin: 0 11px;
+  margin: 0 12px;
   height: 200px;
   background-color: rgb(242, 242, 242);
   padding: 0 12px;

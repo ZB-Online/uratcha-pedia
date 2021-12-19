@@ -2,6 +2,7 @@ import { MovieDetails } from '../Components/MovieDetails';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { movieDetailCommentCarousel } from '../utils/carousel.js';
+import { bindMovieCommentCarouselEvents } from '../utils/carousel';
 import fetch from '../utils/fetch';
 
 export default function MovieDetailsPage({ $target, initialState }) {
@@ -10,12 +11,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
   $MovieDetailsPage.classList.add('movie-detail-page');
   $target.appendChild($MovieDetailsPage);
 
-  // 수정함!
-  // this.state = {
-  //   movieId: initialState,
-  //   user: { email: 'test1@test.com', username: '테스트계정1' },
-  //   userScore: { id: 1, userEmail: 'test1@test.com', movieId: 1, score: 5 },
-  // };
   this.state = {
     movieId: initialState,
   };
@@ -23,6 +18,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+
     this.bindEvents();
   };
 
@@ -45,8 +41,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   this.bindEvents = () => {
     eventListeners();
-    // 추가
-    movieDetailCommentCarousel(
+
+    bindMovieCommentCarouselEvents(
       document.querySelector('.detail-container_comment-container'),
       this.state.reviewsByMovieId
     );
@@ -87,6 +83,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
       console.log(err);
     }
   };
+  // 추가
+
   const fetchMovieDetails = async movieId => {
     try {
       const data = await fetch.get(`/api/movies/${movieId}`);
@@ -123,5 +121,5 @@ export default function MovieDetailsPage({ $target, initialState }) {
   };
 
   fetchMovieDetailData();
-  fetchInitialScore()
+  fetchInitialScore();
 }

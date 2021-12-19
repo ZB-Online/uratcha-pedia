@@ -12,6 +12,8 @@ export function Header({ $target, initialState }) {
   this.render = () => {
     if (!this.state) return;
 
+    const { keyword } = this.state;
+
     $header.innerHTML = `
     <div class="outer">
       <div class="inner">
@@ -25,7 +27,9 @@ export function Header({ $target, initialState }) {
             <form class="search-form" action="#">
               <span class="material-icons">search</span>
               <label for="search-input">
-                <input type="text" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
+                <input type="text" value="${
+                  keyword ? keyword : ''
+                }" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
                 <!-- 입력 시 hidden 제거 -->
                 <div class="cancel-btn hidden"> 
                   <span class="material-icons ">

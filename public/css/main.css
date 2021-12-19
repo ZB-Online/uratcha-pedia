@@ -116,8 +116,6 @@
 
 .carousel {
   margin: auto;
-  display: flex;
-  align-items: center;
   max-width: 1330px;
   overflow: hidden;
   cursor: pointer;
