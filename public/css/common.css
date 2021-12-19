@@ -61,6 +61,10 @@ a {
   display: none;
 }
 
+.hide {
+  visibility: hidden;
+}
+
 /* HEADER */
 header {
   width: 100%;

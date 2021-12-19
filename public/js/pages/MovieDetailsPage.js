@@ -72,7 +72,15 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const fetchMovieDetailData = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
-    this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: reviewsByMovieId });
+
+    const scoredReview = await Promise.all(
+      reviewsByMovieId.map(async review => {
+        const data = await fetch.get(`/api/stars/movies/${review.movieId}/users/${review.userEmail}`);
+        const score = await data.resData.star.score;
+        return { ...review, score };
+      })
+    );
+    this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: scoredReview });
   };
 
   fetchMovieDetailData();

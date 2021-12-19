@@ -16,6 +16,8 @@ export default function MovieCommentCarousel({ $target, initialState }) {
 
     const { comments } = this.state;
 
+    console.log(comments);
+
     $movieCommentCarousel.innerHTML = `<div class="detail-container_comment-list carousel-slides">
       ${comments
         .map(comment => {
@@ -23,7 +25,11 @@ export default function MovieCommentCarousel({ $target, initialState }) {
               <div class="detail-container_comment-item" data-movie-id="${comment?.movieId}">
               <div class="detail-container_comment-item-header">
               <span class="detail-container_user-name">${comment.userEmail}</span>
-              <div class="detail-container_user-score">★ <span>5.0</span></div>
+              ${
+                comment?.score
+                  ? `<div class="detail-container_user-score">★<span>${comment.score}.0</span></div>`
+                  : `<div class="detail-container_user-score hide"></div>`
+              }
             </div>
             <p class="detail-container_user-content">
               ${comment?.comment}
