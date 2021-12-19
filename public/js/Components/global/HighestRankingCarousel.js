@@ -5,8 +5,6 @@ export default function HighestRankingCarousel({ $target, initialState }) {
   $highestRankingCarousel.classList.add('carousel', 'highest-ranking');
   $target.appendChild($highestRankingCarousel);
 
-  console.log('하이스트', initialState);
-
   this.state = {
     movies: initialState,
   };
@@ -20,7 +18,6 @@ export default function HighestRankingCarousel({ $target, initialState }) {
     if (!this.state) return;
 
     const { movies } = this.state;
-    console.log('21', movies);
 
     $highestRankingCarousel.innerHTML = `<ul class="movie-score carousel-slides">
       ${movies

@@ -71,22 +71,25 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   const fetchStarsByMovieId = async movieId => {
     try {
-      const data = await fetch.get(`/api/stars/movies/${movieId}`);
-      console.log('data', data);
-      return await data.resData;
-      // const starsByMovieId = await data?.resData;
-      // return starsByMovieId;
+      const { resData } = await fetch.get(`/api/stars/movies/${movieId}`);
+      return resData;
     } catch (e) {
-      console.error('stars not fetched: ', e);
+      console.error('starsByMovieId not fetched: ', e);
     }
   };
 
   const fetchMovieDetailData = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
-    const starsData = await fetchStarsByMovieId(this.state.movieId);
-    console.log('starsData', starsData);
-    this.setState({ ...this.state, movieDetails: movieDetailsData, reviewsByMovieId: reviewsByMovieId });
+    // & : movieId 변경 필요 1~20 들어옴
+    const starsData = await fetchStarsByMovieId(843241);
+
+    this.setState({
+      ...this.state,
+      movieDetails: movieDetailsData,
+      reviewsByMovieId: reviewsByMovieId,
+      starsData: starsData,
+    });
   };
 
   fetchMovieDetailData();
