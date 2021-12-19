@@ -58,6 +58,9 @@ export default function BoxOfficeRankingCarousel({ $target, initialState }) {
             alt="forward"
         />
         </button>`;
+
     return $boxOfficeRankingCarousel;
   };
+
+  this.render();
 }
