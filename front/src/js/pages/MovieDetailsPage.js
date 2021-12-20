@@ -73,7 +73,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
       // dropdown
       if (target.matches('.movie-header_add-comment')) {
         // check if review exists
-        console.log(this.state.myReview.id, this.state.myReview.movieId, this.state.movieId);
         this.state.myReview.id && this.state.myReview.movieId === +this.state.movieId
           ? $commentDropdown.classList.toggle('hidden') // pop up add-comment dropdown
           : $commentModal.classList.remove('hidden'); // pop up comment modal
@@ -98,7 +97,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         $commentModalTextarea.value = comment || '';
         $commentModalWriteBtn.removeAttribute('disabled');
       } else if (target.matches('.delete-comment') || target.matches('.my-comment-container_btn.del-btn')) {
-        console.log('cur review', this.state.myReview.id);
         deleteMyReview();
         document.querySelector('.my-comment-container.comment').classList.add('hidden');
       }
@@ -279,7 +277,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         comment,
       };
       const res = await fetch.post('/api/reviews', myReview);
-      console.log(res);
       // review id 서버에서 가져와서 myReview 객체에 넣어주세요 :)
       this.setState({ ...this.state, myReview });
     } catch (e) {

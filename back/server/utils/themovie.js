@@ -33,7 +33,7 @@ const getMoviesDetailsById = async movieId => {
         fetch(`${apiBaseUrl}movie/${movieId}/release_dates?api_key=${apiKey}`),
       ]).then(promises => promises.map(promise => promise.json()))
     );
-    const country = responseData?.production_countries.map(country => country.iso_3166_1)[0];
+    const country = responseData?.production_countries.map(country => country.iso_3166_1)[0] || 'None';
     const certification = await findCertification(responseCertificationData?.results, country);
     return {
       id: responseData?.id,
@@ -60,7 +60,7 @@ const getMoviesWithCountry = async movieId => {
     const response = await fetch(`${apiBaseUrl}movie/${movieId}?api_key=${apiKey}`);
     const responseData = await response.json();
     return {
-      country: responseData?.production_countries.map(country => country.iso_3166_1)[0],
+      country: responseData?.production_countries.map(country => country.iso_3166_1)[0] || 'None',
     };
   } catch (error) {
     throw new Error(error);
@@ -98,7 +98,7 @@ const getMyScoredMoviesInfo = async movieId => {
     return {
       title: responseData?.title,
       release_date: responseData?.release_date,
-      country: responseData?.production_countries?.map(country => country.iso_3166_1)[0],
+      country: responseData?.production_countries?.map(country => country.iso_3166_1)[0] || 'None',
       poster_path: responseData?.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
     };
   } catch (error) {
