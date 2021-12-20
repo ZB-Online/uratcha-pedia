@@ -1,0 +1,208 @@
+/* @ : my-scored-movies */
+.my-scored-movies-header {
+  margin-top: 66px;
+  margin-bottom: 64px;
+  width: 100%;
+  height: 85px;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 0 20px;
+  border-bottom: 1px solid rgb(227, 227, 227);
+}
+
+.my-scored-movies-header__back-button {
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.my-scored-movies-header__title {
+  height: 41px;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.my-scored-movies-container {
+  /* width: 1300px; */
+  width: 100vw;
+  height: 100%;
+  padding: 20px 20px 0 20px;
+
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.my-scored-movies-container__header {
+  overflow: hidden;
+}
+
+.my-scored-movies-container__title {
+  float: left;
+  color: rgb(0, 0, 0);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+  line-height: 28px;
+  margin: 8px 0px;
+}
+
+.my-scored-movies-container__number {
+  display: inline-block;
+  color: rgb(160, 160, 160);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 20px;
+  margin: 12px 0px 12px 6px;
+}
+
+.my-scored-movies-container__inner {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  flex-wrap: row wrap;
+
+  --currentSlide: 0;
+  --duration: 0;
+  /* 수평 정렬 */
+  display: flex;
+  transition: transform calc(var(--duration) * 1ms) ease-out;
+  transform: translate3D(calc(var(--currentSlide) * -100%), 0, 0);
+}
+
+.my-scored-movies-container__list {
+  width: 100%;
+  display: flex;
+  /* no list style */
+  list-style: none;
+  padding: 0;
+}
+
+.my-scored-movies-item {
+  padding: 5px;
+  transition: 300ms;
+  margin-bottom: 24px;
+}
+
+.my-scored-movies-item > a,
+.my-scored-movies-item > a:visited,
+.my-scored-movies-item > a:hover,
+.my-scored-movies-item > a:focus,
+.my-scored-movies-item > a:active {
+  text-decoration: none;
+}
+
+.my-scored-movies-item__title {
+  max-width: 146px;
+  height: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(41, 42, 50);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.my-scored-movies-item__score {
+  height: 18px;
+  font-size: 13px;
+  color: rgb(255, 161, 54);
+
+  line-height: 18px;
+  vertical-align: bottom;
+}
+
+.my-scored-movies-item__score {
+  display: flex;
+  align-items: center;
+}
+
+.my-scored-movies-item__score > i {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+.my-scored-movies-item img {
+  height: 200px;
+  max-height: 265px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  vertical-align: top;
+  object-fit: cover;
+  transition: opacity 420ms ease 0s;
+}
+
+@media (max-width: 2250px) {
+  .my-scored-movies-item {
+    width: calc(100% / 14);
+  }
+}
+
+@media (max-width: 2100px) {
+  .my-scored-movies-item {
+    width: calc(100% / 13);
+  }
+}
+
+@media (max-width: 1920px) {
+  .my-scored-movies-item {
+    width: calc(100% / 12);
+  }
+}
+
+@media (max-width: 1750px) {
+  .my-scored-movies-item {
+    width: calc(100% / 11);
+  }
+}
+
+@media (max-width: 1600px) {
+  .my-scored-movies-item {
+    width: calc(100% / 10);
+  }
+}
+
+@media (max-width: 1360px) {
+  .my-scored-movies-item {
+    width: calc(100% / 9);
+  }
+}
+
+@media (max-width: 1200px) {
+  .my-scored-movies-item {
+    width: calc(100% / 8);
+  }
+}
+
+@media (max-width: 1100px) {
+  .my-scored-movies-item {
+    width: calc(100% / 7);
+  }
+}
+
+@media (max-width: 960px) {
+  .my-scored-movies-item {
+    width: calc(100% / 6);
+  }
+}
+
+@media (max-width: 840px) {
+  .my-scored-movies-item {
+    width: calc(100% / 5);
+  }
+}
+
+@media (max-width: 680px) {
+  .my-scored-movies-item {
+    width: calc(100% / 4);
+  }
+}
+
+@media (max-width: 520px) {
+  .my-scored-movies-item {
+    width: calc(100% / 3);
+  }
+}
