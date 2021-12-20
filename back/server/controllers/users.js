@@ -23,7 +23,7 @@ const signin = async (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
   const token = generateToken(signinUser.email);
-  res.cookie('x_auth',token).status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{auth: true, email: userInfo.email, username: userInfo.username}));
+  res.cookie('x_auth',token).status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS));
 };
 
 const signup = async (req, res) => {
@@ -42,9 +42,9 @@ const signup = async (req, res) => {
   } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-
-  userDao.addUser(signupUser);
-  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS));
+  const token = generateToken(signupUser.email);
+  userDao.addUser({...signupUser, token });
+  res.cookie('x_auth',token).status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS));
 };
 
 const generateToken = email => {

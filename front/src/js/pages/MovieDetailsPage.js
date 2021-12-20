@@ -4,6 +4,7 @@ import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
 import { routeChange } from '../../js/router';
+import debounce from '../utils/debounce'
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');
@@ -153,9 +154,9 @@ export default function MovieDetailsPage({ $target, initialState }) {
       this.state.reviewsByMovieId
     );
 
-    document.querySelector('.star-rating').addEventListener('click', e => {
+    document.querySelector('.star-rating').addEventListener('click',debounce(e => {
       e.preventDefault();
-      const score = +e.target.previousElementSibling.value;
+      const score = +e.target.value;
       const currentScore = this.state.userScore?.score;
       if (!currentScore) {
         fetchAddUserScore(score);
@@ -164,7 +165,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
       } else if (currentScore === score) {
         fetchDeleteUserScore(this.state.userScore.id);
       }
-    });
+    },300));
   };
 
   const renderMarkStar = () => {
@@ -279,9 +280,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
         comment,
       };
       const res = await fetch.post('/api/reviews', myReview);
-      console.log(res);
-      // review id 서버에서 가져와서 myReview 객체에 넣어주세요 :)
-      this.setState({ ...this.state, myReview });
+      this.setState({ ...this.state, myReview: res?.resData });
+      console.log(this.state)
     } catch (e) {
       console.error(e);
     }
