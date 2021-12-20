@@ -29,7 +29,7 @@ export default function App({ $target }) {
       new SearchResultPage({ $target, initialState: decodeURI(keyword) });
     } else if (pathname.indexOf('/movies/') === 0) {
       const [, , movieId] = pathname.split('/');
-      new MovieDetailsPage({ $target, initialState: movieId });
+      new MovieDetailsPage({ $target, initialState: +movieId });
     } else if (pathname === '/mypage') {
       new MyPage({ $target });
     }

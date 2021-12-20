@@ -1,17 +1,19 @@
-import MovieCommentCarousel from './global/MovieCommentCarousel';
-import SimilarWorks from './SimilarWorks';
-import StarsGraph from './StarsGraph';
+import MovieCommentCarousel from '../../../js/Components/global/MovieCommentCarousel';
+import SimilarWorks from '../../../js/Components/SimilarWorks';
+import StarsGraph from '../../../js/Components/StarsGraph';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
 
+  console.log(initialState.myReview);
   this.state = {
     movieDetails: initialState.movieDetails,
     reviewsByMovieId: initialState.reviewsByMovieId,
     starsData: initialState.starsData,
     averageStarsData: initialState.averageStarsData,
     similarWorksData: initialState.similarWorksData,
+    myReview: initialState.myReview,
   };
 
   this.setState = newState => {
@@ -24,7 +26,6 @@ export function MovieDetails({ $target, initialState }) {
 
     const { cast, certification, country, genres, id, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
-
 
     const releaseYear = release_date.slice(0, 4);
     const genresComb = genres.join('/');
@@ -65,17 +66,82 @@ export function MovieDetails({ $target, initialState }) {
                   <label for="1-star" class="star">&#9733;</label>
                   </div>
                 </div>
-                <button class="movie-header_add-comment">
-                  <box-icon
-                    type="solid"
-                    name="pencil"
-                    animation="tada-hover"
-                  ></box-icon>
+                <button class="movie-header_add-comment btn">
+                  <div class="add-comment-icon-container"><span class="material-icons"> edit </span></div>
                   코멘트
+                  <div class="comment-dropdown-container hidden">
+                    <div class="edit-comment"><span class="material-icons"> edit </span>Edit Comment</div>
+
+                    <div class="delete-comment"><span class="material-icons "> delete </span>Delete Comment</div>
+                  </div>
                 </button>
               </div>
             </div>
           </div>
+
+          <div class="comment-modal-container hidden">
+            <div class="backdrop"></div>
+              <div id="comment-modal">
+                <div class="modal-container">
+                  <div class="comment-modal-header">
+                    <div class="close-comment">
+                      <button aria-label="close" class="close-comment-btn"></button>
+                    </div>
+                    <em class="comment-title">Spider-Man: No Way Home</em>
+                    <div class="write-comment">
+                      <button class="write-comment-btn" disabled>Comment</button>
+                    </div>
+                  </div>
+                <div class="comment-main">
+                  <div class="comment-content">
+                    <textarea
+                      placeholder="Feel free to write on this title"
+                      class="comment-textarea"
+                    ></textarea>
+                    <div class="writed-content"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-container ">
+      <ul class="my-comment-container comment hidden">
+        <li>
+          <ul class="my-comment">
+            <li>
+              <span class="username">${this.state.myReview.userEmail}</span>
+            </li>
+            <li>
+              <span class="comment-content">${this.state.myReview.comment}</span>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <ul class="my-comment">
+            <li>
+              <button class="my-comment-container_btn del-btn">
+                <span class="material-icons "> delete_outline </span>Delete
+              </button>
+            </li>
+            <li>
+              <button class="my-comment-container_btn edit-btn">
+                <span class="material-icons"> edit </span>Edit
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="my-comment-container leave-comment">
+          <div class="my-comment">
+              <span class="username">Please share your thought</span>
+          </div>
+          <div class="my-comment">
+              <button class="movie-header_add-comment btn--white">Leave Comment</button>
+          </div>
+      </ul>
+    </div>
       
           <div class="detail-container">
             <div class="detail-container_movie-info">
