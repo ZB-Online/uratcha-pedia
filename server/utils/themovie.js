@@ -39,7 +39,7 @@ const getMoviesDetailsById = async movieId => {
       id: responseData?.id,
       title: responseData?.title,
       overview: responseData?.overview,
-      poster_path: movie.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
+      poster_path: responseData.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
       release_date: responseData?.release_date,
       genres: responseData?.genres.map(genre => genre.name),
       country,
@@ -99,7 +99,7 @@ const getMyScoredMoviesInfo = async movieId => {
       title: responseData?.title,
       release_date: responseData?.release_date,
       country: responseData?.production_countries?.map(country => country.iso_3166_1)[0],
-      poster_path: movie.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
+      poster_path: responseData?.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
     };
   } catch (error) {
     throw new Error(error);
@@ -145,7 +145,7 @@ const getSimilarWorksByGenreId = async genre => {
     const { results } = await response.json();
     return results.map(result => ({
       ...result,
-      poster_path: movieConfig.imageBaseUrl + result.poster_path,
+      poster_path: result.poster_path ? movieConfig.imageBaseUrl + result.poster_path : '',
     }));
   } catch (error) {
     throw new Error(error);

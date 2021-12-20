@@ -80,26 +80,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
     const currentScore = this.state.userScore.score || 0;
     if (currentScore) document.getElementById(`${currentScore}-star`).checked = true;
     const starMessage = ['평가하기', '싫어요', '별로에요', '보통이에요', '재미있어요', '최고에요!'];
-    // switch (currentScore) {
-    //   // 배열로 수정
-    //   case 1:
-    //     text = '싫어요';
-    //     break;
-    //   case 2:
-    //     text = '별로에요';
-    //     break;
-    //   case 3:
-    //     text = '보통이에요';
-    //     break;
-    //   case 4:
-    //     text = '재미있어요';
-    //     break;
-    //   case 5:
-    //     text = '최고에요!';
-    //     break;
-    //   default:
-    //     text = '평가하기';
-    // }
     document.querySelector('.movie-header_score-letter').textContent = starMessage[currentScore];
   };
 
@@ -120,7 +100,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         score,
       });
       this.setState({ ...this.state, userScore: data?.resData });
-      // renderMarkStar();
     } catch (err) {
       alert(err);
     }
@@ -134,7 +113,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         score,
       });
       this.setState({ ...this.state, userScore: { ...this.state.userScore, score } });
-      // renderMarkStar();
     } catch (err) {
       alert(err);
     }
@@ -144,7 +122,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
     try {
       await fetch.delete(`/api/stars/${this.state.userScore.id}`);
       this.setState({ ...this.state, userScore: false });
-      // renderMarkStar();
     } catch (err) {
       alert(err);
     }
@@ -209,16 +186,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
     const starsData = await fetchStarsByMovieId(843241);
     const averageStarsData = await fetchAverageStarsByMovieId(843241);
     const similarWorksData = await fetchSimilarWorksByGenre(movieDetailsData.genres[0]);
-
-    // this.setState({
-    //   ...this.state,
-    //   movieDetails: movieDetailsData,
-    //   reviewsByMovieId: reviewsByMovieId,
-    //   starsData: starsData,
-    //   averageStarsData: averageStarsData,
-    //   similarWorksData: similarWorksData,
-    // });
-
     const scoredReview = await Promise.all(
       reviewsByMovieId.map(async review => {
         const data = await fetch.get(`/api/stars/movies/${review.movieId}/users/${review.userEmail}`);
@@ -237,7 +204,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
       averageStarsData,
       similarWorksData,
     });
-    // renderMarkStar();
   };
 
   fetchInitialState();
