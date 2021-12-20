@@ -57,8 +57,25 @@ a {
   font-weight: 600;
   cursor: pointer;
 }
+
+.btn--border {
+  width: auto;
+  min-width: 72px;
+  height: 32px;
+  margin: 15px 0;
+  padding: 6px 14px 6px 14px;
+  color: rgb(53, 53, 53);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
+}
+
+.hide {
+  visibility: hidden;
 }
 
 /* HEADER */
@@ -92,6 +109,10 @@ header ul li {
   margin: auto 0;
   height: 100%;
   position: relative;
+}
+
+header .logo img {
+  width: 170px;
 }
 
 header .search {

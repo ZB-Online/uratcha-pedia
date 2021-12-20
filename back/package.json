@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/bin/www.js",
-    "build": "webpack -w"
+    "start": "nodemon server/bin/www.js"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +22,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.25.3",
-    "nodemon": "^2.0.15",
-    "webpack": "^5.65.0",
-    "webpack-dev-server": "^4.6.0"
+    "nodemon": "^2.0.15"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

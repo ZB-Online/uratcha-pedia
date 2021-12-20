@@ -18,7 +18,6 @@ em {
   font-weight: 500;
   display: block;
   position: fixed;
-  height: 100vh;
   inset: 0px;
   z-index: 100;
   background: rgba(0, 0, 0, 0.56);
@@ -26,21 +25,16 @@ em {
 }
 
 #sign-modal,
-#comment-modal {
+#comment-modal,
+.confirm-modal {
   text-align: center;
   padding: 20px 0px;
   overflow: auto;
-  position: fixed;
+  position: absolute;
   inset: 0px;
   z-index: 101;
   padding: 20px 0px;
 }
-
-/* #comment-modal {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-} */
 
 #sign-modal > .modal-container {
   position: relative;
@@ -59,20 +53,34 @@ em {
 }
 
 #comment-modal > .modal-container {
-  position: relative;
   display: inline-block;
+  position: relative;
   vertical-align: middle;
   background: rgb(255, 255, 255);
   text-align: left;
   width: 640px;
-  min-height: 540px;
   height: auto;
+  min-height: 540px;
   border-radius: 6px;
   overflow: auto;
   box-shadow: rgb(0 0 0 / 12%) 0px 0px 6px 0px;
   overflow: hidden;
   padding: 32px 0px 48px;
-  z-index: 100;
+}
+
+.confirm-modal > .modal-container {
+  position: relative;
+  box-sizing: border-box;
+  background: rgb(255, 255, 255);
+  text-align: center;
+  width: 280px;
+  padding: 20px 20px 0px 20px;
+  border-radius: 8px;
+  box-shadow: rgb(0 0 0 / 12%) 0px 0px 6px 0px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
 }
 
 .signin-header {
@@ -118,6 +126,23 @@ em {
   height: 44px;
   padding: 0px 12px;
   border-radius: 6px;
+}
+
+.input-label--active {
+  margin: 4px 0px;
+  overflow: hidden;
+  background: rgb(255, 240, 240);
+  border: 1px solid rgb(245, 0, 0);
+  border-radius: 6px;
+}
+
+.error {
+  color: rgb(245, 0, 0);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  line-height: 18px;
+  margin: 6px 12px 4px;
 }
 
 input {
@@ -182,10 +207,6 @@ input {
   display: none !important;
 }
 
-.comment-modal-container {
-  font-family: 'Roboto';
-}
-
 .comment-modal-header {
   left: 0px;
   z-index: 50;
@@ -211,20 +232,16 @@ input {
   position: absolute;
   right: 0px;
   left: 0px;
+  z-index: 1;
   text-align: center;
   margin: 11px 0px;
-  z-index: 0;
-}
-
-.close-comment {
-  z-index: 2;
 }
 
 .close-comment-btn {
-  cursor: pointer;
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9IiNGRjJGNkUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgdHJhbnNmb3JtPSJyb3RhdGUoNDUgMTIgMTIpIj4KICAgICAgICA8cmVjdCB3aWR0aD0iMiIgaGVpZ2h0PSIxOCIgeD0iMTEiIHk9IjMiIHJ4PSIxIi8+CiAgICAgICAgPHJlY3Qgd2lkdGg9IjE4IiBoZWlnaHQ9IjIiIHg9IjMiIHk9IjExIiByeD0iMSIvPgogICAgPC9nPgo8L3N2Zz4K);
   padding: 0px;
   border: none;
+  cursor: pointer;
   width: 24px;
   height: 24px;
   margin: 10px 0px;
@@ -236,14 +253,14 @@ input {
 }
 
 .write-comment-btn {
-  cursor: pointer;
   background: none;
   padding: 0px;
   border: none;
   position: relative;
   z-index: 51;
   float: right;
-  color: rgb(255, 47, 110);
+  color: rgb(210, 210, 210);
+  /* color: rgb(255, 47, 110); */
   cursor: default;
   font-size: 17px;
   font-weight: 400;
@@ -252,36 +269,28 @@ input {
   margin: 11px 0px;
 }
 
-.write-comment-btn:disabled {
-  color: rgb(210, 210, 210);
-}
-
 .comment-main {
   margin: 40px 40px;
   display: block;
-  height: 100%;
-}
-
-.comment-content {
-  height: 100%;
+  /* height: 100%; */
 }
 
 .comment-textarea {
-  font-family: 'Roboto';
   font-size: 17px;
-  letter-spacing: 0.4px;
+  font-weight: 500;
+  letter-spacing: -0.7px;
   line-height: 26px;
   width: 100%;
   border: 0px;
   outline: none;
   margin: 1px 0px;
   resize: none;
-  overflow: hidden;
+  overflow: auto;
 }
 
 textarea::placeholder {
-  font-weight: 300;
-  color: rgb(202, 202, 202);
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.56);
 }
 
 .writed-content {
@@ -299,4 +308,44 @@ textarea::placeholder {
   padding: 24px 0px;
   margin: 0px 20px;
   opacity: 0;
+}
+
+.confirm-title {
+  display: inline-block;
+  color: rgb(0, 0, 0);
+  white-space: pre-wrap;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 22px;
+}
+.confirm-content {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 20px;
+  white-space: pre-wrap;
+  padding: 0px 0px 20px;
+  border-bottom: 1px solid rgb(210, 210, 210);
+  margin: 8px 0px 0px;
+  word-break: break-all;
+}
+.confirm-btn-container {
+  display: flex;
+}
+.confirm-btn {
+  background: none;
+  cursor: pointer;
+  flex: 1 1 0%;
+  color: rgb(255, 47, 110);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+  line-height: 22px;
+  border: none;
+  margin: 8px 0;
+}
+
+.confirm-ok-btn {
+  border-left: solid 1px rgb(210, 210, 210);
 }
