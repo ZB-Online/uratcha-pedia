@@ -165,6 +165,12 @@ export default function MovieDetailsPage({ $target, initialState }) {
         fetchDeleteUserScore(this.state.userScore.id);
       }
     });
+
+    $MovieDetailsPage.addEventListener('click', ({ target }) => {
+      if (!target.matches('.similar-works-container *')) return;
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
   };
 
   const renderMarkStar = () => {
@@ -216,13 +222,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
     } catch (err) {
       alert(err);
     }
-    $MovieDetailsPage.addEventListener('click', ({ target }) => {
-      if (!target.matches('.similar-works-container *')) return;
-
-      const movieId = target.closest('li').dataset.movieId;
-      console.log('223', movieId);
-      routeChange(`/movies/${movieId}`);
-    });
   };
 
   const fetchMovieDetails = async movieId => {
