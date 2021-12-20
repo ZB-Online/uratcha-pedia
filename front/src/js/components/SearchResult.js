@@ -26,7 +26,7 @@ export function SearchResult({ $target, initialState }) {
           <div class="outer">
             <div class="inner">
               <div class="search-result-title">
-                <span>"${this.state.keyword}"</span>의 검색결과
+              Search results for <span>"${this.state.keyword}"</span>
               </div>
             </div>
           </div>

@@ -27,7 +27,7 @@ export default function SimilarWorks({ $target, initialState }) {
               <div class="similar-works-item__title">
                 ${movie.title}
               </div>
-              <div class="search-result-item__category"><span>영화</span></div>
+              <div class="search-result-item__category"><span>Movies</span></div>
             </div>
           </a>
         </li>`

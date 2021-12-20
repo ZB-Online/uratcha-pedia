@@ -28,11 +28,11 @@ export default function HomePage({ $target }) {
         components: [
           {
             component: MovieRanking,
-            props: { initialState: { title: '박스 오피스', movieRanking: this.state.boxOffice } },
+            props: { initialState: { title: 'Box Office', movieRanking: this.state.boxOffice } },
           },
           {
             component: MovieRanking,
-            props: { initialState: { title: '별점 높은 순', movieRanking: this.state.highestRanking } },
+            props: { initialState: { title: 'Highest Ranking', movieRanking: this.state.highestRanking } },
           },
         ],
       }).render()

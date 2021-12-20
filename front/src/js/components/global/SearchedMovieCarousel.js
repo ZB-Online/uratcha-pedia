@@ -1,3 +1,5 @@
+import noImage from '../../../img/no_image.png';
+
 export default function SearchedMovieCarousel({ $target, initialState }) {
   const $searchedMovieCarousel = document.createElement('div');
   $searchedMovieCarousel.classList.add('search-result-container__inner');
@@ -24,13 +26,13 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
         movie => `
         <li class="search-result-item" data-movie-id="${movie.id}">
           <a href="javascript:void(0);">
-            <img src="${movie.poster_path ? movie.poster_path : '../../../img/no_image.png'}" alt="movie-poster" />
+            <img src="${movie.poster_path ? movie.poster_path : noImage}" alt="movie-poster" />
             <div class="search-result-item__info">
               <div class="search-result-item__title">${movie.title}</div>
               <div class="search-result-item__subtitle">
                 <span>${movie.release_date.split('-')[0]} ・ ${movie.country}</span>
               </div>
-              <div class="search-result-item__category"><span>영화</span></div>
+              <div class="search-result-item__category"><span>Movies</span></div>
             </div>
           </a> 
         </li>`

@@ -1,3 +1,4 @@
+import noImage from '../../../img/no_image.png';
 export default function MyScoredMoviesCarousel({ $target, initialState }) {
   const $myScoredMoviesCarousel = document.createElement('div');
   $target.appendChild($myScoredMoviesCarousel);
@@ -23,13 +24,13 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
         movie => `
         <li class="my-scored-movies-item" data-movie-id="${movie.id}">
           <a href="javascript:void(0);">
-            <img src="${movie.poster_path ? movie.poster_path : '../../../img/no_image.png'}" alt="poster" />
+            <img src="${movie.poster_path ? movie.poster_path : noImage}" alt="poster" />
             <div class="my-scored-movies-item__info">
               <div class="my-scored-movies-item__title">
                 ${movie.title}
               </div>
               <div class="my-scored-movies-item__score">
-                평가함 ★ 3.9
+                Rated ★ 3.9
               </div>
             </div>
           </a>

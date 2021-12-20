@@ -31,7 +31,7 @@ export function Header({ $target, initialState }) {
               <label for="search-input">
                 <input type="text" value="${
                   keyword ? keyword : ''
-                }" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
+                }" id="search-input" class="search-input" placeholder="Search contents, people, collections and users." />
                 <!-- 입력 시 hidden 제거 -->
                 <div class="cancel-btn hidden"> 
                   <span class="material-icons ">
@@ -42,16 +42,16 @@ export function Header({ $target, initialState }) {
             </form>
           </li>
           <li class='sign-in'>
-            <button class="btn">로그인</button>
+            <button class="btn">Login</button>
           </li>
           <li class='sign-up'>
-            <button class="btn btn--white">회원가입</button>
+            <button class="btn btn--white">Sign Up</button>
           </li>
           <li class='my-page hidden'>
-            <button class="btn btn--border">마이페이지</button>
+            <button class="btn btn--border">My Page</button>
           </li>
           <li class='logout hidden'>
-            <button class="btn">로그아웃</button>
+            <button class="btn">LogOut</button>
           </li>
         </ul>
       </div>
@@ -85,7 +85,7 @@ function Footer({ $target, initialState }) {
           <div class="outer">
             <div class="inner">
               <div >
-                <span class="total-scores">지금까지 <em>★ 1,000,000,000 개의 평가가</em> 쌓였어요.</span>
+                <span class="total-scores">So far <em>★ 1,000,000,000 ratings</em> have made.</span>
               </div>
             </div>
           </div>
@@ -94,13 +94,13 @@ function Footer({ $target, initialState }) {
           <div class="outer">
             <div class="inner">
               <ul class="menu">
-                <li><a href="javascript:void(0)">데이터 출처</a></li>
-                <li><a href="javascript:void(0)">서비스 이용약관</a></li>
-                <li><a href="javascript:void(0)">개인정보 처리방침</a></li>
-                <li><a href="javascript:void(0)">회사 안내</a></li>
+                <li><a href="javascript:void(0)">Source of Data</a></li>
+                <li><a href="javascript:void(0)">Terms of Service</a></li>
+                <li><a href="javascript:void(0)">Privacy Policy</a></li>
+                <li><a href="javascript:void(0)">About UratchaPedia</a></li>
               </ul>
               <ul class="customer-service">
-                <li><a href="javascript:void(0)">고객센터</a></li>
+                <li><a href="javascript:void(0)">Customer Support</a></li>
                 <li><a href="javascript:void(0)">support@watcha.com</a></li>
               </ul>
               <ul class="logo">
@@ -108,7 +108,7 @@ function Footer({ $target, initialState }) {
                   <a href="javascript:void(0)"><img src="/img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
                 </li>
                 <li>
-                  <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
+                  <span>© 2021 by URATCHA, Inc. All rights reserved.</span>
                 </li>              
               </ul>
             </div>
@@ -269,12 +269,12 @@ function Sign({ $target, initialState }) {
       <div class="backdrop"></div>
       <div class="modal-container">
        <div class="confirm-main">
-         <div class="confirm-title">알림</div>
-         <div class="confirm-content">로그아웃 하시겠어요?</div>
+         <div class="confirm-title">Alert</div>
+         <div class="confirm-content">Are you sure you want to log out?</div>
        </div>
        <div class="confirm-btn-container">
-        <button class="confirm-btn confirm-cancel-btn">취소</button>
-        <button class="confirm-btn confirm-ok-btn">확인</button>
+        <button class="confirm-btn confirm-cancel-btn">Cancel</button>
+        <button class="confirm-btn confirm-ok-btn">Confirm</button>
        </div>
       </div>
     </div>

@@ -49,10 +49,10 @@ export function MovieDetails({ $target, initialState }) {
                 <span class="movie-header_divide-letter">・</span>
                 <span class="movie-header_movie-country">${country}</span>
               </p>
-              <p class="movie-header_movie-average">평균 ★3.9 (5만명)</p>
+              <p class="movie-header_movie-average"> Average ★${averageStar} (${starsData?.length})</p>
               <div class="movie-header_user-interaction">
                 <div class="movie-header_score-container">
-                  <p class="movie-header_score-letter">평가하기</p>
+                  <p class="movie-header_score-letter">Rate</p>
                   <div class="star-rating">
                   <input type="radio" id="5-star" name="rating" value="5" />
                   <label for="5-star" class="star">&#9733;</label>
@@ -68,7 +68,7 @@ export function MovieDetails({ $target, initialState }) {
                 </div>
                 <button class="movie-header_add-comment btn">
                   <div class="add-comment-icon-container"><span class="material-icons"> edit </span></div>
-                  코멘트
+                  Comment
                   <div class="comment-dropdown-container hidden">
                     <div class="edit-comment"><span class="material-icons"> edit </span>Edit Comment</div>
 
@@ -145,7 +145,7 @@ export function MovieDetails({ $target, initialState }) {
       
           <div class="detail-container">
             <div class="detail-container_movie-info">
-              <h2 class="detail-container_title">기본 정보</h2>
+              <h2 class="detail-container_title">Overview</h2>
               <div class="detail-container_summary">
                 <p class="detail-container_movie-item">${title}</p>
                 <p class="detail-container_movie-item">
@@ -167,7 +167,7 @@ export function MovieDetails({ $target, initialState }) {
             </div>
       
             <div class="detail-container_cast">
-              <h2 class="detail-container_title">출연/제작</h2>
+              <h2 class="detail-container_title">Cast/Crew</h2>
               <div class="detail-container_cast-container">
               ${cast.reduce((acc, { name, character }) => {
                 acc += `<div class="detail-container_cast-item">
@@ -181,10 +181,10 @@ export function MovieDetails({ $target, initialState }) {
 
             <section class="detail-container__stars-graph">
               <div class="detail-container__title-container">
-                <h2 class="detail-container__title">별점 그래프</h2>
+                <h2 class="detail-container__title">Rating Graph</h2>
                 <span class="detail-container__info">
-                  <p>평균 ★${averageStar}</p>
-                  <strong>(${starsData?.length}명)</strong>
+                  <p>Avg ★${averageStar}</p>
+                  <strong>(${starsData?.length})</strong>
                 </span>
               </div>
               <div class="detail-container__graph-container">
@@ -194,9 +194,8 @@ export function MovieDetails({ $target, initialState }) {
 
             <div class="detail-container_comment">
               <div class="detail-container_title-container">
-                <h2 class="detail-container_title">코멘트</h2>
+                <h2 class="detail-container_title">Comment</h2>
                 <span class="detail-container_comment-count">${this.state.reviewsByMovieId.length}</span>
-                <a class="detail-container_comment-more">더보기</a>
               </div>
               <div class="detail-container_comment-container">
                 ${
@@ -209,7 +208,7 @@ export function MovieDetails({ $target, initialState }) {
             </div>
 
             <div class="detail-container__similar-works">
-              <h2 class="detail-container__title">비슷한 작품</h2>
+              <h2 class="detail-container__title">Similar Titles</h2>
               <div class="detail-container__similar-works-container">
                 
               </div>

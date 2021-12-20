@@ -170,7 +170,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const renderMarkStar = () => {
     const currentScore = this.state.userScore.score || 0;
     if (currentScore) document.getElementById(`${currentScore}-star`).checked = true;
-    const starMessage = ['평가하기', '싫어요', '별로에요', '보통이에요', '재미있어요', '최고에요!'];
+    const starMessage = ['Rate', 'Dislike', 'Meh', "It's not bad", "It's a must watch", "It's the best"];
     document.querySelector('.movie-header_score-letter').textContent = starMessage[currentScore];
   };
 
@@ -314,8 +314,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const fetchInitialState = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
-    const starsData = await fetchStarsByMovieId(843241);
-    const averageStarsData = await fetchAverageStarsByMovieId(843241);
+    const starsData = await fetchStarsByMovieId(this.state.movieId);
+    const averageStarsData = await fetchAverageStarsByMovieId(this.state.movieId);
     const similarWorksData = await fetchSimilarWorksByGenre(movieDetailsData.genres[0]);
     const myReview = await fetch.get(`/api/reviews/movies/${this.state.movieId}/users/${this.state.user.email}`);
 
