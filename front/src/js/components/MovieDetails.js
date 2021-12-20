@@ -1,12 +1,11 @@
-import MovieCommentCarousel from '../../../js/Components/global/MovieCommentCarousel';
-import SimilarWorks from '../../../js/Components/SimilarWorks';
-import StarsGraph from '../../../js/Components/StarsGraph';
+import MovieCommentCarousel from '../../js/Components/global/MovieCommentCarousel';
+import SimilarWorks from '../../js/Components/SimilarWorks';
+import StarsGraph from '../../js/Components/StarsGraph';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
-
-  console.log(initialState.myReview);
+  
   this.state = {
     movieDetails: initialState.movieDetails,
     reviewsByMovieId: initialState.reviewsByMovieId,

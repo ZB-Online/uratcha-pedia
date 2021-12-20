@@ -79,7 +79,7 @@ export const eventListeners = () => {
 
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    console.log("logout")
+    console.log('logout');
     // var bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
     // try {
     //   const res = await fetch.get('/api/users/logout', {
@@ -104,6 +104,13 @@ export const eventListeners = () => {
       $singupForm.email.value = '';
       $singupForm.password.value = '';
     }
+  };
+
+  const resetStyle = (target, $valid, $invalid, $error) => {
+    document.getElementById(target).parentNode.classList.remove('input-label--active');
+    $valid.classList.add('hidden');
+    $invalid.classList.add('hidden');
+    $error.textContent = '';
   };
 
   const hiddenSignModal = () => {
@@ -164,6 +171,8 @@ export const eventListeners = () => {
     const password = $singinForm.password.value.trim();
     if (!regExp['email'].test(email) || !regExp['password'].test(password)) {
       resetValue('signin');
+      resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+      resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
       return;
     }
 
@@ -175,6 +184,8 @@ export const eventListeners = () => {
       if (!response.success) {
         alert(response.message);
         resetValue('signin');
+        resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+        resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
         return;
       }
       hiddenSignModal();
@@ -201,23 +212,29 @@ export const eventListeners = () => {
   $singupForm.addEventListener('submit', async e => {
     e.preventDefault();
     const username = $singupForm.username.value.trim();
-    const email = $singinForm.email.value.trim();
-    const password = $singinForm.password.value.trim();
+    const email = $singupForm.email.value.trim();
+    const password = $singupForm.password.value.trim();
 
     if (!regExp['username'].test(username) || !regExp['email'].test(email) || !regExp['password'].test(password)) {
       resetValue('signup');
+      resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+      resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+      resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
       return;
     }
-
     try {
       const response = await fetch.post('/api/users/signup', {
         email,
         password,
         username,
       });
+      console.log(response);
       if (!response.success) {
         alert(response.message);
         resetValue('signup');
+        resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+        resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+        resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
         return;
       }
       hiddenSignModal();
@@ -244,12 +261,6 @@ export const eventListeners = () => {
     hiddenSignModal();
     resetValue('signin');
     resetValue('signup');
-    const resetStyle = (target, $valid, $invalid, $error) => {
-      document.getElementById(target).parentNode.classList.remove('input-label--active');
-      $valid.classList.add('hidden');
-      $invalid.classList.add('hidden');
-      $error.textContent = '';
-    };
     resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
     resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
     resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
