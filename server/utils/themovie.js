@@ -10,7 +10,7 @@ const getPopularMovies = async (page = 1) => {
       id: movie.id,
       title: movie.title,
       overview: movie.overview,
-      poster_path: movieConfig.imageBaseUrl + movie.poster_path,
+      poster_path: movie.poster_path ? movieConfig.imageBaseUrl + movie.poster_path : '',
       release_date: movie.release_date,
     }));
   } catch (error) {
@@ -39,7 +39,7 @@ const getMoviesDetailsById = async movieId => {
       id: responseData?.id,
       title: responseData?.title,
       overview: responseData?.overview,
-      poster_path: movieConfig.imageBaseUrl + responseData?.poster_path,
+      poster_path: movie.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
       release_date: responseData?.release_date,
       genres: responseData?.genres.map(genre => genre.name),
       country,
@@ -75,7 +75,7 @@ const getMoviesForAdditionalInfo = async movies =>
     movies.map(async movie => ({
       id: movie.id,
       title: movie.title,
-      poster_path: movieConfig.imageBaseUrl + movie.poster_path,
+      poster_path: movie.poster_path ? movieConfig.imageBaseUrl + movie.poster_path : '',
       release_date: movie.release_date,
       ...(await getMoviesWithCountry(movie.id)),
     }))
@@ -99,7 +99,7 @@ const getMyScoredMoviesInfo = async movieId => {
       title: responseData?.title,
       release_date: responseData?.release_date,
       country: responseData?.production_countries?.map(country => country.iso_3166_1)[0],
-      poster_path: movieConfig.imageBaseUrl + responseData?.poster_path,
+      poster_path: movie.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
     };
   } catch (error) {
     throw new Error(error);

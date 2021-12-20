@@ -27,7 +27,7 @@ export default function BoxOfficeRankingCarousel({ $target, initialState }) {
             <div class="movie-item-container">
              <div class="movie-poster">
               <div class="movie-poster-num" data-num="${i}">${i + 1}</div>
-              <img src="${movie?.poster_path}" alt="movie-poster" />
+              <img src="${movie.poster_path ? movie.poster_path : '../../../img/no_image.png'}" alt="movie-poster" />
             </div>
             <div class="movie-detail">
              <span class="movie-title">${movie?.title ? titleFormat(movie.title) : ''}</span>
