@@ -1,4 +1,6 @@
 import logoImage from '../../img/uratcha_logo.PNG';
+import logoSmall from '../../img/uratcha_logo_small.png';
+import fetch from '../utils/fetch';
 
 export function Header({ $target, initialState }) {
   const $header = document.createElement('header');
@@ -64,6 +66,12 @@ export function Header({ $target, initialState }) {
   this.render();
 }
 
+const fetchTotalStars = async () => {
+  const data = await fetch.get('/api/stars');
+  const totalStars = await data.resData.starCount;
+  return totalStars;
+};
+
 function Footer({ $target, initialState }) {
   const $footer = document.createElement('footer');
   $target.appendChild($footer);
@@ -75,8 +83,10 @@ function Footer({ $target, initialState }) {
     this.render();
   };
 
-  this.render = () => {
+  this.render = async () => {
     if (!this.state) return;
+
+    const totalStars = await fetchTotalStars();
 
     $footer.innerHTML = `
     <!-- FOOTER -->
@@ -85,7 +95,9 @@ function Footer({ $target, initialState }) {
           <div class="outer">
             <div class="inner">
               <div >
-                <span class="total-scores">So far <em>★ 1,000,000,000 ratings</em> have made.</span>
+                <span class="total-scores">So far <em>★ ${totalStars
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ratings</em> have made.</span>
               </div>
             </div>
           </div>
@@ -105,7 +117,7 @@ function Footer({ $target, initialState }) {
               </ul>
               <ul class="logo">
                 <li>
-                  <a href="javascript:void(0)"><img src="/img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
+                  <a href="javascript:void(0)"><img src="${logoSmall}" alt="WATCHA_LOGO"></a>
                 </li>
                 <li>
                   <span>© 2021 by URATCHA, Inc. All rights reserved.</span>
@@ -305,6 +317,7 @@ export default function Wrapper({ $target, initialState, components }) {
     components.forEach(
       ({ component, props }) => new component({ $target: $wrapper, initialState: props.initialState })
     );
+
     new Footer({ $target: $wrapper, initialState });
 
     return $wrapper;
