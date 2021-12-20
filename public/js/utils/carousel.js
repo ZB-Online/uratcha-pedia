@@ -70,7 +70,15 @@ export const bindMovieCommentCarouselEvents = ($container, comments) => {
 };
 
 export const bindBoxOfficeMovieCarouselEvents = ($container, movies) => {
-  bindCarouselEvents($container, movies, 500, 5);
+  const currentWidth = $container.getBoundingClientRect().width;
+
+  if (currentWidth >= 1100) {
+    bindCarouselEvents($container, movies, 500, 5);
+  } else if (currentWidth >= 700) {
+    bindCarouselEvents($container, movies, 500, 4);
+  } else if (currentWidth >= 600) {
+    bindCarouselEvents($container, movies, 500, 3);
+  }
 };
 
 export const bindHighestRankingMovieCarouselEvents = ($container, movies) => {

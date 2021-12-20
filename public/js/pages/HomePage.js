@@ -50,7 +50,7 @@ export default function HomePage({ $target }) {
         const route = `/movies/${movieId}`;
         routeChange(route);
       } else {
-        const route = '/movies/2';
+        const route = `/movies/${movieId}`;
         routeChange(route);
       }
     });
