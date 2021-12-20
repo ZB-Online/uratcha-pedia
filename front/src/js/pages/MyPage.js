@@ -1,5 +1,5 @@
-import MyScoredMovies from '../Components/MyScoredMovies';
-import Wrapper from '../Components/Wrapper';
+import MyScoredMovies from '../components/MyScoredMovies';
+import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';

@@ -1,5 +1,5 @@
-import Wrapper from '../Components/Wrapper';
-import { MovieRanking } from '../Components/MovieRanking';
+import Wrapper from '../components/Wrapper';
+import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';

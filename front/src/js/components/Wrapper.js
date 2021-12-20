@@ -1,4 +1,5 @@
-import logoImage from "../../img/uratcha_logo.PNG"
+import logoImage from '../../img/uratcha_logo.PNG';
+
 export function Header({ $target, initialState }) {
   const $header = document.createElement('header');
   $target.appendChild($header);
