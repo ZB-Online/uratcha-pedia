@@ -27,9 +27,6 @@ export default function SimilarWorks({ $target, initialState }) {
               <div class="similar-works-item__title">
                 ${movie.title}
               </div>
-              <div class="similar-works-item__score">
-                평가함 ★ 3.9
-              </div>
               <div class="search-result-item__category"><span>영화</span></div>
             </div>
           </a>
