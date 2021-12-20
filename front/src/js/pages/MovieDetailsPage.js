@@ -1,10 +1,9 @@
 import { MovieDetails } from '../components/MovieDetails';
-import Wrapper from '../../../js/Components/Wrapper';
-import { eventListeners } from '../../../js/eventListeners';
-import { movieDetailCommentCarousel } from '../utils/carousel';
+import Wrapper from '../components/Wrapper';
+import { eventListeners } from '../eventListeners';
 import { bindMovieCommentCarouselEvents } from '../utils/carousel';
-import fetch from '../../../js/utils/fetch';
-import { routeChange } from '../../../js/router';
+import fetch from '../utils/fetch';
+import { routeChange } from '../router';
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');
@@ -280,9 +279,9 @@ export default function MovieDetailsPage({ $target, initialState }) {
         comment,
       };
       const res = await fetch.post('/api/reviews', myReview);
-      console.log(res);
-      // review id 서버에서 가져와서 myReview 객체에 넣어주세요 :)
-      this.setState({ ...this.state, myReview });
+      if (res)
+        // review id 서버에서 가져와서 myReview 객체에 넣어주세요 :)
+        this.setState({ ...this.state, myReview });
     } catch (e) {
       console.error(e);
     }
@@ -297,7 +296,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
         comment,
       };
       const res = await fetch.patch('/api/reviews', myReview);
-      this.setState({ ...this.state, myReview });
+      if (res) this.setState({ ...this.state, myReview });
     } catch (e) {
       console.error(e);
     }
@@ -305,11 +304,11 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   const deleteMyReview = async () => {
     const res = await fetch.delete(`/api/reviews/${this.state.myReview.id}`);
-    console.log(res);
-    this.setState({
-      ...this.state,
-      myReview: { id: null, userEmail: this.state.user.email, movieId: this.state.movieId, comment: null },
-    });
+    if (res)
+      this.setState({
+        ...this.state,
+        myReview: { id: null, userEmail: this.state.user.email, movieId: this.state.movieId, comment: null },
+      });
   };
 
   const fetchInitialState = async () => {

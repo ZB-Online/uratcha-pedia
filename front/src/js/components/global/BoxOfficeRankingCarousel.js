@@ -36,7 +36,7 @@ export default function BoxOfficeRankingCarousel({ $target, initialState }) {
               <span>ㆍ</span>
               <span class="movie-country">${movie?.country}</span>
              </div>
-              <span class="movie-score">평균★3.9</span>
+              <span class="movie-score">평균★${movie?.averageStar}</span>
              </div>
            </div>
           </li>`

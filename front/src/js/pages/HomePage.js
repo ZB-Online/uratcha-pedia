@@ -1,5 +1,5 @@
-import Wrapper from '../Components/Wrapper';
-import { MovieRanking } from '../Components/MovieRanking';
+import Wrapper from '../components/Wrapper';
+import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
@@ -63,17 +63,24 @@ export default function HomePage({ $target }) {
   const fetchBoxOffice = async () => {
     try {
       const data = await fetch.get('/api/movies');
-      const boxOffice = data.resData;
+      const boxOffice = await Promise.all(
+        data.resData.map(async movie => {
+          const data = await fetch.get(`/api/stars/${movie.id}`);
+          const averageStar = await data.resData.averageStar;
+          return { ...movie, averageStar };
+        })
+      );
       return boxOffice;
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }
   };
 
-  const fetchHighestRanking = async () => {
+  const fetchHighestRanking = boxOffice => {
     try {
-      const data = await fetch.get('/api/movies');
-      const highestRanking = data.resData;
+      const highestRanking = [...boxOffice].sort((a, b) => {
+        return +b.averageStar >= +a.averageStar ? (+b.averageStar > +a.averageStar ? 1 : 0) : -1;
+      });
       return highestRanking;
     } catch (e) {
       console.error('movie api not fetched: ', e);
@@ -83,7 +90,7 @@ export default function HomePage({ $target }) {
   const fetchMovieRanking = async () => {
     try {
       const boxOffice = await fetchBoxOffice();
-      const highestRanking = await fetchHighestRanking();
+      const highestRanking = await fetchHighestRanking(boxOffice);
       this.setState({ ...this.state, boxOffice, highestRanking });
     } catch (e) {
       console.error('movie api not fetched: ', e);
