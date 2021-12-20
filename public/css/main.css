@@ -37,7 +37,24 @@
 .movie-container ul li.movie-item {
   display: inline-block;
   padding: 0 5px;
-  width: 16.36em;
+}
+
+@media (min-width: 600px) {
+  .movie-container ul li.movie-item {
+    width: 33%;
+  }
+}
+
+@media (min-width: 760px) {
+  .movie-container ul li.movie-item {
+    width: 25%;
+  }
+}
+
+@media (min-width: 1100px) {
+  .movie-container ul li.movie-item {
+    width: 20%;
+  }
 }
 
 .movie-container ul li.movie-item.movie-item-container {
