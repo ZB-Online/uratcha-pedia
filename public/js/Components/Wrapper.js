@@ -20,7 +20,7 @@ export function Header({ $target, initialState }) {
         <ul>
           <li>
             <a href="javascript:void(0)" class="logo">
-              <img src="/img/watcha_logo.png" alt="LOGO" />
+              <img src="/img/uratcha_logo.png" alt="LOGO" />
             </a>
           </li>
           <li class="search">

@@ -2,6 +2,7 @@ import { titleFormat } from '../../utils/carousel';
 
 export default function HighestRankingCarousel({ $target, initialState }) {
   const $highestRankingCarousel = document.createElement('div');
+  $highestRankingCarousel.classList.add('carousel', 'highest-ranking');
   $target.appendChild($highestRankingCarousel);
 
   this.state = {
@@ -34,7 +35,6 @@ export default function HighestRankingCarousel({ $target, initialState }) {
                 <span>ㆍ</span>
                 <span class="movie-country">${movie?.country}</span>
                 </div>
-                <div>연령등급 : ${movie?.certification}</div>
                 <span class="movie-score">평균★3.9</span>
             </div>
             </li>`
@@ -55,6 +55,9 @@ export default function HighestRankingCarousel({ $target, initialState }) {
             alt="forward"
         />
         </button>`;
+
     return $highestRankingCarousel;
   };
+
+  this.render();
 }

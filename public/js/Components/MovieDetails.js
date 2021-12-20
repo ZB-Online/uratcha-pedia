@@ -1,4 +1,6 @@
 import MovieCommentCarousel from './global/MovieCommentCarousel';
+import SimilarWorks from './SimilarWorks';
+import StarsGraph from './StarsGraph';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
@@ -7,6 +9,9 @@ export function MovieDetails({ $target, initialState }) {
   this.state = {
     movieDetails: initialState.movieDetails,
     reviewsByMovieId: initialState.reviewsByMovieId,
+    starsData: initialState.starsData,
+    averageStarsData: initialState.averageStarsData,
+    similarWorksData: initialState.similarWorksData,
   };
 
   this.setState = newState => {
@@ -23,6 +28,9 @@ export function MovieDetails({ $target, initialState }) {
 
     const releaseYear = release_date.slice(0, 4);
     const genresComb = genres.join('/');
+
+    const { averageStarsData, starsData } = this.state;
+    const { averageStar } = averageStarsData;
 
     $movieDetails.innerHTML = `
     <section class="movie-details">
@@ -104,27 +112,59 @@ export function MovieDetails({ $target, initialState }) {
               }, '')}
               </div>
             </div>
-                <div class="detail-container_comment">
-                  <div class="detail-container_title-container">
-                    <h2 class="detail-container_title">코멘트</h2>
-                    <span class="detail-container_comment-count">${this.state.reviewsByMovieId.length}</span>
-                    <a class="detail-container_comment-more">더보기</a>
-                  </div>
-                  <div class="detail-container_comment-container">
-                    ${
-                      new MovieCommentCarousel({
-                        $target: $movieDetails,
-                        initialState: this.state.reviewsByMovieId,
-                      }).render().innerHTML
-                    }
-                  </div>
-                </div>
+
+            <section class="detail-container__stars-graph">
+              <div class="detail-container__title-container">
+                <h2 class="detail-container__title">별점 그래프</h2>
+                <span class="detail-container__info">
+                  <p>평균 ★${averageStar}</p>
+                  <strong>(${starsData?.length}명)</strong>
+                </span>
               </div>
+              <div class="detail-container__graph-container">
+                
+              </div>
+            </section>
+
+            <div class="detail-container_comment">
+              <div class="detail-container_title-container">
+                <h2 class="detail-container_title">코멘트</h2>
+                <span class="detail-container_comment-count">${this.state.reviewsByMovieId.length}</span>
+                <a class="detail-container_comment-more">더보기</a>
+              </div>
+              <div class="detail-container_comment-container">
+                ${
+                  new MovieCommentCarousel({
+                    $target: $movieDetails,
+                    initialState: this.state.reviewsByMovieId,
+                  }).render().innerHTML
+                }
+              </div>
+            </div>
+
+            <div class="detail-container__similar-works">
+              <h2 class="detail-container__title">비슷한 작품</h2>
+              <div class="detail-container__similar-works-container">
+                
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       </ul>
       </section>
     `;
+
+    new StarsGraph({
+      $target: $movieDetails.querySelector('.detail-container__graph-container'),
+      initialState: { starsData: this.state.starsData },
+    });
+
+    new SimilarWorks({
+      $target: $movieDetails.querySelector('.detail-container__similar-works-container'),
+      initialState: { similarWorksData: this.state.similarWorksData },
+    });
+
     return $movieDetails;
   };
 

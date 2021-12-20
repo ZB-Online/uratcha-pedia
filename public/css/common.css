@@ -111,6 +111,10 @@ header ul li {
   position: relative;
 }
 
+header .logo img {
+  width: 170px;
+}
+
 header .search {
   flex: 1;
   width: 300px;

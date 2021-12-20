@@ -2,6 +2,7 @@ import { titleFormat } from '../../utils/carousel';
 
 export default function BoxOfficeRankingCarousel({ $target, initialState }) {
   const $boxOfficeRankingCarousel = document.createElement('div');
+  $boxOfficeRankingCarousel.classList.add('carousel', 'box-office');
   $target.appendChild($boxOfficeRankingCarousel);
 
   this.state = {
@@ -35,7 +36,6 @@ export default function BoxOfficeRankingCarousel({ $target, initialState }) {
               <span>ㆍ</span>
               <span class="movie-country">${movie?.country}</span>
              </div>
-              <div>연령등급 : ${movie?.certification}</div>
               <span class="movie-score">평균★3.9</span>
              </div>
            </div>
@@ -57,6 +57,9 @@ export default function BoxOfficeRankingCarousel({ $target, initialState }) {
             alt="forward"
         />
         </button>`;
+
     return $boxOfficeRankingCarousel;
   };
+
+  this.render();
 }
