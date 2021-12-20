@@ -5,7 +5,7 @@ import StarsGraph from '../../js/Components/StarsGraph';
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
-  
+
   this.state = {
     movieDetails: initialState.movieDetails,
     reviewsByMovieId: initialState.reviewsByMovieId,
@@ -53,15 +53,15 @@ export function MovieDetails({ $target, initialState }) {
                 <div class="movie-header_score-container">
                   <p class="movie-header_score-letter">평가하기</p>
                   <div class="star-rating">
-                  <input type="radio" id="5-star" name="rating" value="5" />
+                  <input type="radio" id="5-star" name="rating" value="5" disabled />
                   <label for="5-star" class="star">&#9733;</label>
-                  <input type="radio" id="4-star" name="rating" value="4" />
+                  <input type="radio" id="4-star" name="rating" value="4" disabled />
                   <label for="4-star" class="star">&#9733;</label>
-                  <input type="radio" id="3-star" name="rating" value="3" />
+                  <input type="radio" id="3-star" name="rating" value="3" disabled />
                   <label for="3-star" class="star">&#9733;</label>
-                  <input type="radio" id="2-star" name="rating" value="2" />
+                  <input type="radio" id="2-star" name="rating" value="2" disabled />
                   <label for="2-star" class="star">&#9733;</label>
-                  <input type="radio" id="1-star" name="rating" value="1" />
+                  <input type="radio" id="1-star" name="rating" value="1" disabled />
                   <label for="1-star" class="star">&#9733;</label>
                   </div>
                 </div>
@@ -109,10 +109,10 @@ export function MovieDetails({ $target, initialState }) {
         <li>
           <ul class="my-comment">
             <li>
-              <span class="username">${this.state.myReview.userEmail}</span>
+              <span class="username">${this.state.myReview?.userEmail}</span>
             </li>
             <li>
-              <span class="comment-content">${this.state.myReview.comment}</span>
+              <span class="comment-content">${this.state.myReview?.comment}</span>
             </li>
           </ul>
         </li>

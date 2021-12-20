@@ -1,5 +1,6 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
+import {getCookieValue,delCookie} from './utils/cookie';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -79,17 +80,11 @@ export const eventListeners = () => {
 
   document.querySelector('.confirm-ok-btn').addEventListener('click', async () => {
     $confirmModal.classList.add('hidden');
-    console.log('logout');
-    var bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
+    const token = getCookieValue();
     try {
-      const res = await fetch.get('/api/users/logout', {
-        mothod: 'GET',
-        headers: {
-          'Authorization': bearer,
-          'content-type': 'application/json',
-        },
-      });
-      console.log(res);
+      const response = await fetch.authGet('/api/users/logout',token);
+      delCookie()
+      location.reload()
     } catch (err) {
       alert(err);
     }
@@ -190,7 +185,8 @@ export const eventListeners = () => {
       }
       hiddenSignModal();
       changeAuthHeader();
-      // localStorage.setItem('AUTH', JSON.stringify(response.resData));
+      isAuth()
+      location.reload()
     } catch (err) {
       alert(err);
     }
@@ -268,4 +264,25 @@ export const eventListeners = () => {
     resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
     resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
   });
+
+  const isAuth = async () => {
+    try {
+      const token = getCookieValue();
+      const response = await fetch.authGet('/api/users/auth', token);
+      if (response.resData.isAuth) {
+        $signin.classList.add('hidden');
+        $signup.classList.add('hidden');
+        $myPage.classList.remove('hidden');
+        $logout.classList.remove('hidden');
+      } else {
+        $signin.classList.remove('hidden');
+        $signup.classList.remove('hidden');
+        $myPage.classList.add('hidden');
+        $logout.classList.add('hidden');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  isAuth()
 };

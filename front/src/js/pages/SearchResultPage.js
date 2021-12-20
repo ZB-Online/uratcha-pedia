@@ -2,6 +2,7 @@ import { SearchResult } from '../Components/SearchResult';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
+import {getCookieValue} from '../utils/cookie';
 import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
 
 export default function SearchResultPage({ $target, initialState }) {
@@ -48,6 +49,19 @@ export default function SearchResultPage({ $target, initialState }) {
   };
 
   fetchSearchResult();
+  const isAuth = async () => {
+    try {
+      const token = getCookieValue();
+      const response = await fetch.authGet('/api/users/auth', token);
+      console.log('==========29==', response);
+      console.log('==========30==', response.resData);
+      this.setState({ ...this.state, user: response?.resData });
+      console.log(this.state);
+    } catch (err) {
+      console.error(err)
+    }
+  };
+  isAuth();
 }
 
 const getSearchMovies = async keyword => {

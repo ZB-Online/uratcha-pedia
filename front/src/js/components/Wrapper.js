@@ -61,6 +61,7 @@ export function Header({ $target, initialState }) {
   };
 
   this.render();
+  
 }
 
 function Footer({ $target, initialState }) {
@@ -104,7 +105,7 @@ function Footer({ $target, initialState }) {
               </ul>
               <ul class="logo">
                 <li>
-                  <a href="javascript:void(0)"><img src="/img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
+                  <a href="javascript:void(0)"><img src='${logoImage}' alt="WATCHA_LOGO"></a>
                 </li>
                 <li>
                   <span>© 2021 by WATCHA, Inc. All rights reserved.</span>
@@ -305,7 +306,6 @@ export default function Wrapper({ $target, initialState, components }) {
       ({ component, props }) => new component({ $target: $wrapper, initialState: props.initialState })
     );
     new Footer({ $target: $wrapper, initialState });
-
     return $wrapper;
   };
 }

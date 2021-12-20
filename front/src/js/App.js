@@ -10,8 +10,6 @@ import SearchResultPage from './pages/SearchResultPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import MyPage from './pages/MyPage';
 import { init } from './router';
-import { eventListeners } from './eventListeners';
-import useFetch from './utils/useFetch';
 
 export default function App({ $target }) {
   this.route = () => {
