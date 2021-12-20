@@ -1,8 +1,8 @@
-import { SearchResultContent } from '../Components/SearchResult';
+import { SearchResult } from '../Components/SearchResult';
 import Wrapper from '../Components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
-import { searchMovieCarousel } from '../utils/carousel.js';
+import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
@@ -25,7 +25,7 @@ export default function SearchResultPage({ $target, initialState }) {
         initialState: this.state,
         components: [
           {
-            component: SearchResultContent,
+            component: SearchResult,
             props: { initialState: { keyword: this.state.keyword, searchResult: this.state.searchResult } },
           },
         ],
@@ -35,20 +35,26 @@ export default function SearchResultPage({ $target, initialState }) {
 
   this.bindEvents = () => {
     eventListeners();
-    // 추가
-    searchMovieCarousel(document.querySelector('.search-result-container'), this.state.searchResult);
+    bindSearchedMovieCarouselEvents(
+      $searchResultPage.querySelector('.search-result-container__inner'),
+      this.state.searchResult
+    );
   };
 
   const fetchSearchResult = async () => {
-    try {
-      // const searchResultData = await getMoviesDetailsById(589761);
-      const data = await fetch.get('/api/movies');
-      const searchResultData = data.resData;
-      this.setState({ ...this.state, searchResult: searchResultData });
-    } catch (e) {
-      console.error('search-result api not fetched: ', e);
-    }
+    const { keyword } = this.state;
+    const searchResults = await getSearchMovies(keyword);
+    this.setState({ ...this.state, searchResult: searchResults });
   };
 
   fetchSearchResult();
 }
+
+const getSearchMovies = async keyword => {
+  try {
+    const { resData } = await fetch.get(`/api/movies/search/${keyword}`);
+    return resData;
+  } catch (e) {
+    console.error('search-result api not fetched: ', e);
+  }
+};

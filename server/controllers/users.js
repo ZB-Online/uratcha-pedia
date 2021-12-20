@@ -23,8 +23,7 @@ const signin = async (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
   const token = generateToken(signinUser.email);
-  // TODO: client에서 확인하면 resData 지우기
-  res.cookie('x_auth').status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS, token));
+  res.cookie('x_auth',token).status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{auth: true, email: userInfo.email, username: userInfo.username}));
 };
 
 const signup = async (req, res) => {
@@ -57,7 +56,7 @@ const generateToken = email => {
 const auth = (req, res) => {
   res
     .status(200)
-    .json(resData.successTrue(resMessage.AUTH_SUCCESS, { email: req.user.email, username: req.user.username }));
+    .json(resData.successTrue(resMessage.AUTH_SUCCESS, { auth: true, email: req.user.email, username: req.user.username }));
 };
 
 const logout = (req, res) => {

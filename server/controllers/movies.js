@@ -42,6 +42,16 @@ const getStarRankMovies = async (req, res) => {
   const movies = await theMovie.getMoviesForStars(movieRank);
   res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movies));
 };
+// & : 비슷한 작품, 메시지 변경 필요
+const getSimilarWorks = async (req, res) => {
+  const { genre } = req.params;
+  try {
+    const movies = await theMovie.getSimilarWorksByGenreId(genre);
+    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movies));
+  } catch (error) {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+  }
+};
 
 module.exports = {
   getMovies,
@@ -49,4 +59,5 @@ module.exports = {
   getMovieDetailById,
   getSearchMovies,
   getStarRankMovies,
+  getSimilarWorks,
 };

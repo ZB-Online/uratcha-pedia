@@ -12,20 +12,24 @@ export function Header({ $target, initialState }) {
   this.render = () => {
     if (!this.state) return;
 
+    const { keyword } = this.state;
+
     $header.innerHTML = `
     <div class="outer">
       <div class="inner">
         <ul>
           <li>
             <a href="javascript:void(0)" class="logo">
-              <img src="/img/watcha_logo.png" alt="LOGO" />
+              <img src="/img/uratcha_logo.png" alt="LOGO" />
             </a>
           </li>
           <li class="search">
             <form class="search-form" action="#">
               <span class="material-icons">search</span>
               <label for="search-input">
-                <input type="text" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
+                <input type="text" value="${
+                  keyword ? keyword : ''
+                }" id="search-input" class="search-input" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." />
                 <!-- 입력 시 hidden 제거 -->
                 <div class="cancel-btn hidden"> 
                   <span class="material-icons ">
@@ -35,14 +39,17 @@ export function Header({ $target, initialState }) {
               </label>
             </form>
           </li>
-          <li class='sign-in hidden'>
+          <li class='sign-in'>
             <button class="btn">로그인</button>
           </li>
-          <li class='sign-up hidden'>
+          <li class='sign-up'>
             <button class="btn btn--white">회원가입</button>
           </li>
-          <li class='my-page '>
-            <button class="btn">마이페이지</button>
+          <li class='my-page hidden'>
+            <button class="btn btn--border">마이페이지</button>
+          </li>
+          <li class='logout hidden'>
+            <button class="btn">로그아웃</button>
           </li>
         </ul>
       </div>
@@ -134,25 +141,29 @@ function Sign({ $target, initialState }) {
           <div class="signin-header">
             <span class="sign-logo"></span>
           </div>
-          <h2 class="title">SIGN IN</h2>
+          <h2 class="title"></h2>
           <section>
             <div class="signin-modal">
-              <form class="form signin" novalidate>
+              <form class="form signin" action="#">
                 <div class="input-container">
                   <label for="signin-email" class="input-label">
                     <input
-                      type="text"
+                      type="email"
                       id="signin-email"
                       name="email"
                       required
                       autocomplete="off"
                       placeholder="email"
                       autofocus
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  />
+                    <span class="valid hidden">
+                      <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                    </span>
+                    <span class="invalid hidden">
+                    <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                    </span>
+                  </label>
+                  <span class="error"></span>
                 </div>
                 <div class="input-container">
                   <label for="signin-password" class="input-label">
@@ -163,15 +174,19 @@ function Sign({ $target, initialState }) {
                       required
                       autocomplete="off"
                       placeholder="password"
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  />
+                  <span class="valid hidden">
+                      <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                    </span>
+                    <span class="invalid hidden">
+                    <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                    </span>
+                  </label>
+                  <span class="error"></span>
                 </div>
-                <button class="signin button" disabled>SIGN IN</button>
+                <button type="submit" class="signin button">SIGN IN</button>
                 <div class="link">
-                  Not a member? <button>Sign up now</a>
+                  Not a member? <button class="to-signup-btn">Sign up now</button>
                 </div>
               </form>
             </div>
@@ -179,7 +194,7 @@ function Sign({ $target, initialState }) {
   
           <section>
             <div class="signup-modal hidden">
-              <form class="form signup" novalidate>
+              <form class="form signup">
                 <div class="input-container">
                   <label for="signup-username" class="input-label"
                     ><input
@@ -190,27 +205,34 @@ function Sign({ $target, initialState }) {
                       autocomplete="off"
                       placeholder="username"
                       autofocus
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  />
+                  <span class="valid hidden">
+                  <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                </span>
+                <span class="invalid hidden">
+                <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                </span>
+              </label>
+              <span class="error"></span>
                 </div>
   
                 <div class="input-container">
                   <label for="signup-email" class="input-label">
                     <input
-                      type="text"
+                      type="email"
                       id="signup-email"
                       name="email"
                       required
                       autocomplete="off"
                       placeholder="email"
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  /><span class="valid hidden">
+                  <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                </span>
+                <span class="invalid hidden">
+                <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                </span>
+              </label>
+              <span class="error"></span>
                 </div>
   
                 <div class="input-container">
@@ -222,20 +244,36 @@ function Sign({ $target, initialState }) {
                       required
                       autocomplete="off"
                       placeholder="password"
-                  /></label>
-                  <span class="bar"></span>
-                  <i class="icon icon-success bx bxs-check-circle"></i>
-                  <i class="icon icon-error bx bxs-x-circle"></i>
-                  <div class="error"></div>
+                  /><span class="valid hidden">
+                  <box-icon name='check-circle' color="#1FA75C"></box-icon>
+                </span>
+                <span class="invalid hidden">
+                <box-icon name='error-circle' color="#FF2F62" ></box-icon>
+                </span>
+              </label>
+              <span class="error"></span>
                 </div>
-                <button class="signup button" disabled>SIGN UP</button>
+                <button type="submit" class="signup button">SIGN UP</button>
                 <div class="link">
-                  Already a member? <button>Sign up now</a>
+                  Already a member? <button class="to-signin-btn">Sign up now</button>
                 </div>
               </form>
             </div>
           </section>
         </div>
+      </div>
+    </div>
+    <div class="confirm-modal hidden">
+      <div class="backdrop"></div>
+      <div class="modal-container">
+       <div class="confirm-main">
+         <div class="confirm-title">알림</div>
+         <div class="confirm-content">로그아웃 하시겠어요?</div>
+       </div>
+       <div class="confirm-btn-container">
+        <button class="confirm-btn confirm-cancel-btn">취소</button>
+        <button class="confirm-btn confirm-ok-btn">확인</button>
+       </div>
       </div>
     </div>
   `;

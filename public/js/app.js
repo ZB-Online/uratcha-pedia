@@ -23,9 +23,7 @@ export default function App({ $target }) {
     $target.innerHTML = ``;
 
     if (pathname === '/') {
-      const Home = new HomePage({ $target });
-      Home.render();
-      Home.bindEvents();
+      new HomePage({ $target });
     } else if (pathname.indexOf('/search/') === 0) {
       const [, , keyword] = pathname.split('/');
       new SearchResultPage({ $target, initialState: decodeURI(keyword) });

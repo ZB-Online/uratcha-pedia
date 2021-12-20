@@ -3,15 +3,15 @@ import { MovieRanking } from '../Components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
-import { mainCarousel } from '../utils/carousel.js';
+import { bindBoxOfficeMovieCarouselEvents, bindHighestRankingMovieCarouselEvents } from '../utils/carousel.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');
   $target.appendChild($homePage);
 
   this.state = {
-    boxOffice: '박스 오피스',
-    highestRanking: '별점 순',
+    boxOffice: [],
+    highestRanking: [],
   };
 
   this.setState = newState => {
@@ -50,24 +50,45 @@ export default function HomePage({ $target }) {
         const route = `/movies/${movieId}`;
         routeChange(route);
       } else {
-        const route = '/movies/2';
+        const route = `/movies/${movieId}`;
         routeChange(route);
       }
     });
 
     // Carousel Events
-    mainCarousel(document.querySelector('.carousel.box-office'), this.state.boxOffice);
+    bindBoxOfficeMovieCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
+    bindHighestRankingMovieCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
   };
 
   const fetchBoxOffice = async () => {
     try {
       const data = await fetch.get('/api/movies');
       const boxOffice = data.resData;
-      this.setState({ ...this.state, boxOffice });
+      return boxOffice;
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }
   };
 
-  fetchBoxOffice();
+  const fetchHighestRanking = async () => {
+    try {
+      const data = await fetch.get('/api/movies');
+      const highestRanking = data.resData;
+      return highestRanking;
+    } catch (e) {
+      console.error('movie api not fetched: ', e);
+    }
+  };
+
+  const fetchMovieRanking = async () => {
+    try {
+      const boxOffice = await fetchBoxOffice();
+      const highestRanking = await fetchHighestRanking();
+      this.setState({ ...this.state, boxOffice, highestRanking });
+    } catch (e) {
+      console.error('movie api not fetched: ', e);
+    }
+  };
+
+  fetchMovieRanking();
 }

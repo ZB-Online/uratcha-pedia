@@ -9,7 +9,7 @@ const getReviewByMovieIdUserEmail = (movieId, userEmail) => {
   return isReview ?? false;
 };
 
-const addReview = newReview => (reviewModel = [...reviewModel, newReview]);
+const addReview = newReview => (reviewModel = [...reviewModel, { id: reviewModel[reviewModel.length - 1].id + 1, ...newReview }]);
 
 const findReviewById = id => reviewModel.some(review => review.id === +id);
 
