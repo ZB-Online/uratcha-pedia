@@ -1,6 +1,6 @@
-import MovieCommentCarousel from '../../../js/Components/global/MovieCommentCarousel';
-import SimilarWorks from '../../../js/Components/SimilarWorks';
-import StarsGraph from '../../../js/Components/StarsGraph';
+import MovieCommentCarousel from './global/MovieCommentCarousel';
+import SimilarWorks from './SimilarWorks';
+import StarsGraph from './StarsGraph';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');

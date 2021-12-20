@@ -1,10 +1,9 @@
 import { MovieDetails } from '../components/MovieDetails';
-import Wrapper from '../../../js/Components/Wrapper';
-import { eventListeners } from '../../../js/eventListeners';
-import { movieDetailCommentCarousel } from '../../../js/utils/carousel.js';
-import { bindMovieCommentCarouselEvents } from '../../../js/utils/carousel';
-import fetch from '../../../js/utils/fetch';
-import { routeChange } from '../../../js/router';
+import Wrapper from '../components/Wrapper';
+import { eventListeners } from '../eventListeners';
+import { bindMovieCommentCarouselEvents } from '../utils/carousel';
+import fetch from '../utils/fetch';
+import { routeChange } from '../router';
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');

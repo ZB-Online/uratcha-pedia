@@ -1,5 +1,5 @@
-import { SearchResult } from '../Components/SearchResult';
-import Wrapper from '../Components/Wrapper';
+import { SearchResult } from '../components/SearchResult';
+import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
 import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
