@@ -4,6 +4,7 @@ const resMessage = require('../utils/resMessage');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const ACCESS_TOKEN_EXPIRED = new Date(Date.now() + 900000000);
 
 const getUsers = (req, res) => {
   res.send(userDao.getUsers());
@@ -23,7 +24,16 @@ const signin = async (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
   const accessToken = generateToken(signinUser.email);
-  res.cookie('accessToken',accessToken).status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{isAuth:true, email:userInfo.email, username:userInfo.username}));
+  res
+    .cookie('access_token', accessToken, { expires: ACCESS_TOKEN_EXPIRED, httpOnly: true })
+    .status(200)
+    .json(
+      resData.successTrue(resMessage.SIGNIN_SUCCESS, {
+        isAuth: true,
+        email: userInfo.email,
+        username: userInfo.username,
+      })
+    );
 };
 
 const signup = async (req, res) => {
@@ -43,8 +53,17 @@ const signup = async (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
   const token = generateToken(signupUser.email);
-  userDao.addUser({...signupUser, token });
-  res.cookie('accessToken',token).status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username}));
+  userDao.addUser({ ...signupUser, token });
+  res
+    .cookie('access_token', accessToken, { expires: ACCESS_TOKEN_EXPIRED, httpOnly: true })
+    .status(200)
+    .json(
+      resData.successTrue(resMessage.SIGNUP_SUCCESS, {
+        isAuth: true,
+        email: signupUser.email,
+        username: signupUser.username,
+      })
+    );
 };
 
 const generateToken = email => {
@@ -56,12 +75,14 @@ const generateToken = email => {
 const auth = (req, res) => {
   res
     .status(200)
-    .json(resData.successTrue(resMessage.AUTH_SUCCESS, { isAuth: true, email: req.user.email, username: req.user.username }));
+    .json(
+      resData.successTrue(resMessage.AUTH_SUCCESS, { isAuth: true, email: req.user.email, username: req.user.username })
+    );
 };
 
 const logout = (req, res) => {
   userDao.removeToken(req.user.email);
-  res.clearCookie('accessToken').status(200).json(resData.successTrue(resMessage.LOGOUT_SUCCESS));
+  res.clearCookie('access_token').status(200).json(resData.successTrue(resMessage.LOGOUT_SUCCESS));
 };
 
 const hashPassword = password => {
