@@ -1,9 +1,9 @@
 import MyScoredMovies from '../components/MyScoredMovies';
 import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
-import fetch from '../utils/fetch.js';
-import { getCookieValue } from '../utils/cookie';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
+import { fetchMyScoredMovies } from '../services/movies/movie';
+import isAuth from '../utils/auth';
 
 export default function MyPage({ $target }) {
   const $myPage = document.createElement('div');
@@ -40,34 +40,13 @@ export default function MyPage({ $target }) {
     );
   };
 
-  const userEmail = 'test7@test.com';
+  const fetchInitialState = async () => {
+    if (!this.state) return;
 
-  const fetchData = async () => {
-    if (!userEmail) return;
-    const myScoredMovies = await fetchMyScoredMovies(userEmail);
-    this.setState({ ...this.state, myScoredMovies: myScoredMovies });
+    const user = await isAuth();
+    const myScoredMovies = await fetchMyScoredMovies(user.email);
+    this.setState({ ...this.state, user: user, myScoredMovies: myScoredMovies });
   };
 
-  const isAuth = async () => {
-    try {
-      const token = getCookieValue();
-      const response = await fetch.authGet('/api/users/auth', token);
-      this.setState({ ...this.state, user: response?.resData });
-      console.log(this.state)
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  isAuth();
-  fetchData();
+  fetchInitialState();
 }
-
-const fetchMyScoredMovies = async userEmail => {
-  try {
-    const { resData } = await fetch.get(`/api/movies/users/${userEmail}`);
-    return resData;
-  } catch (e) {
-    console.error('my scored movies api not fetched: ', e);
-  }
-};

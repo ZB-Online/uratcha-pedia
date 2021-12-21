@@ -1,7 +1,7 @@
 import MovieCommentCarousel from './global/MovieCommentCarousel';
 import SimilarWorks from './SimilarWorks';
 import StarsGraph from './StarsGraph';
-import noImage from '../../img/no_image.png';
+import noImage from 'Images/no_image.png';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
@@ -151,7 +151,7 @@ export function MovieDetails({ $target, initialState }) {
                 <p class="detail-container_movie-item">
                   <span class="detail-container_movie-yaer">${releaseYear}</span>
                   <span class="detail-container_divide-letter">・</span>
-                  <span class="detail-container_movie-genre">${genresComb}</span>
+                  <span class="detail-container_movie-genre">${genres?.length ? genresComb : 'None'}</span>
                   <span class="detail-container_divide-letter">・</span>
                   <span class="detail-container_movie-country">${country}</span>
                 </p>
@@ -198,12 +198,7 @@ export function MovieDetails({ $target, initialState }) {
                 <span class="detail-container_comment-count">${this.state.reviewsByMovieId.length}</span>
               </div>
               <div class="detail-container_comment-container">
-                ${
-                  new MovieCommentCarousel({
-                    $target: $movieDetails,
-                    initialState: this.state.reviewsByMovieId,
-                  }).render().innerHTML
-                }
+
               </div>
             </div>
 
@@ -223,6 +218,11 @@ export function MovieDetails({ $target, initialState }) {
     new StarsGraph({
       $target: $movieDetails.querySelector('.detail-container__graph-container'),
       initialState: { starsData: this.state.starsData },
+    });
+
+    new MovieCommentCarousel({
+      $target: $movieDetails.querySelector('.detail-container_comment-container'),
+      initialState: this.state.reviewsByMovieId,
     });
 
     new SimilarWorks({

@@ -11,7 +11,7 @@ const getPopularMovies = async (page = 1) => {
       title: movie.title,
       overview: movie.overview,
       poster_path: movie.poster_path ? movieConfig.imageBaseUrl + movie.poster_path : '',
-      release_date: movie.release_date,
+      release_date: movie.release_date || 'None',
     }));
   } catch (error) {
     throw new Error(error);
@@ -40,7 +40,7 @@ const getMoviesDetailsById = async movieId => {
       title: responseData?.title,
       overview: responseData?.overview,
       poster_path: responseData.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
-      release_date: responseData?.release_date,
+      release_date: responseData?.release_date || 'None',
       genres: responseData?.genres.map(genre => genre.name),
       country,
       runtime: responseData?.runtime,
@@ -76,7 +76,7 @@ const getMoviesForAdditionalInfo = async movies =>
       id: movie.id,
       title: movie.title,
       poster_path: movie.poster_path ? movieConfig.imageBaseUrl + movie.poster_path : '',
-      release_date: movie.release_date,
+      release_date: movie.release_date || 'None',
       ...(await getMoviesWithCountry(movie.id)),
     }))
   );
@@ -97,7 +97,7 @@ const getMyScoredMoviesInfo = async movieId => {
     const responseData = await response.json();
     return {
       title: responseData?.title,
-      release_date: responseData?.release_date,
+      release_date: responseData?.release_date || 'None',
       country: responseData?.production_countries?.map(country => country.iso_3166_1)[0] || 'None',
       poster_path: responseData?.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
     };

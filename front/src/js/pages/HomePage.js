@@ -3,8 +3,8 @@ import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
-import {getCookieValue} from '../utils/cookie';
-import { bindBoxOfficeMovieCarouselEvents, bindHighestRankingMovieCarouselEvents } from '../utils/carousel.js';
+import isAuth from '../utils/auth';
+import { bindMovieRankingCarouselEvents } from '../utils/carousel.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');
@@ -41,12 +41,13 @@ export default function HomePage({ $target }) {
   };
 
   this.bindEvents = () => {
-    // Routing Events
     eventListeners();
 
     $homePage.addEventListener('click', ({ target }) => {
       if (!target.matches('.movie-item *')) return;
+
       const movieId = target.closest('.movie-item').dataset.movieId;
+
       if (target.matches('.box-office *')) {
         const route = `/movies/${movieId}`;
         routeChange(route);
@@ -56,19 +57,17 @@ export default function HomePage({ $target }) {
       }
     });
 
-    // Carousel Events
-    bindBoxOfficeMovieCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
-    bindHighestRankingMovieCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
+    bindMovieRankingCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
+    bindMovieRankingCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
   };
 
   const fetchBoxOffice = async () => {
     try {
-      const data = await fetch.get('/api/movies');
+      const { resData } = await fetch.get('/api/movies');
       const boxOffice = await Promise.all(
-        data.resData.map(async movie => {
-          const data = await fetch.get(`/api/stars/${movie.id}`);
-          const averageStar = await data.resData.averageStar;
-          return { ...movie, averageStar };
+        resData.map(async movie => {
+          const { resData } = await fetch.get(`/api/stars/${movie.id}`);
+          return { ...movie, averageStar: resData.averageStar };
         })
       );
       return boxOffice;
@@ -77,39 +76,18 @@ export default function HomePage({ $target }) {
     }
   };
 
-  const fetchHighestRanking = boxOffice => {
-    try {
-      const highestRanking = [...boxOffice].sort((a, b) => {
-        return +b.averageStar >= +a.averageStar ? (+b.averageStar > +a.averageStar ? 1 : 0) : -1;
-      });
-      return highestRanking;
-    } catch (e) {
-      console.error('movie api not fetched: ', e);
-    }
-  };
-
   const fetchMovieRanking = async () => {
     try {
+      const user = await isAuth();
       const boxOffice = await fetchBoxOffice();
-      const highestRanking = await fetchHighestRanking(boxOffice);
-      this.setState({ ...this.state, boxOffice, highestRanking });
+      const highestRanking = [...boxOffice].sort((a, b) =>
+        +b.averageStar >= +a.averageStar ? (+b.averageStar > +a.averageStar ? 1 : 0) : -1
+      );
+      this.setState({ ...this.state, boxOffice, highestRanking, user });
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }
   };
 
-  const isAuth = async () => {
-    try {
-      const token = getCookieValue();
-      console.log("home", token)
-      const response = await fetch.authGet('/api/users/auth', token);
-      console.log('home', response)
-      this.setState({ ...this.state, user: response?.resData });
-    } catch (err) {
-      console.error(err)
-    }
-  };
-
-  isAuth();
   fetchMovieRanking();
 }

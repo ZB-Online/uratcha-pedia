@@ -112,6 +112,8 @@
   color: #292a32;
   font-weight: 500;
   line-height: 22px;
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 

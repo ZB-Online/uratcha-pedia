@@ -1,6 +1,6 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
-import {getCookieValue,delCookie,setCookieValue} from './utils/cookie';
+import { getAccessToken, delAccessToken, setAccessToken } from './utils/accessToken';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -80,16 +80,16 @@ export const eventListeners = () => {
 
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    const token = getCookieValue();
-    console.log("logout token", token)
+    const token = getAccessToken();
+    console.log('logout token', token);
     try {
-      fetch.authGet('/api/users/logout',token);
-      delCookie()
-      if(window.location.pathname === "/mypage"){   
-        const route = '/'
-        routeChange(route)
+      fetch.authGet('/api/users/logout', token);
+      delAccessToken();
+      if (window.location.pathname === '/mypage') {
+        const route = '/';
+        routeChange(route);
       }
-      location.reload()
+      location.reload();
     } catch (err) {
       alert(err);
     }
@@ -190,10 +190,10 @@ export const eventListeners = () => {
       }
       hiddenSignModal();
       changeAuthHeader();
-      const accessToken = response.resData.accessToken
-      setCookieValue(accessToken)
-      isAuth()
-      location.reload()
+      const accessToken = response.resData.accessToken;
+      setAccessToken(accessToken);
+      isAuth();
+      location.reload();
     } catch (err) {
       alert(err);
     }
@@ -243,8 +243,8 @@ export const eventListeners = () => {
       }
       hiddenSignModal();
       changeAuthHeader();
-      const accessToken = response.resData.accessToken
-      setCookieValue(accessToken)
+      const accessToken = response.resData.accessToken;
+      setAccessToken(accessToken);
     } catch (err) {
       alert(err);
     }
@@ -276,9 +276,9 @@ export const eventListeners = () => {
 
   const isAuth = async () => {
     try {
-      const token = getCookieValue();
+      const token = getAccessToken();
       const response = await fetch.authGet('/api/users/auth', token);
-      console.log("isAuth",response)
+      console.log('isAuth', response);
       if (response.resData.isAuth) {
         $signin.classList.add('hidden');
         $signup.classList.add('hidden');
@@ -294,5 +294,5 @@ export const eventListeners = () => {
       console.error(err);
     }
   };
-  isAuth()
+  isAuth();
 };

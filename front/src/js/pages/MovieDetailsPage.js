@@ -3,8 +3,7 @@ import Wrapper from '../../js/components/Wrapper';
 import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
-import { getCookieValue } from '../utils/cookie';
-import { routeChange } from '../../js/router';
+import { getAccessToken } from '../utils/accessToken';
 import debounce from '../utils/debounce';
 
 export default function MovieDetailsPage({ $target, initialState }) {
@@ -62,7 +61,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
     } else {
       document.querySelector('.leave-comment').classList.remove('hidden');
     }
-    if (this.state.user.isAuth) renderMarkStar();
+    if (this.state.user?.isAuth) renderMarkStar();
   };
 
   this.bindEvents = () => {
@@ -370,11 +369,10 @@ export default function MovieDetailsPage({ $target, initialState }) {
       similarWorksData,
       myReview: myReview?.resData,
     });
-    console.log(this.state);
   };
   const isAuth = async () => {
     try {
-      const token = getCookieValue();
+      const token = getAccessToken();
       const { resData } = await fetch.authGet('/api/users/auth', token);
       this.setState({ ...this.state, user: resData });
     } catch (err) {

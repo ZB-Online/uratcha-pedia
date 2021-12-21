@@ -1,12 +1,12 @@
 const parseToJSON = response => {
   if (!response.ok) throw new Error(response.status);
-  return response.json()
+  return response.json();
 };
 
 const get = async url => {
   try {
     const response = await fetch(url);
-    return parseToJSON(response)
+    return parseToJSON(response);
   } catch (err) {
     console.error(err);
   }
@@ -21,7 +21,7 @@ const authGet = async (url, token) => {
         'content-type': 'application/json',
       },
     });
-    return parseToJSON(response)
+    return parseToJSON(response);
   } catch (err) {
     console.error(err);
   }
@@ -34,7 +34,7 @@ const post = async (url, payload) => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    return parseToJSON(response)
+    return parseToJSON(response);
   } catch (err) {
     console.error(err);
   }
@@ -47,7 +47,7 @@ const patch = async (url, payload) => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    return parseToJSON(response)
+    return parseToJSON(response);
   } catch (err) {
     console.error(err);
   }
@@ -56,7 +56,7 @@ const patch = async (url, payload) => {
 const remove = async url => {
   try {
     const response = await fetch(url, { method: 'DELETE' });
-    return parseToJSON(response)
+    return parseToJSON(response);
   } catch (err) {
     console.error(err);
   }

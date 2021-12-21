@@ -1,8 +1,3 @@
-export const titleFormat = title => {
-  if (title.length === 0) return '';
-  return title.length >= 33 ? title.slice(0, 33) + '...' : title;
-};
-
 export const bindCarouselEvents = ($container, items, duration, itemsPerPage) => {
   let $carouselPrevBtn = $container.querySelector('.carousel-control.prev');
   let $carouselNextBtn = $container.querySelector('.carousel-control.next');
@@ -69,7 +64,7 @@ export const bindMovieCommentCarouselEvents = ($container, comments) => {
   bindCarouselEvents($container, comments, 700, 3);
 };
 
-export const bindBoxOfficeMovieCarouselEvents = ($container, movies) => {
+export const bindMovieRankingCarouselEvents = ($container, movies) => {
   const currentWidth = $container.getBoundingClientRect().width;
 
   if (currentWidth >= 1100) {
@@ -79,10 +74,6 @@ export const bindBoxOfficeMovieCarouselEvents = ($container, movies) => {
   } else if (currentWidth >= 600) {
     bindCarouselEvents($container, movies, 500, 3);
   }
-};
-
-export const bindHighestRankingMovieCarouselEvents = ($container, movies) => {
-  bindCarouselEvents($container, movies, 500, 5);
 };
 
 export const bindMyScoredMovieCarouselEvents = ($container, movies) => {

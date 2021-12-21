@@ -1,4 +1,4 @@
-import noImage from '../../../img/no_image.png';
+import noImage from 'Images/no_image.png';
 
 export default function SearchedMovieCarousel({ $target, initialState }) {
   const $searchedMovieCarousel = document.createElement('div');
@@ -6,31 +6,30 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
   $target.appendChild($searchedMovieCarousel);
 
   this.state = {
-    movies: initialState.searchResult,
+    searchResult: initialState.searchResult,
   };
 
   this.setState = newState => {
     this.state = newState;
     this.render();
-    this.bindEvents();
   };
 
   this.render = () => {
     if (!this.state) return;
 
-    const { movies } = this.state;
+    const { searchResult } = this.state;
 
     $searchedMovieCarousel.innerHTML = `<ul class="search-result-container__list carousel-slides">
-    ${movies
+    ${searchResult
       .map(
-        movie => `
-        <li class="search-result-item" data-movie-id="${movie.id}">
+        ({ id, poster_path, title, release_date, country }) => `
+        <li class="search-result-item" data-movie-id="${id}">
           <a href="javascript:void(0);">
-            <img src="${movie.poster_path ? movie.poster_path : noImage}" alt="movie-poster" />
+            <img src="${poster_path ? poster_path : noImage}" alt="movie-poster" />
             <div class="search-result-item__info">
-              <div class="search-result-item__title">${movie.title}</div>
+              <div class="search-result-item__title">${title}</div>
               <div class="search-result-item__subtitle">
-                <span>${movie.release_date.split('-')[0]} ・ ${movie.country}</span>
+                <span>${release_date.split('-')[0]} ・ ${country}</span>
               </div>
               <div class="search-result-item__category"><span>Movies</span></div>
             </div>
@@ -57,8 +56,5 @@ export default function SearchedMovieCarousel({ $target, initialState }) {
     return $searchedMovieCarousel;
   };
 
-  this.bindEvents = () => {};
-
   this.render();
-  this.bindEvents();
 }
