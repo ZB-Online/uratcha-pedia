@@ -79,13 +79,13 @@ export const eventListeners = () => {
 
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    console.log("logout")
-    // var bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
+    console.log('logout');
+    // const bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
     // try {
     //   const res = await fetch.get('/api/users/logout', {
     //     mothod: 'GET',
     //     headers: {
-    //       Authorization: bearer,
+    //       'Authorization': bearer,
     //       'content-type': 'application/json',
     //     },
     //   });

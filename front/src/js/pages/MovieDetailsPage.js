@@ -71,7 +71,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
     const eventhandlers = ({ target }) => {
       // dropdown
-      if (target.matches('.movie-header_add-comment')) {
+      if (target.matches('.movie-header_add-comment *')) {
         // check if review exists
         this.state.myReview.id && this.state.myReview.movieId === +this.state.movieId
           ? $commentDropdown.classList.toggle('hidden') // pop up add-comment dropdown
@@ -82,10 +82,10 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
       // add / edit / delete comment btn
       if (
-        target.matches('.edit-comment') ||
-        target.matches('.my-comment-container_btn.edit-btn') ||
+        target.matches('.edit-comment *') ||
+        target.matches('.my-comment-container_btn.edit-btn *') ||
         target.matches('.leave-comment .movie-header_add-comment') ||
-        (target.matches('.movie-header_add-comment') &&
+        (target.matches('.movie-header_add-comment *') &&
           !this.state.myReview.id &&
           !this.state.myReview.movieId === this.state.movieId)
       ) {
@@ -96,7 +96,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
         const comment = savedComments[`${this.state.user.email}:${this.state.movieId}`] || this.state.myReview.comment;
         $commentModalTextarea.value = comment || '';
         $commentModalWriteBtn.removeAttribute('disabled');
-      } else if (target.matches('.delete-comment') || target.matches('.my-comment-container_btn.del-btn')) {
+      } else if (target.matches('.delete-comment *') || target.matches('.my-comment-container_btn.del-btn *')) {
         deleteMyReview();
         document.querySelector('.my-comment-container.comment').classList.add('hidden');
       }

@@ -68,11 +68,11 @@ export function MovieDetails({ $target, initialState }) {
                 </div>
                 <button class="movie-header_add-comment btn">
                   <div class="add-comment-icon-container"><span class="material-icons"> edit </span></div>
-                  Comment
+                  <span>코멘트</span>
                   <div class="comment-dropdown-container hidden">
-                    <div class="edit-comment"><span class="material-icons"> edit </span>Edit Comment</div>
+                    <div class="edit-comment"><span class="material-icons"> edit </span><span>Edit Comment</span></div>
 
-                    <div class="delete-comment"><span class="material-icons "> delete </span>Delete Comment</div>
+                    <div class="delete-comment"><span class="material-icons "> delete </span><span>Delete Comment</span></div>
                   </div>
                 </button>
               </div>
@@ -87,7 +87,7 @@ export function MovieDetails({ $target, initialState }) {
                     <div class="close-comment">
                       <button aria-label="close" class="close-comment-btn"></button>
                     </div>
-                    <em class="comment-title">Spider-Man: No Way Home</em>
+                    <em class="comment-title">${title}</em>
                     <div class="write-comment">
                       <button class="write-comment-btn" disabled>Comment</button>
                     </div>
@@ -121,12 +121,12 @@ export function MovieDetails({ $target, initialState }) {
           <ul class="my-comment">
             <li>
               <button class="my-comment-container_btn del-btn">
-                <span class="material-icons "> delete_outline </span>Delete
+                <span class="material-icons "> delete_outline </span><span>Delete</span>
               </button>
             </li>
             <li>
               <button class="my-comment-container_btn edit-btn">
-                <span class="material-icons"> edit </span>Edit
+                <span class="material-icons"> edit </span><span>Edit</span>
               </button>
             </li>
           </ul>

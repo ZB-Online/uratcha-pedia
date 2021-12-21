@@ -1,6 +1,6 @@
-import logoImage from '../../img/uratcha_logo.PNG';
-import logoSmall from '../../img/uratcha_logo_small.png';
+import logoImage from 'Images/uratcha_logo.PNG';
 import fetch from '../utils/fetch';
+import logoImageSmall from 'Images/uratcha_logo_small.png';
 
 export function Header({ $target, initialState }) {
   const $header = document.createElement('header');
@@ -117,7 +117,7 @@ function Footer({ $target, initialState }) {
               </ul>
               <ul class="logo">
                 <li>
-                  <a href="javascript:void(0)"><img src="${logoSmall}" alt="WATCHA_LOGO"></a>
+                  <a href="javascript:void(0)"><img src="${logoImageSmall}" alt="WATCHA_LOGO"></a>
                 </li>
                 <li>
                   <span>© 2021 by URATCHA, Inc. All rights reserved.</span>
