@@ -101,7 +101,9 @@ export default function HomePage({ $target }) {
   const isAuth = async () => {
     try {
       const token = getCookieValue();
+      console.log("home", token)
       const response = await fetch.authGet('/api/users/auth', token);
+      console.log('home', response)
       this.setState({ ...this.state, user: response?.resData });
     } catch (err) {
       console.error(err)

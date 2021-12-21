@@ -1,6 +1,6 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
-import {getCookieValue,delCookie} from './utils/cookie';
+import {getCookieValue,delCookie,setCookieValue} from './utils/cookie';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -81,6 +81,7 @@ export const eventListeners = () => {
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
     const token = getCookieValue();
+    console.log("logout token", token)
     try {
       fetch.authGet('/api/users/logout',token);
       delCookie()
@@ -189,6 +190,8 @@ export const eventListeners = () => {
       }
       hiddenSignModal();
       changeAuthHeader();
+      const accessToken = response.resData.accessToken
+      setCookieValue(accessToken)
       isAuth()
       location.reload()
     } catch (err) {
@@ -240,6 +243,8 @@ export const eventListeners = () => {
       }
       hiddenSignModal();
       changeAuthHeader();
+      const accessToken = response.resData.accessToken
+      setCookieValue(accessToken)
     } catch (err) {
       alert(err);
     }
@@ -273,6 +278,7 @@ export const eventListeners = () => {
     try {
       const token = getCookieValue();
       const response = await fetch.authGet('/api/users/auth', token);
+      console.log("isAuth",response)
       if (response.resData.isAuth) {
         $signin.classList.add('hidden');
         $signup.classList.add('hidden');

@@ -22,8 +22,8 @@ const signin = async (req, res) => {
   if (!passwordMatch) {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
-  const token = generateToken(signinUser.email);
-  res.cookie('x_auth',token).status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{isAuth:true, email:userInfo.email, username:userInfo.username}));
+  const accessToken = generateToken(signinUser.email);
+  res.status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{isAuth:true, email:userInfo.email, username:userInfo.username, accessToken}));
 };
 
 const signup = async (req, res) => {
@@ -42,9 +42,9 @@ const signup = async (req, res) => {
   } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  const token = generateToken(signupUser.email);
+  const accessToken = generateToken(signupUser.email);
   userDao.addUser({...signupUser, token });
-  res.cookie('x_auth',token).status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username}));
+  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username,accessToken}));
 };
 
 const generateToken = email => {
