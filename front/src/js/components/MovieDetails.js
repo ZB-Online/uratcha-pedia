@@ -27,6 +27,8 @@ export function MovieDetails({ $target, initialState }) {
     const { cast, certification, country, genres, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
 
+    const { userEmail, comment } = this.state.userReview;
+
     const releaseYear = release_date?.slice(0, 4);
     const genresComb = genres?.join('/');
 
@@ -104,15 +106,15 @@ export function MovieDetails({ $target, initialState }) {
             </div>
           </div>
 
-          <div class="detail-container ">
+          <div class="detail-container user-comment">
             <ul class="my-comment-container comment hidden">
               <li>
                 <ul class="my-comment">
                   <li>
-                    <span class="username">${this.state.userReview?.userEmail}</span>
+                    <span class="username">${userEmail}</span>
                   </li>
                   <li>
-                    <span class="comment-content">${this.state.userReview?.comment}</span>
+                    <span class="comment-content">${comment}</span>
                   </li>
                 </ul>
               </li>

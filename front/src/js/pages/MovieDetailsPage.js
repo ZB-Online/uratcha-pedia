@@ -55,14 +55,19 @@ export default function MovieDetailsPage({ $target, initialState }) {
     );
 
     const $leaveComment = document.querySelector('.leave-comment');
-    if (this.state.userReview?.id) {
-      document.querySelector('.my-comment-container').classList.remove('hidden');
-      $leaveComment.classList.add('hidden');
-    } else {
-      $leaveComment.classList.remove('hidden');
-    }
+    const $myComment = document.querySelector('.my-comment-container.comment');
 
-    if (this.state.user.isAuth) renderMarkStar();
+    if (this.state.user.isAuth) {
+      renderMarkStar();
+      if (this.state.userReview?.id) {
+        $myComment.classList.remove('hidden');
+        $leaveComment.classList.add('hidden');
+      } else {
+        $leaveComment.classList.remove('hidden');
+      }
+    } else {
+      document.querySelector('.user-comment').classList.add('hidden');
+    }
   };
 
   this.bindEvents = () => {
@@ -88,13 +93,11 @@ export default function MovieDetailsPage({ $target, initialState }) {
     };
 
     const eventhandlers = async ({ target }) => {
-      // dropdown
       if (target.matches('.movie-header_add-comment')) {
-        // check if review exists
         if (this.state.user.isAuth) {
           this.state.userReview?.id && this.state.userReview?.movieId === +this.state.movieId
-            ? $commentDropdown.classList.toggle('hidden') // pop up add-comment dropdown
-            : $commentModal.classList.remove('hidden'); // pop up comment modal
+            ? $commentDropdown.classList.toggle('hidden')
+            : $commentModal.classList.remove('hidden');
         } else {
           popSignModal();
         }
@@ -102,7 +105,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         $commentDropdown.classList.add('hidden');
       }
 
-      // add / edit / delete comment btn
       if (
         target.matches('.edit-comment') ||
         target.matches('.my-comment-container_btn.edit-btn') ||
@@ -135,7 +137,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         $myComment.classList.add('hidden');
       }
 
-      // post/patch modal comments
       if (target.matches('.write-comment-btn')) {
         $commentModal.classList.add('hidden');
         const comment = $commentModalTextarea.value;
@@ -144,7 +145,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         delete savedComments[`${this.state.user?.email}:${this.state.movieId}`];
         localStorage.setItem('COMMENT_AUTO_SAVE', JSON.stringify(savedComments));
 
-        // setState userReview
         const userReview =
           this.state.userReview?.id && this.state.userReview?.movieId === this.state.movieId
             ? await patchUserReview(comment)
@@ -153,14 +153,11 @@ export default function MovieDetailsPage({ $target, initialState }) {
         this.setState({ ...this.state, userReview });
       }
 
-      // close modal
       if (target.matches('#comment-modal') || target.matches('.close-comment-btn')) {
         $commentModal.classList.add('hidden');
       }
     };
 
-    // comment-modal
-    // window.addEventListener('click', eventhandlers);
     window.onclick = eventhandlers;
 
     $commentModalTextarea.addEventListener('input', e => {
@@ -170,13 +167,11 @@ export default function MovieDetailsPage({ $target, initialState }) {
       e.target.style.height = 'auto';
       e.target.style.height = e.target.scrollHeight + 'px';
 
-      // debounce(e => {
       const comment = e.target.value;
       const savedComments = JSON.parse(localStorage.getItem('COMMENT_AUTO_SAVE')) || {};
       savedComments[`${this.state.user?.email}:${this.state.movieId}`] = comment;
 
       localStorage.setItem('COMMENT_AUTO_SAVE', JSON.stringify(savedComments));
-      // }, 200);
     });
 
     bindMovieCommentCarouselEvents(
@@ -399,6 +394,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
       console.error(err);
     }
   };
+
   isAuth();
   fetchInitialState();
 }

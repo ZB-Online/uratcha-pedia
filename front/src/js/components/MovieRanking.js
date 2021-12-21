@@ -1,3 +1,4 @@
+import { routeChange } from '../router';
 import BoxOfficeRankingCarousel from './global/BoxOfficeRankingCarousel';
 import HighestRankingCarousel from './global/HighestRankingCarousel';
 
@@ -42,5 +43,16 @@ export function MovieRanking({ $target, initialState }) {
         });
   };
 
+  this.bindEvents = () => {
+    const { title } = this.state;
+
+    $target.addEventListener('click', ({ target }) => {
+      if (!target.matches(`${title === 'Box Office' ? '.box-office' : '.highest-ranking'} .movie-item *`)) return;
+      const movieId = target.closest('.movie-item').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
+  };
+
   this.render();
+  this.bindEvents();
 }

@@ -3,7 +3,7 @@ import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
-import {getCookieValue} from '../utils/cookie';
+import { getCookieValue } from '../utils/cookie';
 import { bindBoxOfficeMovieCarouselEvents, bindHighestRankingMovieCarouselEvents } from '../utils/carousel.js';
 
 export default function HomePage({ $target }) {
@@ -41,22 +41,8 @@ export default function HomePage({ $target }) {
   };
 
   this.bindEvents = () => {
-    // Routing Events
     eventListeners();
 
-    $homePage.addEventListener('click', ({ target }) => {
-      if (!target.matches('.movie-item *')) return;
-      const movieId = target.closest('.movie-item').dataset.movieId;
-      if (target.matches('.box-office *')) {
-        const route = `/movies/${movieId}`;
-        routeChange(route);
-      } else {
-        const route = `/movies/${movieId}`;
-        routeChange(route);
-      }
-    });
-
-    // Carousel Events
     bindBoxOfficeMovieCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
     bindHighestRankingMovieCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
   };
@@ -101,12 +87,10 @@ export default function HomePage({ $target }) {
   const isAuth = async () => {
     try {
       const token = getCookieValue();
-      console.log("home", token)
       const response = await fetch.authGet('/api/users/auth', token);
-      console.log('home', response)
       this.setState({ ...this.state, user: response?.resData });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   };
 
