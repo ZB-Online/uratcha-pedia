@@ -1,8 +1,9 @@
 import { SearchResult } from '../components/SearchResult';
 import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
-import fetch from '../utils/fetch.js';
 import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
+import isAuth from '../utils/auth';
+import { getSearchMovies } from '../services/movies/movie';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
@@ -11,7 +12,7 @@ export default function SearchResultPage({ $target, initialState }) {
   this.state = {
     keyword: initialState,
     searchResult: [],
-    user: {}
+    user: {},
   };
 
   this.setState = newState => {
@@ -43,30 +44,12 @@ export default function SearchResultPage({ $target, initialState }) {
     );
   };
 
-  const fetchSearchResult = async () => {
+  const fetchInitialState = async () => {
     const { keyword } = this.state;
+    const user = await isAuth();
     const searchResults = await getSearchMovies(keyword);
-    this.setState({ ...this.state, searchResult: searchResults });
+    this.setState({ ...this.state, user, searchResult: searchResults });
   };
 
-  const isAuth = async () => {
-    try {
-      const response = await fetch.get('/api/users/auth');
-      this.setState({ ...this.state, user: response?.resData });
-    } catch (err) {
-      console.error(err)
-    }
-  };
-
-  isAuth();
-  fetchSearchResult();
+  fetchInitialState();
 }
-
-const getSearchMovies = async keyword => {
-  try {
-    const { resData } = await fetch.get(`/api/movies/search/${keyword}`);
-    return resData;
-  } catch (e) {
-    console.error('search-result api not fetched: ', e);
-  }
-};

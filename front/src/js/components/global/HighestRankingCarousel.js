@@ -1,5 +1,4 @@
-import { titleFormat } from '../../utils/carousel';
-import noImage from '../../../img/no_image.png';
+import noImage from 'Images/no_image.png';
 
 export default function HighestRankingCarousel({ $target, initialState }) {
   const $highestRankingCarousel = document.createElement('div');
@@ -30,7 +29,7 @@ export default function HighestRankingCarousel({ $target, initialState }) {
                 <img src="${movie.poster_path ? movie.poster_path : noImage}" alt="movie-poster" />
             </div>
             <div class="movie-detail">
-                <span class="movie-title">${movie?.title ? titleFormat(movie.title) : ''}</span>
+                <span class="movie-title">${movie?.title}</span>
                 <div class="movie-info">
                 <span class="movie-year">${movie?.release_date.slice(0, 4)}</span>
                 <span>ㆍ</span>

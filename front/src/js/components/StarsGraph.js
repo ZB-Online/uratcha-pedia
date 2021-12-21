@@ -37,7 +37,7 @@ export default function StarsGraph({ $target, initialState }) {
       .datum(function () {
         return this.dataset;
       })
-      .style('height', '10%')
+      .style('height', '5%')
       .transition()
       .duration(1500)
       .style('height', d => d.val + '%');

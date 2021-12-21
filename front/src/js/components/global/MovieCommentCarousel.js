@@ -1,5 +1,6 @@
 export default function MovieCommentCarousel({ $target, initialState }) {
   const $movieCommentCarousel = document.createElement('div');
+  $movieCommentCarousel.classList.add('detail-container_comment-list', 'carousel-slides');
   $target.appendChild($movieCommentCarousel);
 
   this.state = {
@@ -9,6 +10,7 @@ export default function MovieCommentCarousel({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -16,28 +18,26 @@ export default function MovieCommentCarousel({ $target, initialState }) {
 
     const { comments } = this.state;
 
-    $movieCommentCarousel.innerHTML = `<div class="detail-container_comment-list carousel-slides">
+    $movieCommentCarousel.innerHTML = `
       ${comments
-        .map(comment => {
-          let temp = `
-              <div class="detail-container_comment-item" data-movie-id="${comment?.movieId}">
+        .map(
+          ({ movieId, userEmail, score, comment }) =>
+            `<div class="detail-container_comment-item" data-movie-id="${movieId}">
               <div class="detail-container_comment-item-header">
-              <span class="detail-container_user-name">${comment.userEmail}</span>
+              <span class="detail-container_user-name">${userEmail}</span>
               ${
-                comment?.score
-                  ? `<div class="detail-container_user-score">★<span>${comment.score}.0</span></div>`
+                score
+                  ? `<div class="detail-container_user-score">★<span>${score}.0</span></div>`
                   : `<div class="detail-container_user-score hide"></div>`
               }
             </div>
             <p class="detail-container_user-content">
-              ${comment?.comment}
+              ${comment}
             </p>
             </div>
-          `;
-          return temp;
-        })
+          `
+        )
         .join('')}
-        </div>
             <button class="carousel-control prev">
                 <img
                     class="carousel-control-image prev"
@@ -54,4 +54,13 @@ export default function MovieCommentCarousel({ $target, initialState }) {
             </button>`;
     return $movieCommentCarousel;
   };
+
+  this.bindEvents = () => {
+    bindMovieCommentCarouselEvents(
+      document.querySelector('.detail-container_comment-container'),
+      this.state.reviewsByMovieId
+    );
+  };
+
+  this.render();
 }

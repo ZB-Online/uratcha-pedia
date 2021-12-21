@@ -11,7 +11,6 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
-    this.bindEvents();
   };
 
   this.render = () => {
@@ -55,8 +54,5 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
       </button>`;
   };
 
-  this.bindEvents = () => {};
-
   this.render();
-  this.bindEvents();
 }
