@@ -56,6 +56,7 @@ export default function MyPage({ $target }) {
       const token = getCookieValue();
       const response = await fetch.authGet('/api/users/auth', token);
       this.setState({ ...this.state, user: response?.resData });
+      console.log(this.state)
     } catch (err) {
       console.error(err)
     }
