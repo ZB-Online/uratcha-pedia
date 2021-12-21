@@ -3,7 +3,6 @@ import Wrapper from '../../js/components/Wrapper';
 import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
-import { getCookieValue } from '../utils/cookie';
 import debounce from '../utils/debounce';
 
 export default function MovieDetailsPage({ $target, initialState }) {
@@ -371,8 +370,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   };
   const isAuth = async () => {
     try {
-      const token = getCookieValue();
-      const { resData } = await fetch.authGet('/api/users/auth', token);
+      const { resData } = await fetch.get('/api/users/auth');
       this.setState({ ...this.state, user: resData });
     } catch (err) {
       console.error(err);

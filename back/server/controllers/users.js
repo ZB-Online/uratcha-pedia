@@ -23,7 +23,7 @@ const signin = async (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.PW_MISMATCH));
   }
   const accessToken = generateToken(signinUser.email);
-  res.status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{isAuth:true, email:userInfo.email, username:userInfo.username, accessToken}));
+  res.cookie('accessToken',accessToken).status(200).json(resData.successTrue(resMessage.SIGNIN_SUCCESS,{isAuth:true, email:userInfo.email, username:userInfo.username}));
 };
 
 const signup = async (req, res) => {
@@ -44,7 +44,7 @@ const signup = async (req, res) => {
   }
   const token = generateToken(signupUser.email);
   userDao.addUser({...signupUser, token });
-  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username,accessToken:token}));
+  res.cookie('accessToken',token).status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username}));
 };
 
 const generateToken = email => {
@@ -61,7 +61,7 @@ const auth = (req, res) => {
 
 const logout = (req, res) => {
   userDao.removeToken(req.user.email);
-  res.status(200).json(resData.successTrue(resMessage.LOGOUT_SUCCESS));
+  res.clearCookie('accessToken').status(200).json(resData.successTrue(resMessage.LOGOUT_SUCCESS));
 };
 
 const hashPassword = password => {

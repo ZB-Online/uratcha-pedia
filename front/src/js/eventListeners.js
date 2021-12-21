@@ -1,6 +1,5 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
-import { getCookieValue, delCookie, setCookieValue } from './utils/cookie';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -78,9 +77,9 @@ export const eventListeners = () => {
     $confirmModal.classList.add('hidden');
   });
 
-  const postUserLogout = token => {
+  const postUserLogout = () => {
     try {
-      fetch.authGet('/api/users/logout', token);
+      fetch.authGet('/api/users/logout');
     } catch (err) {
       console.err(err);
     }
@@ -88,8 +87,7 @@ export const eventListeners = () => {
 
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    postUserLogout(getCookieValue());
-    delCookie();
+    postUserLogout();
     if (window.location.pathname === '/mypage') {
       const route = '/';
       routeChange(route);
@@ -201,8 +199,6 @@ export const eventListeners = () => {
     }
     hiddenSignModal();
     changeAuthHeader();
-    const accessToken = response.resData.accessToken;
-    setCookieValue(accessToken);
     isAuth();
     location.reload();
   });
@@ -261,7 +257,6 @@ export const eventListeners = () => {
 
     hiddenSignModal();
     changeAuthHeader();
-    setCookieValue(response.resData.accessToken);
     isAuth();
     location.reload();
   });
@@ -292,8 +287,7 @@ export const eventListeners = () => {
 
   const isAuth = async () => {
     try {
-      const token = getCookieValue();
-      const response = await fetch.authGet('/api/users/auth', token);
+      const response = await fetch.get('/api/users/auth');
       if (response.resData.isAuth) {
         $signin.classList.add('hidden');
         $signup.classList.add('hidden');

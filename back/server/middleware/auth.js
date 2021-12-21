@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 
 let auth = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split('Bearer ')[1];
-    if (token === "null") {
+    const token = req.headers.cookie.split('accessToken=')[1];
+    if (!token) {
       return res.status(200).json(resData.successTrue(resMessage.AUTH_FAIL, { isAuth: false }));
     }
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
