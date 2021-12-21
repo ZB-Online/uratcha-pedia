@@ -1,7 +1,6 @@
 import Wrapper from '../components/Wrapper';
 import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
-import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
 import { bindBoxOfficeMovieCarouselEvents, bindHighestRankingMovieCarouselEvents } from '../utils/carousel.js';
 
@@ -40,22 +39,8 @@ export default function HomePage({ $target }) {
   };
 
   this.bindEvents = () => {
-    // Routing Events
     eventListeners();
 
-    $homePage.addEventListener('click', ({ target }) => {
-      if (!target.matches('.movie-item *')) return;
-      const movieId = target.closest('.movie-item').dataset.movieId;
-      if (target.matches('.box-office *')) {
-        const route = `/movies/${movieId}`;
-        routeChange(route);
-      } else {
-        const route = `/movies/${movieId}`;
-        routeChange(route);
-      }
-    });
-
-    // Carousel Events
     bindBoxOfficeMovieCarouselEvents(document.querySelector('.carousel.box-office'), this.state.boxOffice);
     bindHighestRankingMovieCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
   };
@@ -102,7 +87,7 @@ export default function HomePage({ $target }) {
       const response = await fetch.get('/api/users/auth');
       this.setState({ ...this.state, user: response?.resData });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   };
 

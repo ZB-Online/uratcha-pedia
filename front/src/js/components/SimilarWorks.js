@@ -1,3 +1,5 @@
+import { routeChange } from '../router';
+
 export default function SimilarWorks({ $target, initialState }) {
   const $similarWorks = document.createElement('ul');
   $similarWorks.classList.add('similar-works-container');
@@ -10,6 +12,7 @@ export default function SimilarWorks({ $target, initialState }) {
   this.setState = newState => {
     this.state = newState;
     this.render();
+    this.bindEvents();
   };
 
   this.render = () => {
@@ -35,5 +38,13 @@ export default function SimilarWorks({ $target, initialState }) {
       .join('');
   };
 
+  this.bindEvents = () => {
+    $similarWorks.addEventListener('click', ({ target }) => {
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
+  };
+
   this.render();
+  this.bindEvents();
 }

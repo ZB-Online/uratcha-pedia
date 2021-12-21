@@ -13,7 +13,7 @@ export function MovieDetails({ $target, initialState }) {
     starsData: initialState?.starsData,
     averageStarsData: initialState?.averageStarsData,
     similarWorksData: initialState?.similarWorksData,
-    myReview: initialState?.myReview,
+    userReview: initialState?.userReview,
   };
 
   this.setState = newState => {
@@ -26,6 +26,8 @@ export function MovieDetails({ $target, initialState }) {
 
     const { cast, certification, country, genres, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
+
+    const { userEmail, comment } = this.state.userReview;
 
     const releaseYear = release_date?.slice(0, 4);
     const genresComb = genres?.join('/');
@@ -67,11 +69,10 @@ export function MovieDetails({ $target, initialState }) {
                   </div>
                 </div>
                 <button class="movie-header_add-comment btn">
-                  <div class="add-comment-icon-container"><span class="material-icons"> edit </span></div>
+                  <span class="add-comment-icon-container"><span class="material-icons"> edit </span></span>
                   <span>코멘트</span>
                   <div class="comment-dropdown-container hidden">
                     <div class="edit-comment"><span class="material-icons"> edit </span><span>Edit Comment</span></div>
-
                     <div class="delete-comment"><span class="material-icons "> delete </span><span>Delete Comment</span></div>
                   </div>
                 </button>
@@ -105,43 +106,43 @@ export function MovieDetails({ $target, initialState }) {
             </div>
           </div>
 
-          <div class="detail-container ">
-      <ul class="my-comment-container comment hidden">
-        <li>
-          <ul class="my-comment">
-            <li>
-              <span class="username">${this.state.myReview?.userEmail}</span>
-            </li>
-            <li>
-              <span class="comment-content">${this.state.myReview?.comment}</span>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <ul class="my-comment">
-            <li>
-              <button class="my-comment-container_btn del-btn">
-                <span class="material-icons "> delete_outline </span><span>Delete</span>
-              </button>
-            </li>
-            <li>
-              <button class="my-comment-container_btn edit-btn">
-                <span class="material-icons"> edit </span><span>Edit</span>
-              </button>
-            </li>
-          </ul>
-        </li>
-      </ul>
+          <div class="detail-container user-comment">
+            <ul class="my-comment-container comment hidden">
+              <li>
+                <ul class="my-comment">
+                  <li>
+                    <span class="username">${userEmail}</span>
+                  </li>
+                  <li>
+                    <span class="comment-content">${comment}</span>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <ul class="my-comment">
+                  <li>
+                    <button class="my-comment-container_btn del-btn">
+                      <span class="material-icons "> delete_outline </span><span>Delete</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button class="my-comment-container_btn edit-btn">
+                      <span class="material-icons"> edit </span><span>Edit</span>
+                    </button>
+                  </li>
+                </ul>
+              </li>
+            </ul>
 
-      <ul class="my-comment-container leave-comment">
-          <div class="my-comment">
-              <span class="username">Please share your thought</span>
+            <ul class="my-comment-container leave-comment">
+                <div class="my-comment">
+                    <span class="username">Please share your thought</span>
+                </div>
+                <div class="my-comment">
+                    <button class="movie-header_add-comment btn--white">Leave Comment</button>
+                </div>
+            </ul>
           </div>
-          <div class="my-comment">
-              <button class="movie-header_add-comment btn--white">Leave Comment</button>
-          </div>
-      </ul>
-    </div>
       
           <div class="detail-container">
             <div class="detail-container_movie-info">

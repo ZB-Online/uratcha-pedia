@@ -1,3 +1,7 @@
+button span {
+  pointer-events: none;
+}
+
 section.movie-details {
   margin-top: 130px;
   margin-bottom: 64px;
@@ -163,6 +167,13 @@ section.movie-details .outer .inner {
 
 .comment-dropdown-container .edit-comment {
   margin-bottom: 2px;
+}
+
+.edit-comment span {
+  pointer-events: none;
+}
+.delete-comment span {
+  pointer-events: none;
 }
 
 .comment-dropdown-container .edit-comment:hover,
@@ -408,7 +419,7 @@ section.movie-details .outer .inner {
   position: relative;
 }
 
-.detail-container__stars-graph{
+.detail-container__stars-graph {
   overflow: hidden;
   position: relative;
 }
