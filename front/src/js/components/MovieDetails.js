@@ -6,7 +6,6 @@ export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
 
-  console.log(initialState.myReview);
   this.state = {
     movieDetails: initialState.movieDetails,
     reviewsByMovieId: initialState.reviewsByMovieId,
