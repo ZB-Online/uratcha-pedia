@@ -42,9 +42,9 @@ const signup = async (req, res) => {
   } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
-  const accessToken = generateToken(signupUser.email);
+  const token = generateToken(signupUser.email);
   userDao.addUser({...signupUser, token });
-  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username,accessToken}));
+  res.status(200).json(resData.successTrue(resMessage.SIGNUP_SUCCESS,{isAuth:true, email:signupUser.email, username:signupUser.username,accessToken:token}));
 };
 
 const generateToken = email => {

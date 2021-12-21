@@ -1,6 +1,6 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
-import {getCookieValue,delCookie,setCookieValue} from './utils/cookie';
+import { getCookieValue, delCookie, setCookieValue } from './utils/cookie';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -78,21 +78,23 @@ export const eventListeners = () => {
     $confirmModal.classList.add('hidden');
   });
 
+  const postUserLogout = token => {
+    try {
+      fetch.authGet('/api/users/logout', token);
+    } catch (err) {
+      console.err(err);
+    }
+  };
+
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    const token = getCookieValue();
-    console.log("logout token", token)
-    try {
-      fetch.authGet('/api/users/logout',token);
-      delCookie()
-      if(window.location.pathname === "/mypage"){   
-        const route = '/'
-        routeChange(route)
-      }
-      location.reload()
-    } catch (err) {
-      alert(err);
+    postUserLogout(getCookieValue());
+    delCookie();
+    if (window.location.pathname === '/mypage') {
+      const route = '/';
+      routeChange(route);
     }
+    location.reload();
   });
 
   const resetValue = sign => {
@@ -165,6 +167,19 @@ export const eventListeners = () => {
     }
   });
 
+  const postSignin = async (email, password) => {
+    try {
+      const response = await fetch.post('/api/users/signin', {
+        email,
+        password,
+      });
+      return response;
+    } catch (err) {
+      alert(response.message)
+      console.err(err);
+    }
+  };
+
   $singinForm.addEventListener('submit', async e => {
     e.preventDefault();
     const email = $singinForm.email.value.trim();
@@ -176,27 +191,20 @@ export const eventListeners = () => {
       return;
     }
 
-    try {
-      const response = await fetch.post('/api/users/signin', {
-        email,
-        password,
-      });
-      if (!response.success) {
-        alert(response.message);
-        resetValue('signin');
-        resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
-        resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
-        return;
-      }
-      hiddenSignModal();
-      changeAuthHeader();
-      const accessToken = response.resData.accessToken
-      setCookieValue(accessToken)
-      isAuth()
-      location.reload()
-    } catch (err) {
-      alert(err);
+    const response = await postSignin(email, password);
+    if (!response.success) {
+      alert(response.message);
+      resetValue('signin');
+      resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+      resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
+      return;
     }
+    hiddenSignModal();
+    changeAuthHeader();
+    const accessToken = response.resData.accessToken;
+    setCookieValue(accessToken);
+    isAuth();
+    location.reload();
   });
 
   $singupForm.addEventListener('keyup', ({ target }) => {
@@ -213,6 +221,20 @@ export const eventListeners = () => {
     }
   });
 
+  const postSignup = async (email, password, username) => {
+    try {
+      const response = await fetch.post('/api/users/signup', {
+        email,
+        password,
+        username,
+      });
+      return response;
+    } catch (err) {
+      alert(response.message)
+      console.err(err);
+    }
+  };
+
   $singupForm.addEventListener('submit', async e => {
     e.preventDefault();
     const username = $singupForm.username.value.trim();
@@ -226,28 +248,22 @@ export const eventListeners = () => {
       resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
       return;
     }
-    try {
-      const response = await fetch.post('/api/users/signup', {
-        email,
-        password,
-        username,
-      });
-      console.log(response);
-      if (!response.success) {
-        alert(response.message);
-        resetValue('signup');
-        resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
-        resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
-        resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
-        return;
-      }
-      hiddenSignModal();
-      changeAuthHeader();
-      const accessToken = response.resData.accessToken
-      setCookieValue(accessToken)
-    } catch (err) {
-      alert(err);
+
+    const response = await postSignup(email, password, username);
+
+    if (!response.success) {
+      resetValue('signup');
+      resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+      resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+      resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
+      return;
     }
+
+    hiddenSignModal();
+    changeAuthHeader();
+    setCookieValue(response.resData.accessToken);
+    isAuth();
+    location.reload();
   });
 
   $toSignupBtn.addEventListener('click', _ => {
@@ -278,7 +294,6 @@ export const eventListeners = () => {
     try {
       const token = getCookieValue();
       const response = await fetch.authGet('/api/users/auth', token);
-      console.log("isAuth",response)
       if (response.resData.isAuth) {
         $signin.classList.add('hidden');
         $signup.classList.add('hidden');
@@ -294,5 +309,5 @@ export const eventListeners = () => {
       console.error(err);
     }
   };
-  isAuth()
+  isAuth();
 };

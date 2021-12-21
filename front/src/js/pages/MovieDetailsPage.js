@@ -4,7 +4,6 @@ import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
 import { getCookieValue } from '../utils/cookie';
-import { routeChange } from '../../js/router';
 import debounce from '../utils/debounce';
 
 export default function MovieDetailsPage({ $target, initialState }) {
@@ -180,7 +179,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
     document.querySelector('.star-rating').addEventListener(
       'click',
-      debounce(e => {
+      debounce(async e => {
         e.preventDefault();
         if (!this.state.user.isAuth) {
           $signModal.classList.remove('hidden');
@@ -192,11 +191,14 @@ export default function MovieDetailsPage({ $target, initialState }) {
         const score = +e.target.previousElementSibling.value;
         const currentScore = this.state.userScore?.score;
         if (!currentScore) {
-          fetchAddUserScore(score);
+          const userScore = await postUserScore(score);
+          this.setState({ ...this.state, userScore });
         } else if (currentScore !== score) {
-          fetchUpdateUserScore(score);
+          patchUserScore(score);
+          this.setState({ ...this.state, userScore: { ...this.state.userScore, score } });
         } else if (currentScore === score) {
-          fetchDeleteUserScore(this.state.userScore.id);
+          deleteUserScore(this.state.userScore.id);
+          this.setState({ ...this.state, userScore: false });
         }
       }, 300)
     );
@@ -209,49 +211,45 @@ export default function MovieDetailsPage({ $target, initialState }) {
     document.querySelector('.movie-header_score-letter').textContent = starMessage[currentScore];
   };
 
-  const fetchInitialUserScore = async () => {
+  const getUserScore = async () => {
     try {
-      const data = await fetch.get(`/api/stars/movies/${this.state.movieId}/users/${this.state.user?.email}`);
-      return data?.resData?.star;
+      const response = await fetch.get(`/api/stars/movies/${this.state.movieId}/users/${this.state.user?.email}`);
+      return response.resData?.star;
     } catch (err) {
-      alert(err);
+      console.err(err);
     }
   };
 
-  const fetchAddUserScore = async score => {
+  const postUserScore = async score => {
     try {
-      const data = await fetch.post('/api/stars', {
+      const response = await fetch.post('/api/stars', {
         userEmail: this.state.user?.email,
         movieId: this.state.movieId,
         score,
       });
-      this.setState({ ...this.state, userScore: data?.resData });
+      return response.resData;
     } catch (err) {
-      alert(err);
+      console.err(err);
     }
   };
 
-  const fetchUpdateUserScore = async score => {
+  const patchUserScore = (score) => {
     try {
-      console.log(this.state.userScore.id, this.state.movieId, score);
-      const response = await fetch.patch('/api/stars', {
+      fetch.patch('/api/stars', {
         id: this.state.userScore.id,
         movieId: this.state.movieId,
         score,
       });
-      console.log('update', response);
-      this.setState({ ...this.state, userScore: { ...this.state.userScore, score } });
     } catch (err) {
-      alert(err);
+      console.err(err);
     }
   };
 
-  const fetchDeleteUserScore = async () => {
+  const deleteUserScore = () => {
     try {
-      await fetch.delete(`/api/stars/${this.state.userScore.id}`);
-      this.setState({ ...this.state, userScore: false });
+      fetch.delete(`/api/stars/${this.state.userScore.id}`);
     } catch (err) {
-      alert(err);
+      console.err(err);
     }
   };
 
@@ -358,7 +356,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
     );
     let userScore;
     if (this.state.user.isAuth) {
-      userScore = await fetchInitialUserScore();
+      userScore = await getUserScore();
     }
     this.setState({
       ...this.state,
@@ -370,7 +368,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
       similarWorksData,
       myReview: myReview?.resData,
     });
-    console.log(this.state);
   };
   const isAuth = async () => {
     try {
