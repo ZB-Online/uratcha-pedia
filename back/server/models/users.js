@@ -3,7 +3,7 @@ let users = [
     email: 'test1@test.com',
     password: '$2b$10$pVCMKODnCWMXomQn7wDzY.dBCwctAiaLr7tWYJBBBgF1qNSj1H2ti',
     username: '테스트계정1',
-    token: null,
+    token: 'eyJhbGciOiJIUzI1NiJ9.dGVzdDFAdGVzdC5jb20.FVrC_5S9w9ADxYeF3rE_DqxHByA2JgBESL_qZzfq21w',
   },
   {
     email: 'test2@test.com',

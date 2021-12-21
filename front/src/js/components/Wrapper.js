@@ -1,4 +1,5 @@
 import logoImage from '../../img/uratcha_logo.PNG';
+import logoImageSmall from '../../img/uratcha_logo_small.png';
 
 export function Header({ $target, initialState }) {
   const $header = document.createElement('header');
@@ -105,7 +106,7 @@ function Footer({ $target, initialState }) {
               </ul>
               <ul class="logo">
                 <li>
-                  <a href="javascript:void(0)"><img src="/img/watch_logo_s.PNG" alt="WATCHA_LOGO"></a>
+                  <a href="javascript:void(0)"><img src="${logoImageSmall}" alt="WATCHA_LOGO"></a>
                 </li>
                 <li>
                   <span>© 2021 by WATCHA, Inc. All rights reserved.</span>

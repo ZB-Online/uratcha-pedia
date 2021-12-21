@@ -90,5 +90,10 @@ export default function HomePage({ $target }) {
     }
   };
 
+  const fetchUserInfo = async () => {
+    try {
+    } catch (e) {}
+  };
+
   fetchMovieRanking();
 }

@@ -265,6 +265,10 @@ footer .info .logo li::after {
   width: 0;
 }
 
+footer .info .logo li a img {
+  width: 90px;
+}
+
 footer .info .logo li span {
   font-size: 12px;
   font-weight: 300;
