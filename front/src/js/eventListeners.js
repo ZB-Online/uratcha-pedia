@@ -37,8 +37,14 @@ export const eventListeners = () => {
     SIGNIN: 'SIGNIN',
     SOGNUP: 'SIGNUP',
   };
+  
+  const FORM_VALUE = {
+    EMAIL: 'EMAIL',
+    PASSWORD: 'PASSWORD',
+    USERNAME: 'USERNAME',
+  };
 
-  $headerLogo.addEventListener('click', () => {
+  $headerLogo.addEventListener('click', _ => {
     const route = '/';
     routeChange(route);
   });
@@ -136,15 +142,16 @@ export const eventListeners = () => {
   };
 
   const regExp = {
-    email: new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/),
-    password: new RegExp(/[\w]{5,12}/),
-    username: new RegExp(/[\w]{2,8}/),
+    EMAIL: new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/),
+    PASSWORD: new RegExp(/[\w]{5,12}/),
+    USERNAME: new RegExp(/[\w]{2,8}/),
   };
+
   const inputValid = (type, value, target, $valid, $invalid, $error) => {
     const errorMessage = {
-      email: '정확하지 않은 이메일입니다.',
-      password: '비밀번호는 최소 5자리 이상이어야 합니다.',
-      username: '정확하지 않은 이름입니다.',
+      EMAIL : '정확하지 않은 이메일입니다.',
+      PASSWORD: '비밀번호는 최소 5자리 이상이어야 합니다.',
+      USERNAME: '정확하지 않은 이름입니다.',
     };
 
     if (value === '') {
@@ -168,10 +175,11 @@ export const eventListeners = () => {
   $singinForm.addEventListener('keyup', ({ target }) => {
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
+
     if (target.matches('#signin-email')) {
-      inputValid('email', email, target, $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+      inputValid(FORM_VALUE.EMAIL, email, target, $signinEmailValid, $signinEmailInvalid, $signinEmailError);
     } else if (target.matches('#signin-password')) {
-      inputValid('password', password, target, $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
+      inputValid(FORM_VALUE.PASSWORD, password, target, $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
     }
   });
 
@@ -189,14 +197,17 @@ export const eventListeners = () => {
 
   $singinForm.addEventListener('submit', async e => {
     e.preventDefault();
+
     const email = $singinForm.email.value.trim();
     const password = $singinForm.password.value.trim();
-    if (!regExp['email'].test(email) || !regExp['password'].test(password)) {
+
+    if (!regExp[FORM_VALUE.EMAIL].test(email) || !regExp[FORM_VALUE.PASSWORD].test(password)) {
       resetForm(FORM_TYPE.SIGNIN);
       return;
     }
 
     const response = await postSignin(email, password);
+
     if (!response.success) {
       alert(response.message);
       resetForm(FORM_TYPE.SIGNIN);
@@ -214,11 +225,11 @@ export const eventListeners = () => {
     const password = $singupForm.password.value.trim();
 
     if (target.matches('#signup-email')) {
-      inputValid('email', email, target, $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+      inputValid(FORM_VALUE.EMAIL, email, target, $signupEmailValid, $signupEmailInvalid, $signupEmailError);
     } else if (target.matches('#signup-password')) {
-      inputValid('password', password, target, $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+      inputValid(FORM_VALUE.PASSWORD, password, target, $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
     } else if (target.matches('#signup-username')) {
-      inputValid('username', username, target, $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
+      inputValid(FORM_VALUE.USERNAME, username, target, $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
     }
   });
 
@@ -237,11 +248,12 @@ export const eventListeners = () => {
 
   $singupForm.addEventListener('submit', async e => {
     e.preventDefault();
+    
     const username = $singupForm.username.value.trim();
     const email = $singupForm.email.value.trim();
     const password = $singupForm.password.value.trim();
 
-    if (!regExp['username'].test(username) || !regExp['email'].test(email) || !regExp['password'].test(password)) {
+    if (!regExp[FORM_VALUE.USERNAME].test(username) || !regExp[FORM_VALUE.EMAIL].test(email) || !regExp[FORM_VALUE.PASSWORD].test(password)) {
       resetForm(FORM_TYPE.SIGNUP);
       return;
     }
