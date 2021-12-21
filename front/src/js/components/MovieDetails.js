@@ -8,12 +8,12 @@ export function MovieDetails({ $target, initialState }) {
   $target.appendChild($movieDetails);
 
   this.state = {
-    movieDetails: initialState.movieDetails,
-    reviewsByMovieId: initialState.reviewsByMovieId,
-    starsData: initialState.starsData,
-    averageStarsData: initialState.averageStarsData,
-    similarWorksData: initialState.similarWorksData,
-    myReview: initialState.myReview,
+    movieDetails: initialState?.movieDetails,
+    reviewsByMovieId: initialState?.reviewsByMovieId,
+    starsData: initialState?.starsData,
+    averageStarsData: initialState?.averageStarsData,
+    similarWorksData: initialState?.similarWorksData,
+    myReview: initialState?.myReview,
   };
 
   this.setState = newState => {
@@ -23,12 +23,13 @@ export function MovieDetails({ $target, initialState }) {
 
   this.render = () => {
     if (!this.state) return;
-
-    const { cast, certification, country, genres, id, overview, poster_path, release_date, runtime, title } =
+    // if (!this.state.movieDetails) return;
+    const { cast, certification, country, genres, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
 
-    const releaseYear = release_date.slice(0, 4);
-    const genresComb = genres.join('/');
+    console.log('cast', this.state.movieDetails, cast);
+    const releaseYear = release_date?.slice(0, 4);
+    const genresComb = genres?.join('/');
 
     const { averageStarsData, starsData } = this.state;
     const { averageStar } = averageStarsData;
@@ -45,7 +46,7 @@ export function MovieDetails({ $target, initialState }) {
               <p class="movie-header_movie-etc">
                 <span class="movie-header_movie-yaer">${releaseYear}</span>
                 <span class="movie-header_divide-letter">・</span>
-                <span class="movie-header_movie-genre">${genres.length ? genresComb : 'None'}</span>
+                <span class="movie-header_movie-genre">${genres?.length ? genresComb : 'None'}</span>
                 <span class="movie-header_divide-letter">・</span>
                 <span class="movie-header_movie-country">${country}</span>
               </p>
@@ -54,15 +55,15 @@ export function MovieDetails({ $target, initialState }) {
                 <div class="movie-header_score-container">
                   <p class="movie-header_score-letter">Rate</p>
                   <div class="star-rating">
-                  <input type="radio" id="5-star" name="rating" value="5" />
+                  <input type="radio" id="5-star" name="rating" value="5" disabled />
                   <label for="5-star" class="star">&#9733;</label>
-                  <input type="radio" id="4-star" name="rating" value="4" />
+                  <input type="radio" id="4-star" name="rating" value="4" disabled />
                   <label for="4-star" class="star">&#9733;</label>
-                  <input type="radio" id="3-star" name="rating" value="3" />
+                  <input type="radio" id="3-star" name="rating" value="3" disabled />
                   <label for="3-star" class="star">&#9733;</label>
-                  <input type="radio" id="2-star" name="rating" value="2" />
+                  <input type="radio" id="2-star" name="rating" value="2" disabled />
                   <label for="2-star" class="star">&#9733;</label>
-                  <input type="radio" id="1-star" name="rating" value="1" />
+                  <input type="radio" id="1-star" name="rating" value="1" disabled />
                   <label for="1-star" class="star">&#9733;</label>
                   </div>
                 </div>
@@ -110,10 +111,10 @@ export function MovieDetails({ $target, initialState }) {
         <li>
           <ul class="my-comment">
             <li>
-              <span class="username">${this.state.myReview.userEmail}</span>
+              <span class="username">${this.state.myReview?.userEmail}</span>
             </li>
             <li>
-              <span class="comment-content">${this.state.myReview.comment}</span>
+              <span class="comment-content">${this.state.myReview?.comment}</span>
             </li>
           </ul>
         </li>
@@ -169,7 +170,7 @@ export function MovieDetails({ $target, initialState }) {
             <div class="detail-container_cast">
               <h2 class="detail-container_title">Cast/Crew</h2>
               <div class="detail-container_cast-container">
-              ${cast.reduce((acc, { name, character }) => {
+              ${cast?.reduce((acc, { name, character }) => {
                 acc += `<div class="detail-container_cast-item">
                   <p class="detail-container_real-name">${name}</p>
                   <span class="detail-container_role">${character}</span>

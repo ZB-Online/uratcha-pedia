@@ -4,7 +4,6 @@ import '../css/movie-detail.css';
 import '../css/mypage.css';
 import '../css/popup.css';
 import '../css/search-result.css';
-import '../css/spinner.css';
 
 import HomePage from './pages/HomePage';
 import SearchResultPage from './pages/SearchResultPage';
@@ -35,5 +34,4 @@ export default function App({ $target }) {
   this.route();
 
   window.addEventListener('popstate', this.route);
-
 }

@@ -33,9 +33,8 @@ const addReview = (req, res) => {
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
   if (reviewDao.getReviewByMovieIdUserEmail(newReview.movieId, newReview.userEmail))
     return res.status(400).json(resData.successFalse(resMessage.REVIEW_ALREADY_EXIST));
-  // TODO : movieId validation
-  reviewDao.addReview(newReview);
-  res.status(200).json(resData.successTrue(resMessage.REVIEW_CREATE_SUCCESS));
+  const review = reviewDao.addReview(newReview);
+  res.status(200).json(resData.successTrue(resMessage.REVIEW_CREATE_SUCCESS, review));
 };
 
 const updateReview = (req, res) => {

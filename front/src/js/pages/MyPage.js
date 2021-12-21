@@ -2,6 +2,7 @@ import MyScoredMovies from '../components/MyScoredMovies';
 import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
+import {getCookieValue} from '../utils/cookie';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
 
 export default function MyPage({ $target }) {
@@ -50,5 +51,16 @@ export default function MyPage({ $target }) {
     }
   };
 
+  const isAuth = async () => {
+    try {
+      const token = getCookieValue();
+      const response = await fetch.authGet('/api/users/auth', token);
+      this.setState({ ...this.state, user: response?.resData });
+    } catch (err) {
+      console.error(err)
+    }
+  };
+
+  isAuth();
   fetchMyScoredMovies();
 }

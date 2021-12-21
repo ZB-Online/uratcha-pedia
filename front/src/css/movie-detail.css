@@ -270,6 +270,7 @@ section.movie-details .outer .inner {
 }
 
 .detail-container__title {
+  margin-top: 10px;
 }
 
 .detail-container__info {

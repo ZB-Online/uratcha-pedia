@@ -1,5 +1,6 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
+import {getCookieValue,delCookie} from './utils/cookie';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -79,20 +80,18 @@ export const eventListeners = () => {
 
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    console.log('logout');
-    // const bearer = 'Bearer ' + 'eyJhbGciOiJIUzI1NiJ9.dGVzdDlAdGVzdC5jb20.UBSWiKnGLeEhrmwBxzRXlZKl9lAKAiaQtI7KJqgmQT8';
-    // try {
-    //   const res = await fetch.get('/api/users/logout', {
-    //     mothod: 'GET',
-    //     headers: {
-    //       'Authorization': bearer,
-    //       'content-type': 'application/json',
-    //     },
-    //   });
-    //   console.log(res);
-    // } catch (err) {
-    //   alert(err);
-    // }
+    const token = getCookieValue();
+    try {
+      fetch.authGet('/api/users/logout',token);
+      delCookie()
+      if(window.location.pathname === "/mypage"){   
+        const route = '/'
+        routeChange(route)
+      }
+      location.reload()
+    } catch (err) {
+      alert(err);
+    }
   });
 
   const resetValue = sign => {
@@ -104,6 +103,13 @@ export const eventListeners = () => {
       $singupForm.email.value = '';
       $singupForm.password.value = '';
     }
+  };
+
+  const resetStyle = (target, $valid, $invalid, $error) => {
+    document.getElementById(target).parentNode.classList.remove('input-label--active');
+    $valid.classList.add('hidden');
+    $invalid.classList.add('hidden');
+    $error.textContent = '';
   };
 
   const hiddenSignModal = () => {
@@ -164,6 +170,8 @@ export const eventListeners = () => {
     const password = $singinForm.password.value.trim();
     if (!regExp['email'].test(email) || !regExp['password'].test(password)) {
       resetValue('signin');
+      resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+      resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
       return;
     }
 
@@ -175,10 +183,14 @@ export const eventListeners = () => {
       if (!response.success) {
         alert(response.message);
         resetValue('signin');
+        resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
+        resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
         return;
       }
       hiddenSignModal();
       changeAuthHeader();
+      isAuth()
+      location.reload()
     } catch (err) {
       alert(err);
     }
@@ -201,23 +213,29 @@ export const eventListeners = () => {
   $singupForm.addEventListener('submit', async e => {
     e.preventDefault();
     const username = $singupForm.username.value.trim();
-    const email = $singinForm.email.value.trim();
-    const password = $singinForm.password.value.trim();
+    const email = $singupForm.email.value.trim();
+    const password = $singupForm.password.value.trim();
 
     if (!regExp['username'].test(username) || !regExp['email'].test(email) || !regExp['password'].test(password)) {
       resetValue('signup');
+      resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+      resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+      resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
       return;
     }
-
     try {
       const response = await fetch.post('/api/users/signup', {
         email,
         password,
         username,
       });
+      console.log(response);
       if (!response.success) {
         alert(response.message);
         resetValue('signup');
+        resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
+        resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+        resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
         return;
       }
       hiddenSignModal();
@@ -244,16 +262,31 @@ export const eventListeners = () => {
     hiddenSignModal();
     resetValue('signin');
     resetValue('signup');
-    const resetStyle = (target, $valid, $invalid, $error) => {
-      document.getElementById(target).parentNode.classList.remove('input-label--active');
-      $valid.classList.add('hidden');
-      $invalid.classList.add('hidden');
-      $error.textContent = '';
-    };
     resetStyle('signin-email', $signinEmailValid, $signinEmailInvalid, $signinEmailError);
     resetStyle('signin-password', $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
     resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
     resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
     resetStyle('signup-username', $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
   });
+
+  const isAuth = async () => {
+    try {
+      const token = getCookieValue();
+      const response = await fetch.authGet('/api/users/auth', token);
+      if (response.resData.isAuth) {
+        $signin.classList.add('hidden');
+        $signup.classList.add('hidden');
+        $myPage.classList.remove('hidden');
+        $logout.classList.remove('hidden');
+      } else {
+        $signin.classList.remove('hidden');
+        $signup.classList.remove('hidden');
+        $myPage.classList.add('hidden');
+        $logout.classList.add('hidden');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  isAuth()
 };

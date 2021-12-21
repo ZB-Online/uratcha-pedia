@@ -16,7 +16,6 @@ const getStarsCount = (req, res) => {
 const getAverageStarByMovieId = (req, res) => {
   const { movieId } = req.params;
   if (!movieId) return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
-  // TODO : movieId validation
   const averageStar = starDao.getAverageStarByMovieId(movieId);
   res.status(200).json(resData.successTrue(resMessage.STAR_GET_SUCCESS, { averageStar }));
 };
@@ -29,7 +28,6 @@ const addStar = (req, res) => {
   if (starDao.findStarById(newStar.id)) return res.status(400).json(resData.successFalse(resMessage.ID_ALREADY_EXIST));
   if (!userDao.findUserByEmail(newStar.userEmail))
     return res.status(400).json(resData.successFalse(resMessage.EMAIL_NOT_EXIST));
-  // TODO : movieId validation
   if (starDao.getStarByMovieIdUserEmail(newStar.movieId, newStar.userEmail))
     return res.status(400).json(resData.successFalse(resMessage.STAR_ALREADY_EXIST));
   const star = starDao.addStar(newStar);

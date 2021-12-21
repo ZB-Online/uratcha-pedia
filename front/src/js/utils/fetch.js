@@ -9,6 +9,15 @@ export default {
   get(url) {
     return fetch(url).then(parseToJSON);
   },
+  authGet(url, token) {
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+      },
+    }).then(parseToJSON);
+  },
   post(url, payload) {
     return fetch(url, {
       method: 'POST',

@@ -64,6 +64,7 @@ export function Header({ $target, initialState }) {
   };
 
   this.render();
+  
 }
 
 const fetchTotalStars = async () => {
@@ -117,7 +118,11 @@ function Footer({ $target, initialState }) {
               </ul>
               <ul class="logo">
                 <li>
+<<<<<<< HEAD
                   <a href="javascript:void(0)"><img src="${logoImageSmall}" alt="WATCHA_LOGO"></a>
+=======
+                  <a href="javascript:void(0)"><img src='${logoImage}' alt="WATCHA_LOGO"></a>
+>>>>>>> origin/feat/50-auth
                 </li>
                 <li>
                   <span>© 2021 by URATCHA, Inc. All rights reserved.</span>

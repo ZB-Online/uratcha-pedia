@@ -3,6 +3,7 @@ import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
 import { routeChange } from '../router';
 import fetch from '../utils/fetch.js';
+import {getCookieValue} from '../utils/cookie';
 import { bindBoxOfficeMovieCarouselEvents, bindHighestRankingMovieCarouselEvents } from '../utils/carousel.js';
 
 export default function HomePage({ $target }) {
@@ -97,10 +98,16 @@ export default function HomePage({ $target }) {
     }
   };
 
-  const fetchUserInfo = async () => {
+  const isAuth = async () => {
     try {
-    } catch (e) {}
+      const token = getCookieValue();
+      const response = await fetch.authGet('/api/users/auth', token);
+      this.setState({ ...this.state, user: response?.resData });
+    } catch (err) {
+      console.error(err)
+    }
   };
 
+  isAuth();
   fetchMovieRanking();
 }
