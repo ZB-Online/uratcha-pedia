@@ -1,7 +1,7 @@
 const get = async url => {
   try {
     const response = await fetch(url);
-    return response.json()
+    return response.json();
   } catch (err) {
     console.error(err);
   }
@@ -16,7 +16,7 @@ const authGet = async (url, token) => {
         'content-type': 'application/json',
       },
     });
-    response.json()
+    return response.json();
   } catch (err) {
     console.error(err);
   }
@@ -29,7 +29,7 @@ const post = async (url, payload) => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    response.json()
+    return response.json();
   } catch (err) {
     console.error(err);
   }
@@ -42,7 +42,7 @@ const patch = async (url, payload) => {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    response.json()
+    return response.json();
   } catch (err) {
     console.error(err);
   }
@@ -51,7 +51,7 @@ const patch = async (url, payload) => {
 const remove = async url => {
   try {
     const response = await fetch(url, { method: 'DELETE' });
-    response.json()
+    return response.json();
   } catch (err) {
     console.error(err);
   }
