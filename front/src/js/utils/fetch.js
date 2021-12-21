@@ -1,38 +1,66 @@
-const parseToJSON = res => {
-  if (!res.ok) {
-    // throw new Error(res.status);
+const get = async url => {
+  try {
+    const response = await fetch(url);
+    return response.json();
+  } catch (err) {
+    console.error(err);
   }
-  return res.json();
 };
 
-export default {
-  get(url) {
-    return fetch(url).then(parseToJSON);
-  },
-  authGet(url, token) {
-    return fetch(url, {
+const authGet = async (url, token) => {
+  try {
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         authorization: `Bearer ${token}`,
         'content-type': 'application/json',
       },
-    }).then(parseToJSON);
-  },
-  post(url, payload) {
-    return fetch(url, {
+    });
+    return response.json();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const post = async (url, payload) => {
+  try {
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
-    }).then(parseToJSON);
-  },
-  patch(url, payload) {
-    return fetch(url, {
+    });
+    return response.json();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const patch = async (url, payload) => {
+  try {
+    const response = await fetch(url, {
       method: 'PATCH',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
-    }).then(parseToJSON);
-  },
-  delete(url) {
-    return fetch(url, { method: 'DELETE' }).then(parseToJSON);
-  },
+    });
+    return response.json();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const remove = async url => {
+  try {
+    const response = await fetch(url, { method: 'DELETE' });
+    return response.json();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export default {
+  get,
+  authGet,
+  post,
+  patch,
+  delete: remove,
 };
