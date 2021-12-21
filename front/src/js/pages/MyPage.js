@@ -5,7 +5,7 @@ import fetch from '../utils/fetch.js';
 import { getCookieValue } from '../utils/cookie';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
 
-export default function MyPage({ $target }) {
+export default function MyPage({ $target, initialState }) {
   const $myPage = document.createElement('div');
   $target.appendChild($myPage);
 
@@ -40,25 +40,23 @@ export default function MyPage({ $target }) {
     );
   };
 
-  const userEmail = 'test7@test.com';
-
   const fetchData = async () => {
-    if (!userEmail) return;
-    const myScoredMovies = await fetchMyScoredMovies(userEmail);
-    this.setState({ ...this.state, myScoredMovies: myScoredMovies });
+    if (!this.state) return;
+    const user = await isAuth();
+    const myScoredMovies = await fetchMyScoredMovies(user.email);
+    this.setState({ ...this.state, user: user, myScoredMovies: myScoredMovies });
   };
 
   const isAuth = async () => {
     try {
       const token = getCookieValue();
-      const response = await fetch.authGet('/api/users/auth', token);
-      this.setState({ ...this.state, user: response?.resData });
+      const { resData } = await fetch.authGet('/api/users/auth', token);
+      return resData;
     } catch (err) {
       console.error(err);
     }
   };
 
-  isAuth();
   fetchData();
 }
 

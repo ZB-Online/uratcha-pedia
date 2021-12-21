@@ -372,6 +372,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
     });
     console.log(this.state);
   };
+
   const isAuth = async () => {
     try {
       const token = getCookieValue();
