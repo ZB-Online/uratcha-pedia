@@ -7,21 +7,6 @@ const get = async url => {
   }
 };
 
-const authGet = async (url, token) => {
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${token}`,
-        'content-type': 'application/json',
-      },
-    });
-    return response.json();
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 const post = async (url, payload) => {
   try {
     const response = await fetch(url, {
@@ -59,7 +44,6 @@ const remove = async url => {
 
 export default {
   get,
-  authGet,
   post,
   patch,
   delete: remove,
