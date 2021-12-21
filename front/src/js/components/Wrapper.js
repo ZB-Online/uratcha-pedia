@@ -299,13 +299,14 @@ export default function Wrapper({ $target, initialState, components }) {
 
   this.render = () => {
     if (!this.state) return;
+    const { pathname } = window.location;
 
     new Header({ $target: $wrapper, initialState });
     new Sign({ $target: $wrapper, initialState });
     components.forEach(
       ({ component, props }) => new component({ $target: $wrapper, initialState: props.initialState })
     );
-    new Footer({ $target: $wrapper, initialState });
+    pathname !== '/mypage' && new Footer({ $target: $wrapper, initialState });
 
     return $wrapper;
   };

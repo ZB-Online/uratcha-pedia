@@ -1,12 +1,12 @@
 import MovieCommentCarousel from './global/MovieCommentCarousel';
 import SimilarWorks from './SimilarWorks';
 import StarsGraph from './StarsGraph';
+import noImage from '../../img/no_image.png';
 
 export function MovieDetails({ $target, initialState }) {
   const $movieDetails = document.createElement('div');
   $target.appendChild($movieDetails);
 
-  console.log(initialState.myReview);
   this.state = {
     movieDetails: initialState.movieDetails,
     reviewsByMovieId: initialState.reviewsByMovieId,
@@ -26,6 +26,7 @@ export function MovieDetails({ $target, initialState }) {
 
     const { cast, certification, country, genres, id, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
+    console.log(this.state.movieDetails);
 
     const releaseYear = release_date.slice(0, 4);
     const genresComb = genres.join('/');
@@ -39,13 +40,13 @@ export function MovieDetails({ $target, initialState }) {
     <div class="outer">
         <div class="inner">
           <div class="movie-header">
-            <img class="movie-header_movie-poster" src="${poster_path}" />
+            <img class="movie-header_movie-poster" src="${poster_path ? poster_path : noImage}" alt="movie-poster" />
             <div class="movie-header_movie-article">
               <h1 class="movie-header_movie-title">${title}</h1>
               <p class="movie-header_movie-etc">
                 <span class="movie-header_movie-yaer">${releaseYear}</span>
                 <span class="movie-header_divide-letter">・</span>
-                <span class="movie-header_movie-genre">${genresComb}</span>
+                <span class="movie-header_movie-genre">${genres.length ? genresComb : 'None'}</span>
                 <span class="movie-header_divide-letter">・</span>
                 <span class="movie-header_movie-country">${country}</span>
               </p>

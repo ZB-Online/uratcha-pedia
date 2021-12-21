@@ -73,7 +73,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
       // dropdown
       if (target.matches('.movie-header_add-comment')) {
         // check if review exists
-        console.log(this.state.myReview.id, this.state.myReview.movieId, this.state.movieId);
         this.state.myReview.id && this.state.myReview.movieId === +this.state.movieId
           ? $commentDropdown.classList.toggle('hidden') // pop up add-comment dropdown
           : $commentModal.classList.remove('hidden'); // pop up comment modal
@@ -98,7 +97,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
         $commentModalTextarea.value = comment || '';
         $commentModalWriteBtn.removeAttribute('disabled');
       } else if (target.matches('.delete-comment') || target.matches('.my-comment-container_btn.del-btn')) {
-        console.log('cur review', this.state.myReview.id);
         deleteMyReview();
         document.querySelector('.my-comment-container.comment').classList.add('hidden');
       }
@@ -165,6 +163,12 @@ export default function MovieDetailsPage({ $target, initialState }) {
         fetchDeleteUserScore(this.state.userScore.id);
       }
     });
+
+    $MovieDetailsPage.addEventListener('click', ({ target }) => {
+      if (!target.matches('.similar-works-container *')) return;
+      const movieId = target.closest('li').dataset.movieId;
+      routeChange(`/movies/${movieId}`);
+    });
   };
 
   const renderMarkStar = () => {
@@ -216,12 +220,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
     } catch (err) {
       alert(err);
     }
-    $MovieDetailsPage.addEventListener('click', ({ target }) => {
-      if (!target.matches('.similar-works-container *')) return;
-
-      const movieId = target.closest('li').dataset.movieId;
-      routeChange(`/movies/${movieId}`);
-    });
   };
 
   const fetchMovieDetails = async movieId => {
@@ -264,6 +262,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   const fetchSimilarWorksByGenre = async genre => {
     try {
+      if (!genre) return;
       const { resData } = await fetch.get(`/api/movies/genre/${genre}`);
       return resData;
     } catch (e) {
@@ -314,8 +313,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const fetchInitialState = async () => {
     const movieDetailsData = await fetchMovieDetails(this.state.movieId);
     const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
-    const starsData = await fetchStarsByMovieId(843241);
-    const averageStarsData = await fetchAverageStarsByMovieId(843241);
+    const starsData = await fetchStarsByMovieId(this.state.movieId);
+    const averageStarsData = await fetchAverageStarsByMovieId(this.state.movieId);
     const similarWorksData = await fetchSimilarWorksByGenre(movieDetailsData.genres[0]);
     const myReview = await fetch.get(`/api/reviews/movies/${this.state.movieId}/users/${this.state.user.email}`);
 

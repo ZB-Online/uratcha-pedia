@@ -18,7 +18,7 @@ export default function SimilarWorks({ $target, initialState }) {
     const { movies } = this.state;
 
     $similarWorks.innerHTML = movies
-      .map(
+      ?.map(
         movie => `
         <li class="similar-works-item" data-movie-id="${movie.id}">
           <a href="javascript:void(0);">
