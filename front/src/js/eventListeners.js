@@ -173,8 +173,7 @@ export const eventListeners = () => {
       });
       return response;
     } catch (err) {
-      alert(response.message)
-      console.err(err);
+      console.error(err);
     }
   };
 
@@ -226,8 +225,7 @@ export const eventListeners = () => {
       });
       return response;
     } catch (err) {
-      alert(response.message)
-      console.err(err);
+      console.error(err);
     }
   };
 
@@ -248,6 +246,7 @@ export const eventListeners = () => {
     const response = await postSignup(email, password, username);
 
     if (!response.success) {
+      alert(response.message);
       resetValue('signup');
       resetStyle('signup-email', $signupEmailValid, $signupEmailInvalid, $signupEmailError);
       resetStyle('signup-password', $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);

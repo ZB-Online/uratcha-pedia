@@ -1,11 +1,11 @@
 import fetch from '../../utils/fetch';
 
-const fetchMyScoredMovies = async userEmail => {
+const getMyScoredMovies = async userEmail => {
   try {
     const { resData } = await fetch.get(`/api/movies/users/${userEmail}`);
     return resData;
-  } catch (e) {
-    console.error('my scored movies api not fetched: ', e);
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -13,9 +13,9 @@ const getSearchMovies = async keyword => {
   try {
     const { resData } = await fetch.get(`/api/movies/search/${keyword}`);
     return resData;
-  } catch (e) {
-    console.error('search-result api not fetched: ', e);
+  } catch (err) {
+    onsole.log(err);
   }
 };
 
-export { fetchMyScoredMovies, getSearchMovies };
+export { getMyScoredMovies, getSearchMovies };

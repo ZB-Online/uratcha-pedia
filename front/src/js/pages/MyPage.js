@@ -2,7 +2,7 @@ import MyScoredMovies from '../components/MyScoredMovies';
 import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
-import { fetchMyScoredMovies } from '../services/movies/movie';
+import { getMyScoredMovies } from '../services/movies/movie';
 import isAuth from '../utils/auth';
 
 export default function MyPage({ $target }) {
@@ -44,7 +44,7 @@ export default function MyPage({ $target }) {
     if (!this.state) return;
 
     const user = await isAuth();
-    const myScoredMovies = await fetchMyScoredMovies(user.email);
+    const myScoredMovies = await getMyScoredMovies(user.email);
     this.setState({ ...this.state, user: user, myScoredMovies: myScoredMovies });
   };
 
