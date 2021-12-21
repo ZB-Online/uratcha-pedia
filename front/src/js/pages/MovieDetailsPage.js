@@ -21,7 +21,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
     averageStarsData: {},
     similarWorksData: [],
     myReview: {},
-    userScore: {}
+    userScore: {},
   };
 
   this.setState = newState => {
@@ -257,9 +257,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   const fetchMovieDetails = async movieId => {
     try {
-      const data = await fetch.get(`/api/movies/${movieId}`);
-      const movieDetailsData = await data?.resData;
-      return movieDetailsData;
+      const { resData } = await fetch.get(`/api/movies/${movieId}`);
+      return resData;
     } catch (e) {
       console.error('movie api not fetched: ', e);
     }
@@ -267,9 +266,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   const fetchReviewsByMovieId = async movieId => {
     try {
-      const data = await fetch.get(`/api/reviews/${movieId}`);
-      const reviewsByMovieId = await data?.resData;
-      return reviewsByMovieId;
+      const { resData } = await fetch.get(`/api/reviews/${movieId}`);
+      return resData;
     } catch (e) {
       console.error('reviews not fetched: ', e);
     }
@@ -379,7 +377,6 @@ export default function MovieDetailsPage({ $target, initialState }) {
       const token = getCookieValue();
       const { resData } = await fetch.authGet('/api/users/auth', token);
       this.setState({ ...this.state, user: resData });
-      console.log(this.state);
     } catch (err) {
       console.error(err);
     }

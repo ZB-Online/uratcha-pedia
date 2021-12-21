@@ -2,7 +2,7 @@ import MyScoredMovies from '../components/MyScoredMovies';
 import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
-import {getCookieValue} from '../utils/cookie';
+import { getCookieValue } from '../utils/cookie';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
 
 export default function MyPage({ $target }) {
@@ -40,15 +40,12 @@ export default function MyPage({ $target }) {
     );
   };
 
-  const fetchMyScoredMovies = async () => {
-    try {
-      // & : userId에 맞는 별점을 가진 영화들을 가져오도록 수정필요
-      const data = await fetch.get('/api/movies');
-      const myScoredMovies = data.resData;
-      this.setState({ ...this.state, myScoredMovies: myScoredMovies });
-    } catch (e) {
-      console.error('movie api not fetched: ', e);
-    }
+  const userEmail = 'test7@test.com';
+
+  const fetchData = async () => {
+    if (!userEmail) return;
+    const myScoredMovies = await fetchMyScoredMovies(userEmail);
+    this.setState({ ...this.state, myScoredMovies: myScoredMovies });
   };
 
   const isAuth = async () => {
@@ -58,10 +55,19 @@ export default function MyPage({ $target }) {
       this.setState({ ...this.state, user: response?.resData });
       console.log(this.state)
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   };
 
   isAuth();
-  fetchMyScoredMovies();
+  fetchData();
 }
+
+const fetchMyScoredMovies = async userEmail => {
+  try {
+    const { resData } = await fetch.get(`/api/movies/users/${userEmail}`);
+    return resData;
+  } catch (e) {
+    console.error('my scored movies api not fetched: ', e);
+  }
+};

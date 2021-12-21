@@ -170,10 +170,10 @@
 // // VALUE_INVALID
 // // EMAIL_NOT_EXIST
 // // STAR_GET_SUCCESS
-// (async () => {
-//   const res = await fetch.get('/api/stars/users/test3@test.com');
-//   console.log('GET', res);
-// })();
+(async () => {
+  const res = await fetch.get('/api/stars/users/test3@test.com');
+  console.log('GET', res);
+})();
 
 // // 별점 등록
 // // resData: none

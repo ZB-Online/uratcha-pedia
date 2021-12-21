@@ -115,6 +115,15 @@ const getMoviesForStars = async movieRank =>
     }))
   );
 
+const getMoviesForMyStar = async stars =>
+  await Promise.all(
+    stars.map(async ({ movieId, score }) => ({
+      id: movieId,
+      score,
+      ...(await getMyScoredMoviesInfo(movieId)),
+    }))
+  );
+
 const genres = [
   { id: 28, name: 'Action' },
   { id: 12, name: 'Adventure' },
@@ -160,4 +169,5 @@ module.exports = {
   getMoviesForStars,
   searchMoviesByKeyword,
   getSimilarWorksByGenreId,
+  getMoviesForMyStar,
 };
