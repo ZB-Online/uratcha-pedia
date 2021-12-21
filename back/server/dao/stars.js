@@ -15,7 +15,7 @@ const getAverageStarByMovieId = movieId =>
 const addStar = newStar => {
   newStar = { id: starModel[starModel.length - 1].id + 1, ...newStar };
   starModel = [...starModel, newStar];
-  return newStar
+  return newStar;
 };
 
 const updateStar = (id, score) => (starModel = starModel.map(star => (star.id === +id ? { ...star, score } : star)));

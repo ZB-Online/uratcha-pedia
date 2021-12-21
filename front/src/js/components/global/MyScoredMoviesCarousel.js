@@ -22,16 +22,16 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
     $myScoredMoviesCarousel.innerHTML = `<ul class="my-scored-movies-container__list carousel-slides">
     ${movies
       .map(
-        movie => `
-        <li class="my-scored-movies-item" data-movie-id="${movie.id}">
+        ({ id, poster_path, title, score }) => `
+        <li class="my-scored-movies-item" data-movie-id="${id}">
           <a href="javascript:void(0);">
-            <img src="${movie.poster_path ? movie.poster_path : noImage}" alt="poster" />
+            <img src="${poster_path ? poster_path : noImage}" alt="poster" />
             <div class="my-scored-movies-item__info">
               <div class="my-scored-movies-item__title">
-                ${movie.title}
+                ${title}
               </div>
               <div class="my-scored-movies-item__score">
-                Rated ★ 3.9
+                Rated ★ ${score}
               </div>
             </div>
           </a>

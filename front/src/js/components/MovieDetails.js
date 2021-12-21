@@ -23,11 +23,10 @@ export function MovieDetails({ $target, initialState }) {
 
   this.render = () => {
     if (!this.state) return;
-    // if (!this.state.movieDetails) return;
+
     const { cast, certification, country, genres, overview, poster_path, release_date, runtime, title } =
       this.state.movieDetails;
 
-    console.log('cast', this.state.movieDetails, cast);
     const releaseYear = release_date?.slice(0, 4);
     const genresComb = genres?.join('/');
 

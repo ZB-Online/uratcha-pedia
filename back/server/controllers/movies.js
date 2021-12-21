@@ -2,6 +2,7 @@ const theMovie = require('../utils/themovie');
 const resData = require('../utils/resData');
 const resMessage = require('../utils/resMessage');
 const movieDao = require('../dao/movies');
+const starDao = require('../dao/stars');
 
 const getMovies = (req, res) => {
   res.send(movieDao.getMovies());
@@ -42,12 +43,23 @@ const getStarRankMovies = async (req, res) => {
   const movies = await theMovie.getMoviesForStars(movieRank);
   res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movies));
 };
-// & : 비슷한 작품, 메시지 변경 필요
+
 const getSimilarWorks = async (req, res) => {
   const { genre } = req.params;
   try {
     const movies = await theMovie.getSimilarWorksByGenreId(genre);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movies));
+  } catch (error) {
+    return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
+  }
+};
+
+const getMyScoredMovies = async (req, res) => {
+  const { userEmail } = req.params;
+  try {
+    const stars = starDao.getStarsByUserEmail(userEmail);
+    const myScoredMovies = await theMovie.getMoviesForMyStar(stars);
+    res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, myScoredMovies));
   } catch (error) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
@@ -60,4 +72,5 @@ module.exports = {
   getSearchMovies,
   getStarRankMovies,
   getSimilarWorks,
+  getMyScoredMovies,
 };
