@@ -174,7 +174,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   const renderMarkStar = () => {
     const currentScore = this.state.userScore.score || 0;
     if (currentScore) document.getElementById(`${currentScore}-star`).checked = true;
-    const starMessage = ['평가하기', '싫어요', '별로에요', '보통이에요', '재미있어요', '최고에요!'];
+    const starMessage = ['Rate', 'Dislike', 'Meh', "It's not bad", "It's a must watch", "It's the best"];
     document.querySelector('.movie-header_score-letter').textContent = starMessage[currentScore];
   };
 

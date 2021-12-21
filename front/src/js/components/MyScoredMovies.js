@@ -23,11 +23,11 @@ export default function MyScoredMovies({ $target, initialState }) {
       <article class="container">
         <div class="my-scored-movies-header">
           <div class="my-scored-movies-header__back-button"></div>
-          <div class="my-scored-movies-header__title">영화</div>
+          <div class="my-scored-movies-header__title">Movies</div>
         </div>
         <section class="my-scored-movies-container">
           <div class="my-scored-movies-container__header">
-            <h2 class="my-scored-movies-container__title">평가</h2>
+            <h2 class="my-scored-movies-container__title">Average</h2>
             <span class="my-scored-movies-container__number"></span>
           </div>
           <div class="my-scored-movies-container__inner">

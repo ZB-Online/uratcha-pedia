@@ -26,12 +26,12 @@ export function MovieRanking({ $target, initialState }) {
             </div>
           </div>
         </div> 
-        <div class="carousel ${title === '별점 높은 순' ? 'box-office' : 'highest-ranking'}">
+        <div class="carousel ${title === 'Box Office' ? 'box-office' : 'highest-ranking'}">
         
         </div>
       </section>`;
 
-    title === '별점 높은 순'
+    title === 'Box Office'
       ? new BoxOfficeRankingCarousel({
           $target: $movieRanking.querySelector('.carousel'),
           initialState: movieRanking,

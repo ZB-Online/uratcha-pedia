@@ -1,4 +1,4 @@
-import noImage from '../../../img/no_image.png';
+import noImage from 'Images/no_image.png';
 
 export default function MyScoredMoviesCarousel({ $target, initialState }) {
   const $myScoredMoviesCarousel = document.createElement('div');
@@ -31,7 +31,7 @@ export default function MyScoredMoviesCarousel({ $target, initialState }) {
                 ${movie.title}
               </div>
               <div class="my-scored-movies-item__score">
-                평가함 ★ 3.9
+                Rated ★ 3.9
               </div>
             </div>
           </a>

@@ -32,11 +32,11 @@ export default function HighestRankingCarousel({ $target, initialState }) {
             <div class="movie-detail">
                 <span class="movie-title">${movie?.title ? titleFormat(movie.title) : ''}</span>
                 <div class="movie-info">
-                <span class="movie-year">${movie?.release_date}</span>
+                <span class="movie-year">${movie?.release_date.slice(0, 4)}</span>
                 <span>ㆍ</span>
                 <span class="movie-country">${movie?.country}</span>
                 </div>
-                <span class="movie-score">평균★3.9</span>
+                <span class="movie-score">Average★${movie?.averageStar}</span>
             </div>
             </li>`
         )
