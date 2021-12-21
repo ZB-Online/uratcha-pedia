@@ -79,9 +79,9 @@ export const eventListeners = () => {
 
   const postUserLogout = () => {
     try {
-      fetch.authGet('/api/users/logout');
+      fetch.get('/api/users/logout');
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   };
 

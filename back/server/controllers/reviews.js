@@ -39,7 +39,6 @@ const addReview = (req, res) => {
 
 const updateReview = (req, res) => {
   const { id, comment } = req.body;
-  console.log(typeof id, comment);
   if (!id || !comment) return res.status(400).json(resData.successFalse(resMessage.VALUE_INVALID));
   if (!reviewDao.findReviewById(id)) return res.status(400).json(resData.successFalse(resMessage.ID_NOT_EXIST));
   reviewDao.updateReview(id, comment);
