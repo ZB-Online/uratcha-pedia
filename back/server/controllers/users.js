@@ -55,7 +55,7 @@ const signup = async (req, res) => {
   const token = generateToken(signupUser.email);
   userDao.addUser({ ...signupUser, token });
   res
-    .cookie('access_token', accessToken, { expires: ACCESS_TOKEN_EXPIRED, httpOnly: true })
+    .cookie('access_token', token, { expires: ACCESS_TOKEN_EXPIRED, httpOnly: true })
     .status(200)
     .json(
       resData.successTrue(resMessage.SIGNUP_SUCCESS, {

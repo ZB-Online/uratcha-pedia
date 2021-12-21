@@ -166,7 +166,6 @@ function Sign({ $target, initialState }) {
                       type="email"
                       id="signin-email"
                       name="email"
-                      required
                       autocomplete="off"
                       placeholder="email"
                       autofocus
@@ -186,7 +185,6 @@ function Sign({ $target, initialState }) {
                       type="password"
                       id="signin-password"
                       name="password"
-                      required
                       autocomplete="off"
                       placeholder="password"
                   />
@@ -216,7 +214,6 @@ function Sign({ $target, initialState }) {
                       type="text"
                       id="signup-username"
                       name="username"
-                      required
                       autocomplete="off"
                       placeholder="username"
                       autofocus
@@ -237,7 +234,6 @@ function Sign({ $target, initialState }) {
                       type="email"
                       id="signup-email"
                       name="email"
-                      required
                       autocomplete="off"
                       placeholder="email"
                   /><span class="valid hidden">
@@ -256,7 +252,6 @@ function Sign({ $target, initialState }) {
                       type="password"
                       id="signup-password"
                       name="password"
-                      required
                       autocomplete="off"
                       placeholder="password"
                   /><span class="valid hidden">
