@@ -17,7 +17,7 @@ let auth = (req, res, next) => {
     req.user = user;
     req.token = decoded;
     next();
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.AUTH_FAIL));
   }
 };

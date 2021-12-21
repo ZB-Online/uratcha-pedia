@@ -13,7 +13,7 @@ const getBoxoffices = async (req, res) => {
     const movies = await theMovie.getPopularMovies();
     const boxoffices = await theMovie.getMoviesForBoxOffice(movies);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, boxoffices));
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
 };
@@ -23,7 +23,7 @@ const getMovieDetailById = async (req, res) => {
   try {
     const movieDetail = await theMovie.getMoviesDetailsById(movieId);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movieDetail));
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
 };
@@ -33,7 +33,7 @@ const getSearchMovies = async (req, res) => {
   try {
     const searchMovies = await theMovie.searchMoviesByKeyword(keyword);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, searchMovies));
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
 };
@@ -49,7 +49,7 @@ const getSimilarWorks = async (req, res) => {
   try {
     const movies = await theMovie.getSimilarWorksByGenreId(genre);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, movies));
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
 };
@@ -60,7 +60,7 @@ const getMyScoredMovies = async (req, res) => {
     const stars = starDao.getStarsByUserEmail(userEmail);
     const myScoredMovies = await theMovie.getMoviesForMyStar(stars);
     res.status(200).json(resData.successTrue(resMessage.MOVIE_GET_SUCCESS, myScoredMovies));
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
 };

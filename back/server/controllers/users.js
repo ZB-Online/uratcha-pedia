@@ -49,7 +49,7 @@ const signup = async (req, res) => {
 
   try {
     signupUser.password = await hashPassword(signupUser.password);
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json(resData.successFalse(resMessage.INTERNAL_SERVER_ERROR));
   }
   const token = generateToken(signupUser.email);
@@ -87,10 +87,10 @@ const logout = (req, res) => {
 
 const hashPassword = password => {
   return new Promise((resolve, reject) => {
-    bcrypt.genSalt(saltRounds, (error, salt) => {
-      if (error) reject(error);
-      bcrypt.hash(password, salt, (error, hash) => {
-        if (error) reject(error);
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+      if (err) reject(err);
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) reject(err);
         resolve(hash);
       });
     });

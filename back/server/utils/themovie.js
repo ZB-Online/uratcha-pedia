@@ -13,8 +13,8 @@ const getPopularMovies = async (page = 1) => {
       poster_path: movie.poster_path ? movieConfig.imageBaseUrl + movie.poster_path : '',
       release_date: movie.release_date || 'None',
     }));
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
@@ -50,8 +50,8 @@ const getMoviesDetailsById = async movieId => {
         character: cast.character,
       })),
     };
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
@@ -62,8 +62,8 @@ const getMoviesWithCountry = async movieId => {
     return {
       country: responseData?.production_countries.map(country => country.iso_3166_1)[0] || 'None',
     };
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
@@ -86,8 +86,8 @@ const searchMoviesByKeyword = async keyword => {
     const response = await fetch(`${apiBaseUrl}search/movie?query=${keyword}&api_key=${apiKey}`);
     const movies = await response.json();
     return await getMoviesForAdditionalInfo(movies.results);
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
@@ -101,8 +101,8 @@ const getMyScoredMoviesInfo = async movieId => {
       country: responseData?.production_countries?.map(country => country.iso_3166_1)[0] || 'None',
       poster_path: responseData?.poster_path ? movieConfig.imageBaseUrl + responseData?.poster_path : '',
     };
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
@@ -156,8 +156,8 @@ const getSimilarWorksByGenreId = async genre => {
       ...result,
       poster_path: result.poster_path ? movieConfig.imageBaseUrl + result.poster_path : '',
     }));
-  } catch (error) {
-    throw new Error(error);
+  } catch (err) {
+    throw new Error(err);
   }
 };
 
