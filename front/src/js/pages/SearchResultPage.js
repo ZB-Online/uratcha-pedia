@@ -11,8 +11,16 @@ export default function SearchResultPage({ $target, initialState }) {
 
   this.state = {
     keyword: initialState,
-    searchResult: [],
-    user: {},
+    searchResult: [
+      {
+        id: null,
+        title: null,
+        poster_path: null,
+        release_date: null,
+        country: null,
+      },
+    ],
+    user: { isAuth: null, email: null, userName: null },
   };
 
   this.setState = newState => {

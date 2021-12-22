@@ -10,7 +10,17 @@ export default function MyPage({ $target }) {
   $target.appendChild($myPage);
 
   this.state = {
-    myScoredMovies: [],
+    myScoredMovies: [
+      {
+        id: null,
+        score: null,
+        title: null,
+        release_date: null,
+        country: null,
+        poster_path: null,
+      },
+    ],
+    user: { isAuth: null, email: null, userName: null },
   };
 
   this.setState = newState => {

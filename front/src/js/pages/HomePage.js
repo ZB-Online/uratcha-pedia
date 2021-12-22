@@ -10,8 +10,27 @@ export default function HomePage({ $target }) {
   $target.appendChild($homePage);
 
   this.state = {
-    boxOffice: [],
-    highestRanking: [],
+    boxOffice: [
+      {
+        id: null,
+        title: null,
+        overview: null,
+        poster_path: null,
+        release_date: null,
+        country: null,
+      },
+    ],
+    highestRanking: [
+      {
+        id: null,
+        title: null,
+        overview: null,
+        poster_path: null,
+        release_date: null,
+        country: null,
+      },
+    ],
+    user: { isAuth: null, email: null, userName: null },
   };
 
   this.setState = newState => {

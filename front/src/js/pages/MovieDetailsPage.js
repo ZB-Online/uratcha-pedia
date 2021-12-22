@@ -30,13 +30,34 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
   this.state = {
     movieId: +initialState,
-    movieDetails: {},
-    reviewsByMovieId: [],
-    starsData: [],
-    averageStarsData: {},
-    similarWorksData: [],
+    movieDetails: {
+      id: null,
+      title: null,
+      overview: null,
+      poster_path: null,
+      release_date: null,
+      genres: [null],
+      country: null,
+      runtime: null,
+      certification: null,
+      cast: [{ name: null, character: null }],
+    },
+    reviewsByMovieId: [{ id: null, userEmail: null, movieId: +initialState, comment: null }],
+    starsData: [{ id: null, userEmail: null, movieId: +initialState, score: null }],
+    averageStarsData: { averageStar: null },
+    similarWorksData: [
+      {
+        id: null,
+        title: null,
+        overview: null,
+        poster_path: null,
+        release_date: null,
+        country: null,
+      },
+    ],
     userReview: { id: null, userEmail: null, movieId: +initialState, comment: null },
-    userScore: {},
+    userScore: { id: null, userEmail: null, movieId: +initialState, score: null },
+    user: { isAuth: null, email: null, userName: null },
   };
 
   this.setState = newState => {

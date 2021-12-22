@@ -5,7 +5,7 @@ const getMyScoredMovies = async userEmail => {
     const { resData } = await fetch.get(`/api/movies/users/${userEmail}`);
     return resData;
   } catch (err) {
-    console.log(err);
+    console.error(err);
   }
 };
 
