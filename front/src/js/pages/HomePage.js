@@ -4,33 +4,17 @@ import { eventListeners } from '../eventListeners';
 import fetch from '../utils/fetch.js';
 import isAuth from '../utils/auth';
 import { bindMovieRankingCarouselEvents } from '../utils/carousel.js';
+import { fetchMovie } from '../services/index.js';
+import { defaultMovie, defaultUser } from '../temp/index';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');
   $target.appendChild($homePage);
 
   this.state = {
-    boxOffice: [
-      {
-        id: null,
-        title: null,
-        overview: null,
-        poster_path: null,
-        release_date: null,
-        country: null,
-      },
-    ],
-    highestRanking: [
-      {
-        id: null,
-        title: null,
-        overview: null,
-        poster_path: null,
-        release_date: null,
-        country: null,
-      },
-    ],
-    user: { isAuth: null, email: null, userName: null },
+    boxOffice: defaultMovie.boxOffice,
+    highestRanking: defaultMovie.highestRanking,
+    user: defaultUser.user,
   };
 
   this.setState = newState => {
@@ -65,25 +49,10 @@ export default function HomePage({ $target }) {
     bindMovieRankingCarouselEvents(document.querySelector('.carousel.highest-ranking'), this.state.boxOffice);
   };
 
-  const fetchBoxOffice = async () => {
-    try {
-      const { resData } = await fetch.get('/api/movies');
-      const boxOffice = await Promise.all(
-        resData.map(async movie => {
-          const { resData } = await fetch.get(`/api/stars/${movie.id}`);
-          return { ...movie, averageStar: resData.averageStar };
-        })
-      );
-      return boxOffice;
-    } catch (e) {
-      console.error('movie api not fetched: ', e);
-    }
-  };
-
-  const fetchMovieRanking = async () => {
+  const fetchInitialState = async () => {
     try {
       const user = await isAuth();
-      const boxOffice = await fetchBoxOffice();
+      const boxOffice = await fetchMovie.getBoxOffice();
       const highestRanking = [...boxOffice].sort((a, b) =>
         +b.averageStar >= +a.averageStar ? (+b.averageStar > +a.averageStar ? 1 : 0) : -1
       );
@@ -93,5 +62,5 @@ export default function HomePage({ $target }) {
     }
   };
 
-  fetchMovieRanking();
+  fetchInitialState();
 }

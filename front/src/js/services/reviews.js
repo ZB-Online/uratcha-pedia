@@ -66,4 +66,11 @@ const getScoredReviews = async reviewsByMovieId => {
   return scoredReviews;
 };
 
-export { getReviewsByMovieId, getUserReview, postUserReview, patchUserReview, deleteMyReview, getScoredReviews };
+export default {
+  getReviewsByMovieId,
+  getUserReview,
+  postUserReview,
+  patchUserReview,
+  deleteMyReview,
+  getScoredReviews,
+};

@@ -31,7 +31,7 @@ const getStarByMovieIdUserEmail = (movieId, userEmail) => {
 
 const getStarsByUserEmail = userEmail => starModel.filter(star => star.userEmail === userEmail);
 
-const getStarsByMovieId = movieId => starModel.filter(star => star.movieId === +movieId);
+const getStarsByMovieId = movieId => starModel.filter(star => star.movieId === +movieId).reverse();
 
 const getMovieIdById = id => starModel.find(star => star.id === +id).movieId;
 

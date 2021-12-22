@@ -2,7 +2,7 @@ let reviewModel = require('../models/reviews');
 
 const getReviews = () => reviewModel;
 
-const getReviewsByMovieId = movieId => reviewModel.filter(review => review.movieId === +movieId);
+const getReviewsByMovieId = movieId => reviewModel.filter(review => review.movieId === +movieId).reverse();
 
 const getReviewByMovieIdUserEmail = (movieId, userEmail) => {
   const isReview = reviewModel.find(review => review.movieId === +movieId && review.userEmail === userEmail);
@@ -10,9 +10,9 @@ const getReviewByMovieIdUserEmail = (movieId, userEmail) => {
 };
 
 const addReview = newReview => {
-  newReview = { id: reviewModel[reviewModel.length - 1].id + 1, ...newReview }
+  newReview = { id: reviewModel[reviewModel.length - 1].id + 1, ...newReview };
   reviewModel = [...reviewModel, newReview];
-  return newReview
+  return newReview;
 };
 
 const findReviewById = id => reviewModel.some(review => review.id === +id);
