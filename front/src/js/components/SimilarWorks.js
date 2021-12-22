@@ -23,7 +23,7 @@ export default function SimilarWorks({ $target, initialState }) {
 
     $similarWorks.innerHTML = movies
       ? movies
-          ?.map(
+          .map(
             ({ id, poster_path, title }) => `
         <li class="similar-works-item" data-movie-id="${id}">
           <a href="javascript:void(0);">
