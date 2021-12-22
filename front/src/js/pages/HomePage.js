@@ -1,11 +1,10 @@
 import Wrapper from '../components/Wrapper';
 import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
-import fetch from '../utils/fetch.js';
 import isAuth from '../utils/auth';
 import { bindMovieRankingCarouselEvents } from '../utils/carousel.js';
 import { fetchMovie } from '../services/index.js';
-import { defaultMovie, defaultUser } from '../temp/index';
+import { defaultMovie, defaultUser } from './initialState/index.js';
 
 export default function HomePage({ $target }) {
   const $homePage = document.createElement('div');

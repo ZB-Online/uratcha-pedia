@@ -4,8 +4,7 @@ import { eventListeners } from '../eventListeners';
 import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
 import isAuth from '../utils/auth';
 import { fetchMovie } from '../services/index';
-
-import { defaultMovie, defaultUser } from '../temp/index.js';
+import { defaultMovie, defaultUser } from './initialState/index.js';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');

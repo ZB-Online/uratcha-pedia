@@ -5,7 +5,7 @@ import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
 import debounce from '../utils/debounce';
 import { fetchMovie, fetchReview, fetchScore } from '../services/index';
-import { defaultMovie, defaultReview, defaultScore, defaultUser } from '../temp/index.js';
+import { defaultMovie, defaultReview, defaultScore, defaultUser } from './initialState/index.js';
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');

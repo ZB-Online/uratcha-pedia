@@ -3,7 +3,7 @@ import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
 import isAuth from '../utils/auth';
-import { defaultMovie, defaultUser } from '../temp/index';
+import { defaultMovie, defaultUser } from './initialState/index.js';
 import { fetchMovie } from '../services/index';
 
 export default function MyPage({ $target }) {
