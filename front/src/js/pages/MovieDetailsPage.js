@@ -11,6 +11,7 @@ import {
   getUserReview,
   patchUserReview,
   postUserReview,
+  getScoredReviews,
 } from '../services/reviews';
 import {
   deleteUserScore,
@@ -136,11 +137,16 @@ export default function MovieDetailsPage({ $target, initialState }) {
         this.state.user.isAuth &&
         (target.matches('.delete-comment') || target.matches('.my-comment-container_btn.del-btn'))
       ) {
-        if (deleteMyReview(this.state.userReview?.id))
+        if (deleteMyReview(this.state.userReview?.id)) {
           this.setState({
             ...this.state,
             userReview: { id: null, userEmail: this.state.user?.email, movieId: this.state.movieId, comment: null },
           });
+          const reviewsByMovieId = await getReviewsByMovieId(this.state.movieId);
+          const scoredReview = await getScoredReviews(reviewsByMovieId);
+          this.setState({ ...this.state, reviewsByMovieId: scoredReview });
+        }
+
         $myComment.classList.add('hidden');
       }
 
@@ -154,10 +160,20 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
         const userReview =
           this.state.userReview?.id && this.state.userReview?.movieId === this.state.movieId
-            ? await patchUserReview(this.state.userReview?.id, this.state.user?.email, this.state.movieId, comment)
+            ? await patchUserReview(
+                this.state.userReview?.id,
+                this.state.user?.email,
+                this.state.movieId,
+                comment,
+                this.state.userReview
+              )
             : await postUserReview(this.state.user?.email, this.state.movieId, comment);
 
         this.setState({ ...this.state, userReview });
+
+        const reviewsByMovieId = await getReviewsByMovieId(this.state.movieId);
+        const scoredReview = await getScoredReviews(reviewsByMovieId);
+        this.setState({ ...this.state, reviewsByMovieId: scoredReview });
       }
 
       if (target.matches('#comment-modal') || target.matches('.close-comment-btn')) {
@@ -206,6 +222,10 @@ export default function MovieDetailsPage({ $target, initialState }) {
           deleteUserScore(this.state.userScore.id);
           this.setState({ ...this.state, userScore: false });
         }
+        const averageStarsData = await getAverageStarsByMovieId(this.state.movieId);
+        const scoredReview = await getScoredReviews(this.state.reviewsByMovieId);
+
+        this.setState({ ...this.state, averageStarsData, reviewsByMovieId: scoredReview });
       }, 300)
     );
   };
@@ -242,13 +262,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
       ? await getUserScore(this.state.movieId, this.state.user?.email)
       : this.state.userScore;
 
-    const scoredReview = await Promise.all(
-      reviewsByMovieId.map(async review => {
-        const data = await fetch.get(`/api/stars/movies/${review.movieId}/users/${review?.userEmail}`);
-        const score = await data.resData.star.score;
-        return { ...review, score };
-      })
-    );
+    const scoredReview = await getScoredReviews(reviewsByMovieId);
 
     this.state.user.isAuth
       ? this.setState({

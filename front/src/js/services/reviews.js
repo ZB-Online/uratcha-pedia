@@ -2,9 +2,8 @@ import fetch from '../utils/fetch';
 
 const getReviewsByMovieId = async movieId => {
   try {
-    const data = await fetch.get(`/api/reviews/${movieId}`);
-    const reviewsByMovieId = await data?.resData;
-    return reviewsByMovieId;
+    const { resData } = await fetch.get(`/api/reviews/${movieId}`);
+    return resData;
   } catch (err) {
     console.error(err);
   }
@@ -12,8 +11,8 @@ const getReviewsByMovieId = async movieId => {
 
 const getUserReview = async (movieId, userEmail) => {
   try {
-    const response = await fetch.get(`/api/reviews/movies/${movieId}/users/${userEmail}`);
-    return response?.resData;
+    const { resData } = await fetch.get(`/api/reviews/movies/${movieId}/users/${userEmail}`);
+    return resData;
   } catch (err) {
     console.error(err);
   }
@@ -26,14 +25,14 @@ const postUserReview = async (userEmail, movieId, comment) => {
       movieId,
       comment,
     };
-    const response = await fetch.post('/api/reviews', newReview);
-    return response.resData;
+    const { resData } = await fetch.post('/api/reviews', newReview);
+    return resData;
   } catch (err) {
     console.error(err);
   }
 };
 
-const patchUserReview = async (id, userEmail, movieId, comment) => {
+const patchUserReview = async (id, userEmail, movieId, comment, originReview) => {
   try {
     const userReview = {
       id,
@@ -42,7 +41,7 @@ const patchUserReview = async (id, userEmail, movieId, comment) => {
       comment,
     };
     const response = await fetch.patch('/api/reviews', userReview);
-    return response ? userReview : this.state.userReview;
+    return response ? userReview : originReview;
   } catch (err) {
     console.error(err);
   }
@@ -57,4 +56,14 @@ const deleteMyReview = async id => {
   }
 };
 
-export { getReviewsByMovieId, getUserReview, postUserReview, patchUserReview, deleteMyReview };
+const getScoredReviews = async reviewsByMovieId => {
+  const scoredReviews = await Promise.all(
+    reviewsByMovieId.map(async review => {
+      const { resData } = await fetch.get(`/api/stars/movies/${review.movieId}/users/${review?.userEmail}`);
+      return { ...review, score: resData.star.score };
+    })
+  );
+  return scoredReviews;
+};
+
+export { getReviewsByMovieId, getUserReview, postUserReview, patchUserReview, deleteMyReview, getScoredReviews };
