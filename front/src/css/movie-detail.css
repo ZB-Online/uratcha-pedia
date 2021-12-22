@@ -537,7 +537,9 @@ section.movie-details .outer .inner {
   height: 120px;
   margin-top: 12px;
   display: inline-block;
+  overflow: auto;
   white-space: normal;
+  text-overflow: ellipsis;
 }
 
 .detail-container_comment .carousel-control {

@@ -60,4 +60,11 @@ const deleteUserScore = id => {
   }
 };
 
-export { getStarsByMovieId, getAverageStarsByMovieId, getUserScore, postUserScore, patchUserScore, deleteUserScore };
+export default {
+  getStarsByMovieId,
+  getAverageStarsByMovieId,
+  getUserScore,
+  postUserScore,
+  patchUserScore,
+  deleteUserScore,
+};

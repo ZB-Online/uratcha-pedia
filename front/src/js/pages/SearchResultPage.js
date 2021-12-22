@@ -3,7 +3,9 @@ import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
 import isAuth from '../utils/auth';
-import { getSearchMovies } from '../services/movie';
+import { fetchMovie } from '../services/index';
+
+import { defaultMovie, defaultUser } from '../temp/index.js';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');
@@ -11,8 +13,8 @@ export default function SearchResultPage({ $target, initialState }) {
 
   this.state = {
     keyword: initialState,
-    searchResult: [],
-    user: {},
+    searchResult: defaultMovie.searchResult,
+    user: defaultUser.user,
   };
 
   this.setState = newState => {
@@ -47,7 +49,7 @@ export default function SearchResultPage({ $target, initialState }) {
   const fetchInitialState = async () => {
     const { keyword } = this.state;
     const user = await isAuth();
-    const searchResults = await getSearchMovies(keyword);
+    const searchResults = await fetchMovie.getSearchMovies(keyword);
     this.setState({ ...this.state, user, searchResult: searchResults });
   };
 
