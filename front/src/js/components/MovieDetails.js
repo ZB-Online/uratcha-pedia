@@ -201,6 +201,7 @@ export function MovieDetails({ $target, initialState }) {
               <div class="detail-container_comment-container">
 
               </div>
+              
             </div>
 
             <div class="detail-container__similar-works">
