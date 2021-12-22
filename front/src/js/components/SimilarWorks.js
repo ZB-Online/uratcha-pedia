@@ -22,8 +22,9 @@ export default function SimilarWorks({ $target, initialState }) {
     const { movies } = this.state;
 
     $similarWorks.innerHTML = movies
-      ?.map(
-        ({ id, poster_path, title }) => `
+      ? movies
+          ?.map(
+            ({ id, poster_path, title }) => `
         <li class="similar-works-item" data-movie-id="${id}">
           <a href="javascript:void(0);">
             <img src="${poster_path ? poster_path : noImage}" alt="poster" />
@@ -35,8 +36,9 @@ export default function SimilarWorks({ $target, initialState }) {
             </div>
           </a>
         </li>`
-      )
-      .join('');
+          )
+          .join('')
+      : '<li>No similar works</li>';
   };
 
   this.bindEvents = () => {
