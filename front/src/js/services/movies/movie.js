@@ -18,4 +18,24 @@ const getSearchMovies = async keyword => {
   }
 };
 
-export { getMyScoredMovies, getSearchMovies };
+const getMovieDetails = async movieId => {
+  try {
+    const data = await fetch.get(`/api/movies/${movieId}`);
+    const movieDetailsData = await data?.resData;
+    return movieDetailsData;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getSimilarWorksByGenre = async genre => {
+  try {
+    if (!genre) return;
+    const { resData } = await fetch.get(`/api/movies/genre/${genre}`);
+    return resData;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { getMyScoredMovies, getSearchMovies, getMovieDetails, getSimilarWorksByGenre };
