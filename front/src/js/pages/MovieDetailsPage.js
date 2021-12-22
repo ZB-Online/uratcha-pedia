@@ -4,7 +4,6 @@ import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
 import debounce from '../utils/debounce';
-import { getMovieDetails, getSimilarWorksByGenre } from '../services/movies';
 import { fetchMovie, fetchReview, fetchScore } from '../services/index';
 import { defaultMovie, defaultReview, defaultScore, defaultUser } from '../temp/index.js';
 

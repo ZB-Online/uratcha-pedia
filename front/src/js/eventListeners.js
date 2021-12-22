@@ -1,5 +1,6 @@
 import { routeChange } from './router';
 import fetch from './utils/fetch.js';
+import { fetchUser } from './services/index';
 
 export const eventListeners = () => {
   const $headerLogo = document.querySelector('header .logo');
@@ -37,7 +38,7 @@ export const eventListeners = () => {
     SIGNIN: 'SIGNIN',
     SOGNUP: 'SIGNUP',
   };
-  
+
   const FORM_VALUE = {
     EMAIL: 'EMAIL',
     PASSWORD: 'PASSWORD',
@@ -88,17 +89,9 @@ export const eventListeners = () => {
     $confirmModal.classList.add('hidden');
   });
 
-  const postUserLogout = () => {
-    try {
-      fetch.get('/api/users/logout');
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   document.querySelector('.confirm-ok-btn').addEventListener('click', () => {
     $confirmModal.classList.add('hidden');
-    postUserLogout();
+    fetchUser.postUserLogout();
     if (window.location.pathname === '/mypage') {
       const route = '/';
       routeChange(route);
@@ -144,12 +137,12 @@ export const eventListeners = () => {
   const regExp = {
     EMAIL: new RegExp(/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/),
     PASSWORD: new RegExp(/[\w]{5,12}/),
-    USERNAME: new RegExp(/[\w]{2,8}/),
+    USERNAME: new RegExp(/[\w가-힣]{2,8}/),
   };
 
   const inputValid = (type, value, target, $valid, $invalid, $error) => {
     const errorMessage = {
-      EMAIL : '정확하지 않은 이메일입니다.',
+      EMAIL: '정확하지 않은 이메일입니다.',
       PASSWORD: '비밀번호는 최소 5자리 이상이어야 합니다.',
       USERNAME: '정확하지 않은 이름입니다.',
     };
@@ -179,21 +172,16 @@ export const eventListeners = () => {
     if (target.matches('#signin-email')) {
       inputValid(FORM_VALUE.EMAIL, email, target, $signinEmailValid, $signinEmailInvalid, $signinEmailError);
     } else if (target.matches('#signin-password')) {
-      inputValid(FORM_VALUE.PASSWORD, password, target, $signinPasswordValid, $signinPasswordInvalid, $signinPasswordError);
+      inputValid(
+        FORM_VALUE.PASSWORD,
+        password,
+        target,
+        $signinPasswordValid,
+        $signinPasswordInvalid,
+        $signinPasswordError
+      );
     }
   });
-
-  const postSignin = async (email, password) => {
-    try {
-      const response = await fetch.post('/api/users/signin', {
-        email,
-        password,
-      });
-      return response;
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   $singinForm.addEventListener('submit', async e => {
     e.preventDefault();
@@ -206,7 +194,7 @@ export const eventListeners = () => {
       return;
     }
 
-    const response = await postSignin(email, password);
+    const response = await fetchUser.postSignin(email, password);
 
     if (!response.success) {
       alert(response.message);
@@ -227,38 +215,43 @@ export const eventListeners = () => {
     if (target.matches('#signup-email')) {
       inputValid(FORM_VALUE.EMAIL, email, target, $signupEmailValid, $signupEmailInvalid, $signupEmailError);
     } else if (target.matches('#signup-password')) {
-      inputValid(FORM_VALUE.PASSWORD, password, target, $signupPasswordValid, $signupPasswordInvalid, $signupPasswordError);
+      inputValid(
+        FORM_VALUE.PASSWORD,
+        password,
+        target,
+        $signupPasswordValid,
+        $signupPasswordInvalid,
+        $signupPasswordError
+      );
     } else if (target.matches('#signup-username')) {
-      inputValid(FORM_VALUE.USERNAME, username, target, $signupUsernameValid, $signupUsernameInvalid, $signupUsernameError);
+      inputValid(
+        FORM_VALUE.USERNAME,
+        username,
+        target,
+        $signupUsernameValid,
+        $signupUsernameInvalid,
+        $signupUsernameError
+      );
     }
   });
 
-  const postSignup = async (email, password, username) => {
-    try {
-      const response = await fetch.post('/api/users/signup', {
-        email,
-        password,
-        username,
-      });
-      return response;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   $singupForm.addEventListener('submit', async e => {
     e.preventDefault();
-    
+
     const username = $singupForm.username.value.trim();
     const email = $singupForm.email.value.trim();
     const password = $singupForm.password.value.trim();
 
-    if (!regExp[FORM_VALUE.USERNAME].test(username) || !regExp[FORM_VALUE.EMAIL].test(email) || !regExp[FORM_VALUE.PASSWORD].test(password)) {
+    if (
+      !regExp[FORM_VALUE.USERNAME].test(username) ||
+      !regExp[FORM_VALUE.EMAIL].test(email) ||
+      !regExp[FORM_VALUE.PASSWORD].test(password)
+    ) {
       resetForm(FORM_TYPE.SIGNUP);
       return;
     }
 
-    const response = await postSignup(email, password, username);
+    const response = await fetchUser.postSignup(email, password, username);
 
     if (!response.success) {
       alert(response.message);
