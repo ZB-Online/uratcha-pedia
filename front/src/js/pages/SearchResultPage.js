@@ -3,7 +3,7 @@ import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { bindSearchedMovieCarouselEvents } from '../utils/carousel.js';
 import isAuth from '../utils/auth';
-import { getSearchMovies } from '../services/movies/movie';
+import { getSearchMovies } from '../services/movie';
 
 export default function SearchResultPage({ $target, initialState }) {
   const $searchResultPage = document.createElement('div');

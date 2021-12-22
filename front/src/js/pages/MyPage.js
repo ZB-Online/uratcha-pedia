@@ -2,7 +2,7 @@ import MyScoredMovies from '../components/MyScoredMovies';
 import Wrapper from '../components/Wrapper';
 import { eventListeners } from '../eventListeners';
 import { bindMyScoredMovieCarouselEvents } from '../utils/carousel';
-import { getMyScoredMovies } from '../services/movies/movie';
+import { getMyScoredMovies } from '../services/movie';
 import isAuth from '../utils/auth';
 
 export default function MyPage({ $target }) {

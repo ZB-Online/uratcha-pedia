@@ -4,14 +4,14 @@ import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
 import debounce from '../utils/debounce';
-import { getMovieDetails, getSimilarWorksByGenre } from '../services/movies/movie';
+import { getMovieDetails, getSimilarWorksByGenre } from '../services/movie';
 import {
   deleteMyReview,
   getReviewsByMovieId,
   getUserReview,
   patchUserReview,
   postUserReview,
-} from '../services/reviews/reviews';
+} from '../services/reviews';
 import {
   deleteUserScore,
   getAverageStarsByMovieId,
@@ -19,7 +19,7 @@ import {
   getUserScore,
   patchUserScore,
   postUserScore,
-} from '../services/scores/scores';
+} from '../services/scores';
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');
