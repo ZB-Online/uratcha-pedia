@@ -4,6 +4,22 @@ import { eventListeners } from '../../js/eventListeners';
 import { bindMovieCommentCarouselEvents } from '../../js/utils/carousel';
 import fetch from '../../js/utils/fetch';
 import debounce from '../utils/debounce';
+import { getMovieDetails, getSimilarWorksByGenre } from '../services/movies/movie';
+import {
+  deleteMyReview,
+  getReviewsByMovieId,
+  getUserReview,
+  patchUserReview,
+  postUserReview,
+} from '../services/reviews/reviews';
+import {
+  deleteUserScore,
+  getAverageStarsByMovieId,
+  getStarsByMovieId,
+  getUserScore,
+  patchUserScore,
+  postUserScore,
+} from '../services/scores/scores';
 
 export default function MovieDetailsPage({ $target, initialState }) {
   const $MovieDetailsPage = document.createElement('div');
@@ -18,7 +34,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
     starsData: [],
     averageStarsData: {},
     similarWorksData: [],
-    userReview: {},
+    userReview: { id: null, userEmail: null, movieId: +initialState, comment: null },
     userScore: {},
   };
 
@@ -29,7 +45,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
   };
 
   this.render = () => {
-    const { movieDetails, reviewsByMovieId, starsData, averageStarsData, similarWorksData, userReview } = this.state;
+    const { movieDetails, reviewsByMovieId, starsData, averageStarsData, similarWorksData } = this.state;
 
     $MovieDetailsPage.appendChild(
       new Wrapper({
@@ -45,7 +61,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
                 starsData: starsData,
                 averageStarsData: averageStarsData,
                 similarWorksData: similarWorksData,
-                userReview,
+                userReview: this.state.userReview,
               },
             },
           },
@@ -53,17 +69,9 @@ export default function MovieDetailsPage({ $target, initialState }) {
       }).render()
     );
 
-    const $leaveComment = document.querySelector('.leave-comment');
-    const $myComment = document.querySelector('.my-comment-container.comment');
-
     if (this.state.user.isAuth) {
       renderMarkStar();
-      if (this.state.userReview?.id) {
-        $myComment.classList.remove('hidden');
-        $leaveComment.classList.add('hidden');
-      } else {
-        $leaveComment.classList.remove('hidden');
-      }
+      renderUserComment();
     } else {
       document.querySelector('.user-comment').classList.add('hidden');
     }
@@ -91,7 +99,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
       $title.innerText = 'SIGN IN';
     };
 
-    const eventhandlers = async ({ target }) => {
+    const commentEventhandlers = async ({ target }) => {
       if (target.matches('.movie-header_add-comment')) {
         if (this.state.user.isAuth) {
           this.state.userReview?.id && this.state.userReview?.movieId === +this.state.movieId
@@ -128,7 +136,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
         this.state.user.isAuth &&
         (target.matches('.delete-comment') || target.matches('.my-comment-container_btn.del-btn'))
       ) {
-        if (deleteMyReview())
+        if (deleteMyReview(this.state.userReview?.id))
           this.setState({
             ...this.state,
             userReview: { id: null, userEmail: this.state.user?.email, movieId: this.state.movieId, comment: null },
@@ -146,8 +154,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
 
         const userReview =
           this.state.userReview?.id && this.state.userReview?.movieId === this.state.movieId
-            ? await patchUserReview(comment)
-            : await postUserReview(comment);
+            ? await patchUserReview(this.state.userReview?.id, this.state.user?.email, this.state.movieId, comment)
+            : await postUserReview(this.state.user?.email, this.state.movieId, comment);
 
         this.setState({ ...this.state, userReview });
       }
@@ -157,7 +165,7 @@ export default function MovieDetailsPage({ $target, initialState }) {
       }
     };
 
-    window.onclick = eventhandlers;
+    window.onclick = commentEventhandlers;
 
     $commentModalTextarea.addEventListener('input', e => {
       e.target.value
@@ -189,10 +197,10 @@ export default function MovieDetailsPage({ $target, initialState }) {
         const score = +e.target.previousElementSibling.value;
         const currentScore = this.state.userScore?.score;
         if (!currentScore) {
-          const userScore = await postUserScore(score);
+          const userScore = await postUserScore(this.state.user?.email, this.state.movieId, score);
           this.setState({ ...this.state, userScore });
         } else if (currentScore !== score) {
-          patchUserScore(score);
+          patchUserScore(this.state.userScore.id, this.state.movieId, score);
           this.setState({ ...this.state, userScore: { ...this.state.userScore, score } });
         } else if (currentScore === score) {
           deleteUserScore(this.state.userScore.id);
@@ -209,152 +217,30 @@ export default function MovieDetailsPage({ $target, initialState }) {
     document.querySelector('.movie-header_score-letter').textContent = starMessage[currentScore];
   };
 
-  const getUserScore = async () => {
-    try {
-      const response = await fetch.get(`/api/stars/movies/${this.state.movieId}/users/${this.state.user?.email}`);
-      return response.resData?.star;
-    } catch (err) {
-      console.error(err);
+  const renderUserComment = () => {
+    const $leaveComment = document.querySelector('.leave-comment');
+    const $myComment = document.querySelector('.my-comment-container.comment');
+    if (this.state.userReview?.id) {
+      $myComment.classList.remove('hidden');
+      $leaveComment.classList.add('hidden');
+    } else {
+      $leaveComment.classList.remove('hidden');
     }
   };
 
-  const postUserScore = async score => {
-    try {
-      const response = await fetch.post('/api/stars', {
-        userEmail: this.state.user?.email,
-        movieId: this.state.movieId,
-        score,
-      });
-      return response.resData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const getInitialState = async () => {
+    const movieDetailsData = await getMovieDetails(this.state.movieId);
+    const reviewsByMovieId = await getReviewsByMovieId(this.state.movieId);
+    const starsData = await getStarsByMovieId(this.state.movieId);
+    const averageStarsData = await getAverageStarsByMovieId(this.state.movieId);
+    const similarWorksData = await getSimilarWorksByGenre(movieDetailsData.genres[0]);
 
-  const patchUserScore = (score) => {
-    try {
-      fetch.patch('/api/stars', {
-        id: this.state.userScore.id,
-        movieId: this.state.movieId,
-        score,
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const deleteUserScore = () => {
-    try {
-      fetch.delete(`/api/stars/${this.state.userScore.id}`);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchMovieDetails = async movieId => {
-    try {
-      const data = await fetch.get(`/api/movies/${movieId}`);
-      const movieDetailsData = await data?.resData;
-      return movieDetailsData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchReviewsByMovieId = async movieId => {
-    try {
-      const data = await fetch.get(`/api/reviews/${movieId}`);
-      const reviewsByMovieId = await data?.resData;
-      return reviewsByMovieId;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchStarsByMovieId = async movieId => {
-    try {
-      const { resData } = await fetch.get(`/api/stars/movies/${movieId}`);
-      return resData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchAverageStarsByMovieId = async movieId => {
-    try {
-      const { resData } = await fetch.get(`/api/stars/${movieId}`);
-      return resData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchSimilarWorksByGenre = async genre => {
-    try {
-      if (!genre) return;
-      const { resData } = await fetch.get(`/api/movies/genre/${genre}`);
-      return resData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getUserReview = async () => {
-    try {
-      const response = await fetch.get(`/api/reviews/movies/${this.state.movieId}/users/${this.state.user?.email}`);
-      return response?.resData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const postUserReview = async comment => {
-    try {
-      const newReview = {
-        userEmail: this.state.user?.email,
-        movieId: this.state.movieId,
-        comment,
-      };
-      const response = await fetch.post('/api/reviews', newReview);
-      return response.resData;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const patchUserReview = async comment => {
-    try {
-      const userReview = {
-        id: this.state.userReview?.id,
-        userEmail: this.state.user?.email,
-        movieId: this.state.movieId,
-        comment,
-      };
-      const response = await fetch.patch('/api/reviews', userReview);
-      return response ? userReview : this.state.userReview;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const deleteMyReview = async () => {
-    try {
-      const response = await fetch.delete(`/api/reviews/${this.state.userReview?.id}`);
-      return response;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const fetchInitialState = async () => {
-    const movieDetailsData = await fetchMovieDetails(this.state.movieId);
-    const reviewsByMovieId = await fetchReviewsByMovieId(this.state.movieId);
-    const starsData = await fetchStarsByMovieId(this.state.movieId);
-    const averageStarsData = await fetchAverageStarsByMovieId(this.state.movieId);
-    const similarWorksData = await fetchSimilarWorksByGenre(movieDetailsData.genres[0]);
-
-    const userReview = this.state.user.isAuth ? await getUserReview() : null;
-    const userScore = this.state.user.isAuth ? await getUserScore() : null;
+    const userReview = this.state.user.isAuth
+      ? await getUserReview(this.state.movieId, this.state.user.email)
+      : this.state.userReview;
+    const userScore = this.state.user.isAuth
+      ? await getUserScore(this.state.movieId, this.state.user?.email)
+      : this.state.userScore;
 
     const scoredReview = await Promise.all(
       reviewsByMovieId.map(async review => {
@@ -382,6 +268,8 @@ export default function MovieDetailsPage({ $target, initialState }) {
           starsData,
           averageStarsData,
           similarWorksData,
+          userScore,
+          userReview,
         });
   };
 
@@ -395,5 +283,5 @@ export default function MovieDetailsPage({ $target, initialState }) {
   };
 
   isAuth();
-  fetchInitialState();
+  getInitialState();
 }
