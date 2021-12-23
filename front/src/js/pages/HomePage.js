@@ -1,9 +1,8 @@
 import Wrapper from '../components/Wrapper';
 import { MovieRanking } from '../components/MovieRanking';
 import { eventListeners } from '../eventListeners';
-import isAuth from '../utils/auth';
 import { bindMovieRankingCarouselEvents } from '../utils/carousel.js';
-import { fetchMovie } from '../services/index.js';
+import { fetchUser, fetchMovie } from '../services/index.js';
 import { defaultMovie, defaultUser } from './initialState/index.js';
 
 export default function HomePage({ $target }) {
@@ -50,7 +49,7 @@ export default function HomePage({ $target }) {
 
   const fetchInitialState = async () => {
     try {
-      const user = await isAuth();
+      const user = await fetchUser.isAuth();
       const boxOffice = await fetchMovie.getBoxOffice();
       const highestRanking = [...boxOffice].sort((a, b) =>
         +b.averageStar >= +a.averageStar ? (+b.averageStar > +a.averageStar ? 1 : 0) : -1

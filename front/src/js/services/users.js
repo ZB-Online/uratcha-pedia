@@ -1,5 +1,14 @@
 import fetch from '../utils/fetch';
 
+const isAuth = async () => {
+  try {
+    const { resData } = await fetch.get('/api/users/auth');
+    return resData;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const postSignin = async (email, password) => {
   try {
     const response = await fetch.post('/api/users/signin', {
@@ -34,6 +43,7 @@ const postUserLogout = () => {
 };
 
 export default {
+  isAuth,
   postSignin,
   postSignup,
   postUserLogout,

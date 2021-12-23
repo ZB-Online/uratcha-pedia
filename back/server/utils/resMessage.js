@@ -1,5 +1,4 @@
 const responseMessage = {
-  // TODO : message 방식 status로 변경 여부
   SIGNUP_SUCCESS: '회원가입 성공',
   SIGNUP_FAIL: '회원 가입 실패',
 
@@ -27,9 +26,9 @@ const responseMessage = {
   STAR_ALREADY_EXIST: '존재하는 평점입니다.',
   MOVIE_GET_SUCCESS: '영화 조회 성공',
 
-  AUTH_SUCCESS: "토큰 인증 성공",
-  AUTH_FAIL: "토큰 인증 실패",
-  VALUE_INVALID: "파라미터 값이 잘못 되었습니다.",
+  AUTH_SUCCESS: '토큰 인증 성공',
+  AUTH_FAIL: '토큰 인증 실패',
+  VALUE_INVALID: '파라미터 값이 잘못 되었습니다.',
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
 };
 

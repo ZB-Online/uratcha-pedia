@@ -58,8 +58,6 @@ module.exports = {
       title: 'development',
     }),
   ],
-  // devtool: 'inline-source-map',
-  // mode: 'production',
   mode: 'development',
   devServer: {
     historyApiFallback: {
