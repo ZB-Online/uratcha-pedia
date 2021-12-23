@@ -3,7 +3,7 @@ const resData = require('../utils/resData');
 const resMessage = require('../utils/resMessage');
 const jwt = require('jsonwebtoken');
 
-let auth = (req, res, next) => {
+const auth = (req, res, next) => {
   try {
     const token = req.headers.cookie?.split('access_token=')[1];
     if (!token) {
